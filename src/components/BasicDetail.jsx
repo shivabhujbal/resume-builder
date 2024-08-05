@@ -210,7 +210,7 @@ function BasicDetail() {
                   htmlFor="website"
                   className="block text-md font-semibold text-gray-700"
                 >
-                  Website
+                  GitHub
                 </label>
                 <input
                   type="url"

@@ -38,6 +38,12 @@ function EducationDetail() {
     navigate('/'); // Navigate back to the home page
   };
 
+  //add education
+  const handleAddEducation = ()=>{
+    console.log("addEducation");
+
+  }
+
   return (
     <div className="flex h-screen">
       {/* Sidebar Component */}
@@ -171,10 +177,10 @@ function EducationDetail() {
               </div>
               <div className="mt-10 pr-5 pb-10 flex justify-end space-x-5">
                 <button
-                  type="submit"
-                  className="items-end w-32 py-3 px-5 border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  Preview
+                  onClick={handleAddEducation}
+                  className="py-3 px-5 border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  >
+                  Add+
                 </button>
                 <button
                   type="button" // Changed to button to prevent form submission on next click
