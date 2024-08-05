@@ -54,6 +54,9 @@ function SkillDetail() {
   const handleBackClick = () => {
     navigate('/experience-details'); // Navigate to the Experience Details route
   };
+  const handleNextClick = () => {
+    navigate('/summary-details'); // Navigate to the Experience Details route
+  };
 
   return (
     <div className="flex h-screen">
@@ -75,7 +78,7 @@ function SkillDetail() {
         </p>
         <div className="grid grid-cols-2">
           {/* Search Bar Section */}
-          <div className="w-[33rem] h-24 bg-sky-50 mb-6">
+          <div className="w-[33rem] h-24 bg-sky-50 mb-6 drop-shadow-xl">
             <label className="block mb-1 pl-4 pt-2 pb-1 font-semibold text-gray-700">
               Search By Job Title For Pre-Written Examples
             </label>
@@ -134,6 +137,7 @@ function SkillDetail() {
           </button>
           <button
             type="button"
+            onClick={handleNextClick}
             className="items-end px-5 py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Next
