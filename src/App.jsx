@@ -6,6 +6,7 @@ import ExperienceDetils from './components/ExperienceDetils';
 import SkillDetail from './components/SkillDetail';
 import Sidebar from './components/Sidebar';
 import TemplateSelector from './components/TemplateSelector';
+import SummaryDetail from './components/SummaryDetail';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
            <Route path="/education-details" element={<EductionDetail />} />
            <Route path="/experience-details" element={<ExperienceDetils/>} />
            <Route path="/skill-details" element={<SkillDetail />} />
+           <Route path="/summary-details" element={<SummaryDetail />} />
          </Routes>
       </div>
   );
