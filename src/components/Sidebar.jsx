@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const steps = [
-    { name: "Heading", path: "/" },
+    { name: "Basic Details", path: "/" },
     { name: "Education", path: "/education-details" },
     { name: "Professional Experience", path: "/experience-details" },
     { name: "Skills", path: "/skill-details" },
@@ -26,7 +26,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-60 p-4 bg-[#0d1b2a] text-white min-w-[250px]">
+    <div className="flex flex-col h-screen w-60 p-4 bg-[#0d1b2f] text-white min-w-[250px]">
       <h1 className="pt-8 ml-6 text-3xl font-bold mb-5">zety</h1>
 
       {/* Steps Navigation */}
