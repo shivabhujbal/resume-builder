@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom'; // Correct the import here
+import { FaArrowLeft } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
 function EducationDetail() {
@@ -11,8 +11,80 @@ function EducationDetail() {
     fieldOfStudy: '',
     graduationMonth: '',
     graduationYear: '',
-    additionalCoursework: '',
+    userId:'',
   });
+
+  const [errors, setErrors] = useState({});
+
+ const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const degrees = [
+    { value: "X", label: "12th (HSC)" },
+    { value: "XI", label: "10th (SSC)" },
+    { value: "BCA", label: "Bachelor of Computer Application (BCA)" },
+    { value: "BBA", label: "Bachelor of Business Administration (BBA)" },
+    { value: "BCom", label: "Bachelor of Commerce (BCom)" },
+    { value: "BSc", label: "Bachelor of Science (BSc)" },
+    { value: "BA", label: "Bachelor of Arts (BA)" },
+    { value: "BE", label: "Bachelor of Engineering (BE)" },
+    { value: "BTech", label: "Bachelor of Technology (BTech)" },
+    { value: "BEd", label: "Bachelor of Education (BEd)" },
+    { value: "BFA", label: "Bachelor of Fine Arts (BFA)" },
+    { value: "LLB", label: "Bachelor of Law (LLB)" },
+    { value: "MBBS", label: "Bachelor of Medicine (MBBS)" },
+    { value: "MCA", label: "Master of Computer Application (MCA)" },
+    { value: "MBA", label: "Master of Business Administration (MBA)" },
+    { value: "MCom", label: "Master of Commerce (MCom)" },
+    { value: "MSc", label: "Master of Science (MSc)" },
+    { value: "MA", label: "Master of Arts (MA)" },
+    { value: "ME", label: "Master of Engineering (ME)" },
+    { value: "MTech", label: "Master of Technology (MTech)" },
+    { value: "MEd", label: "Master of Education (MEd)" },
+    { value: "MFA", label: "Master of Fine Arts (MFA)" },
+    { value: "LLM", label: "Master of Law (LLM)" },
+    { value: "MPH", label: "Master of Public Health (MPH)" },
+    { value: "MSW", label: "Master of Social Work (MSW)" },
+    { value: "PhD", label: "Doctor of Philosophy (PhD)" },
+    { value: "MD", label: "Doctor of Medicine (MD)" },
+    { value: "DBA", label: "Doctor of Business Administration (DBA)" },
+    { value: "EdD", label: "Doctor of Education (EdD)" },
+    { value: "DrPH", label: "Doctor of Public Health (DrPH)" }
+  ];
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.schoolName) newErrors.schoolName = "School/University name is required.";
+    if (formData.schoolName.length < 3) newErrors.schoolName = "School Name must be at least 3 characters long.";
+    if (!/^[a-zA-Z\s]+$/.test(formData.schoolName)) newErrors.schoolName = "School name must only contain letters and spaces.";
+    
+    if (!formData.schoolLocation) newErrors.schoolLocation = "School/University location is required.";
+    if (!/^[a-zA-Z\s]+$/.test(formData.schoolLocation)) newErrors.schoolLocation = "Location must only contain letters and spaces.";
+    if (formData.schoolName.length < 3) newErrors.schoolName = "Location must be at least 3 characters long.";
+
+    if (!formData.degree) newErrors.degree = "Degree is required.";
+
+    if (!formData.fieldOfStudy) newErrors.fieldOfStudy = "Field of study is required.";
+    if (formData.schoolName.length < 3) newErrors.schoolName = "Field of study must be at least 3 characters long.";
+
+    if (!formData.graduationMonth) newErrors.graduationMonth = "Graduation month is required.";
+    if (!formData.graduationYear) newErrors.graduationYear = "Graduation Year is required.";
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,29 +92,52 @@ function EducationDetail() {
       ...prevData,
       [name]: value,
     }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: '', 
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    // Handle form submission
+    if (validate()) {
+      console.log(formData);
+      // Handle form submission
+    }
+  };
+  const handleAddEducation = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      console.log(formData);
+
+      alert("Education Details Submitted")
+
+      setFormData({
+        schoolName: '',
+        schoolLocation: '',
+        degree: '',
+        fieldOfStudy: '',
+        graduationMonth: '',
+        graduationYear: '',
+        userId:'',
+      });
+
+      
+    }
   };
 
   const navigate = useNavigate();
 
   const handleNextClick = () => {
-    navigate('/experience-details'); // Navigate to experience details
+    if (validate()) {
+      navigate('/experience-details'); // Navigate to experience details
+    }
   };
 
   const handleBackClick = () => {
     navigate('/'); // Navigate back to the home page
   };
-
-  //add education
-  const handleAddEducation = ()=>{
-    console.log("addEducation");
-
-  }
 
   return (
     <div className="flex h-screen">
@@ -59,16 +154,20 @@ function EducationDetail() {
               <FaArrowLeft className="mr-2" />
               Go Back
             </button>
-            <h1 className="text-4xl font-semibold leading-tight mb-3">Tell us about your education</h1>
+            <h1 className="text-4xl font-semibold leading-tight mb-3">
+              Tell us about your education
+            </h1>
             <p className="mb-6 text-lg text-zinc-900">
               Enter your education experience so far, even if you are a current student or did not graduate.
             </p>
-            <p className='text-sm font-semibold mt-6 mb-5'>* indicates a required field</p>
+            <p className="text-sm font-semibold mt-6 mb-5">
+              * indicates a required field
+            </p>
             <form onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-6">
                 <div className="col-span-2 sm:col-span-1">
                   <label className="block mb-1 font-semibold text-gray-700">
-                    School Name
+                    School/ University Name<span className="text-red-900">*</span>
                   </label>
                   <input
                     type="text"
@@ -76,12 +175,13 @@ function EducationDetail() {
                     placeholder="e.g. Delhi University"
                     value={formData.schoolName}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className={`mt-1 block w-full px-3 py-2 bg-white border rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.school_name ? 'border-red-500' : 'border-gray-300'}`}
                   />
+                  {errors.schoolName && <p className="text-red-500 text-sm">{errors.schoolName}</p>}
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label className="block mb-1 font-semibold text-gray-700">
-                    School Location
+                    School/ University Location<span className="text-red-900">*</span>
                   </label>
                   <input
                     type="text"
@@ -89,28 +189,32 @@ function EducationDetail() {
                     placeholder="e.g. Delhi, India"
                     value={formData.schoolLocation}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className={`mt-1 block w-full px-3 py-2 bg-white border rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.schoolLocation ? 'border-red-500' : 'border-gray-300'}`}
                   />
+                  {errors.schoolLocation && <p className="text-red-500 text-sm">{errors.schoolLocation}</p>}
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label className="block mb-1 font-semibold text-gray-700">
-                    Degree
+                    Degree<span className="text-red-900">*</span>
                   </label>
                   <select
                     name="degree"
                     value={formData.degree}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className={`mt-1 block w-full px-3 py-2 bg-white border rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.degree ? 'border-red-500' : 'border-gray-300'}`}
                   >
                     <option value="">Select</option>
-                    <option value="bachelor">Bachelor</option>
-                    <option value="master">Master</option>
-                    <option value="phd">PhD</option>
+                    {degrees.map((degree, index) => (
+                      <option key={index} value={degree.value}>
+                        {degree.label}
+                      </option>
+                    ))}
                   </select>
+                  {errors.degree && <p className="text-red-500 text-sm">{errors.degree}</p>}
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label className="block mb-1 font-semibold text-gray-700">
-                    Field Of Study
+                    Field Of Study<span className="text-red-900">*</span>
                   </label>
                   <input
                     type="text"
@@ -118,8 +222,9 @@ function EducationDetail() {
                     placeholder="e.g. Financial Accounting"
                     value={formData.fieldOfStudy}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className={`mt-1 block w-full px-3 py-2 bg-white border rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.fieldOfStudy ? 'border-red-500' : 'border-gray-300'}`}
                   />
+                  {errors.fieldOfStudy && <p className="text-red-500 text-sm">{errors.fieldOfStudy}</p>}
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <label className="block mb-1 font-semibold text-gray-700">
@@ -130,60 +235,47 @@ function EducationDetail() {
                       name="graduationMonth"
                       value={formData.graduationMonth}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className={`mt-1 block w-full px-3 py-2 bg-white border rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.graduationMonth ? 'border-red-500' : 'border-gray-300'}`}
                     >
                       <option value="">Month</option>
-                      <option value="January">January</option>
-                      <option value="February">February</option>
-                      <option value="March">March</option>
-                      <option value="April">April</option>
-                      <option value="May">May</option>
-                      <option value="June">June</option>
-                      <option value="July">July</option>
-                      <option value="August">August</option>
-                      <option value="September">September</option>
-                      <option value="October">October</option>
-                      <option value="November">November</option>
-                      <option value="December">December</option>
+                      {months.map((month, index) => (
+                        <option key={index} value={month}>
+                          {month}
+                        </option>
+                      ))}
                     </select>
                     <select
                       name="graduationYear"
                       value={formData.graduationYear}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className={`mt-1 block w-full px-3 py-2 bg-white border rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.graduationYear ? 'border-red-500' : 'border-gray-300'}`}
                     >
                       <option value="">Year</option>
                       {Array.from({ length: 10 }, (_, i) => {
                         const year = new Date().getFullYear() - i;
-                        return <option key={year} value={year}>{year}</option>;
+                        return (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        );
                       })}
                     </select>
                   </div>
+                  {errors.graduationMonth && <p className="text-red-500 text-sm">{errors.graduationMonth}</p>}
+                  {errors.graduationYear && <p className="text-red-500 text-sm">{errors.graduationYear}</p>}
                 </div>
               </div>
-  
-              <div className="mt-6">
-                <label className="block mb-1 font-semibold text-gray-700">
-                  Additional Coursework
-                </label>
-                <textarea
-                  name="additionalCoursework"
-                  value={formData.additionalCoursework}
-                  onChange={handleChange}
-                  placeholder="Add any additional coursework you're proud to showcase"
-                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  rows="4"
-                />
-              </div>
+
               <div className="mt-10 pr-5 pb-10 flex justify-end space-x-5">
                 <button
+                  type='submit'
                   onClick={handleAddEducation}
                   className="py-3 px-5 border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                  >
+                >
                   Add+
                 </button>
                 <button
-                  type="button" // Changed to button to prevent form submission on next click
+                  type="button" // Changed to button to prevent form submission
                   onClick={handleNextClick}
                   className="items-end px-5 py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
