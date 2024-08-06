@@ -12,25 +12,83 @@ function BasicDetail() {
   // Initialize the useNavigate hook
   const navigate = useNavigate();
 
-  // Handler to add LinkedIn input fields
-  const handleAddLinkedIn = () => {
-    if (linkedinFields.length === 0) {
-      // Ensure only one additional LinkedIn field
-      setLinkedinFields([...linkedinFields, { id: linkedinFields.length }]);
-    }
+  // State to manage form fields
+  const [formData, setFormData] = useState({
+    firstName: '',
+    surname: '',
+    profession: '',
+    city: '',
+    country: '',
+    // pinCode: '',
+    phone: '',
+    email: '',
+    linkedin: '',
+    website: '',
+  });
+
+  // State to manage form errors
+  const [formErrors, setFormErrors] = useState({});
+
+  // List of cities and countries for dropdowns
+  const cities = ['New Delhi', 'Mumbai', 'Bangalore', 'Kolkata', 'Chennai'];
+  const countries = ['India', 'United States', 'United Kingdom', 'Australia', 'Canada'];
+
+  // Handler to update form data state
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
   };
 
-  // Handler to add Website input fields
-  const handleAddWebsite = () => {
-    if (websiteFields.length === 0) {
-      // Ensure only one additional Website field
-      setWebsiteFields([...websiteFields, { id: websiteFields.length }]);
+  // Validation function
+  const validateForm = () => {
+    const errors = {};
+
+    // Validate First Name
+    if (formData.firstName.length < 3 || formData.firstName.length > 15) {
+      errors.firstName = 'First name must be required.';
     }
+
+    // Validate Surname
+    if (formData.surname.length < 3 || formData.surname.length > 15) {
+      errors.surname = 'Surname must be required.';
+    }
+
+    // Validate City
+    if (!formData.city) {
+      errors.city = 'City is required.';
+    }
+
+    // Validate Country
+    if (!formData.country) {
+      errors.country = 'Country is required.';
+    }
+
+    // Validate Pin Code
+    // if (!formData.pinCode) {
+    //   errors.pinCode = 'Pin code is required.';
+    // }
+
+    // Validate Phone Number
+    if (!/^[789]\d{9}$/.test(formData.phone)) {
+      errors.phone = 'Phone number must be required.';
+    }
+
+    // Validate Email
+    if (!formData.email.endsWith('@gmail.com')) {
+      errors.email = 'Email must be required".';
+    }
+
+    setFormErrors(errors);
+
+    // Return true if no errors
+    return Object.keys(errors).length === 0;
   };
 
   // Handler for navigation
   const handleNextClick = () => {
-    navigate('/education-details'); // Navigate to the EducationDetails route
+    if (validateForm()) {
+      navigate('/education-details'); // Navigate to the EducationDetails route
+    }
   };
 
   return (
@@ -73,8 +131,15 @@ function BasicDetail() {
                   type="text"
                   id="firstName"
                   placeholder="e.g. Saanvi"
-                  className="mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  className={`mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                    formErrors.firstName ? 'border-red-500' : ''
+                  }`}
                 />
+                {formErrors.firstName && (
+                  <p className="text-red-500 text-xs mt-1">{formErrors.firstName}</p>
+                )}
               </div>
               <div>
                 <label
@@ -87,8 +152,15 @@ function BasicDetail() {
                   type="text"
                   id="surname"
                   placeholder="e.g. Patel"
-                  className="mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" // Added border
+                  value={formData.surname}
+                  onChange={handleInputChange}
+                  className={`mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                    formErrors.surname ? 'border-red-500' : ''
+                  }`}
                 />
+                {formErrors.surname && (
+                  <p className="text-red-500 text-xs mt-1">{formErrors.surname}</p>
+                )}
               </div>
             </div>
 
@@ -104,7 +176,9 @@ function BasicDetail() {
                   type="text"
                   id="profession"
                   placeholder="e.g. Software Engineer"
-                  className="mt-1 block w-[675px] h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" // Added border
+                  value={formData.profession}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-[675px] h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -117,12 +191,24 @@ function BasicDetail() {
                 >
                   City
                 </label>
-                <input
-                  type="text"
+                <select
                   id="city"
-                  placeholder="e.g. New Delhi"
-                  className="mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" // Added border
-                />
+                  value={formData.city}
+                  onChange={handleInputChange}
+                  className={`mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                    formErrors.city ? 'border-red-500' : ''
+                  }`}
+                >
+                  <option value="">Select a city</option>
+                  {cities.map((city) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </select>
+                {formErrors.city && (
+                  <p className="text-red-500 text-xs mt-1">{formErrors.city}</p>
+                )}
               </div>
               <div className="flex gap-4">
                 <div>
@@ -132,14 +218,26 @@ function BasicDetail() {
                   >
                     Country
                   </label>
-                  <input
-                    type="text"
+                  <select
                     id="country"
-                    placeholder="e.g. India"
-                    className="mt-1 block w-40 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                    value={formData.country}
+                    onChange={handleInputChange}
+                    className={`mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                      formErrors.country ? 'border-red-500' : ''
+                    }`}
+                  >
+                    <option value="">Select a country</option>
+                    {countries.map((country) => (
+                      <option key={country} value={country}>
+                        {country}
+                      </option>
+                    ))}
+                  </select>
+                  {formErrors.country && (
+                    <p className="text-red-500 text-xs mt-1">{formErrors.country}</p>
+                  )}
                 </div>
-                <div>
+                {/* <div>
                   <label
                     htmlFor="pinCode"
                     className="block text-md font-semibold text-gray-700"
@@ -150,9 +248,16 @@ function BasicDetail() {
                     type="text"
                     id="pinCode"
                     placeholder="e.g. 110034"
-                    className="mt-1 block w-36 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" // Added border
+                    value={formData.pinCode}
+                    onChange={handleInputChange}
+                    className={`mt-1 block w-36 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                      formErrors.pinCode ? 'border-red-500' : ''
+                    }`}
                   />
-                </div>
+                  {formErrors.pinCode && (
+                    <p className="text-red-500 text-xs mt-1">{formErrors.pinCode}</p>
+                  )}
+                </div> */}
               </div>
             </div>
 
@@ -168,8 +273,15 @@ function BasicDetail() {
                   type="text"
                   id="phone"
                   placeholder="e.g. +91 22 1234 5677"
-                  className="mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" // Added border
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className={`mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                    formErrors.phone ? 'border-red-500' : ''
+                  }`}
                 />
+                {formErrors.phone && (
+                  <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>
+                )}
               </div>
 
               <div>
@@ -183,9 +295,16 @@ function BasicDetail() {
                   type="email"
                   id="email"
                   placeholder="e.g. saanvipatel@sample.in"
-                  className="mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" // Added border
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={`mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                    formErrors.email ? 'border-red-500' : ''
+                  }`}
                   required
                 />
+                {formErrors.email && (
+                  <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>
+                )}
               </div>
             </div>
 
@@ -201,7 +320,9 @@ function BasicDetail() {
                   type="url"
                   id="linkedin"
                   placeholder="e.g. linkedin.com/in/saanvi-patel"
-                  className="mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" // Added border
+                  value={formData.linkedin}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -210,13 +331,15 @@ function BasicDetail() {
                   htmlFor="website"
                   className="block text-md font-semibold text-gray-700"
                 >
-                  GitHub
+                  Website
                 </label>
                 <input
                   type="url"
                   id="website"
                   placeholder="e.g. http://medium.com/saanvi-patel"
-                  className="mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" // Added border
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -284,7 +407,7 @@ function BasicDetail() {
               <div></div>
               <div className="flex-grow">
                 <button
-                  type="submit"
+                  type="button"
                   className="py-3 px-4 rounded-full shadow-sm text-base font-medium text-white bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Optional: Personal Details
@@ -294,7 +417,7 @@ function BasicDetail() {
               {/* Right-aligned buttons */}
               <div className="flex gap-4">
                 <button
-                  type="submit"
+                  type="button"
                   className="items-end w-32 py-3 px-5  border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Preview
@@ -317,3 +440,4 @@ function BasicDetail() {
 }
 
 export default BasicDetail;
+
