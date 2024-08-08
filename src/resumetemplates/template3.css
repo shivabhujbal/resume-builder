@@ -1,0 +1,28 @@
+/* Global styles */
+body {
+    background-color: #ffffff; /* White background */
+    margin: 0;
+    padding: 0;
+}
+.template3 .container {
+    /* ...existing styles... */
+    border-top: 1px solid #000; /* Horizontal line */
+    border-bottom: 1px solid #000; /* Horizontal line */
+}
+
+.template3 .flex-col:first-child {
+    /* ...existing styles... */
+    border-right: 1px solid #000; /* Vertical line */
+}
+
+.bg-white min-h-screen h1::before,
+.bg-white min-h-screen h2::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: black;
+    border-radius: 2px;
+}
