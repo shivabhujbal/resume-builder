@@ -1,0 +1,10 @@
+*{
+    box-sizing: border-box;
+}
+
+.content-center{
+    box-sizing: border-box;
+    border: 0 solid #e5e7eb;
+   height: 900px;
+   
+}
