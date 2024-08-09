@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import { Country, State, City } from 'country-state-city';
 import '../App.css';
 import Sidebar from './Sidebar';
 
@@ -19,7 +20,6 @@ function BasicDetail() {
     profession: '',
     city: '',
     country: '',
-    // pinCode: '',
     phone: '',
     email: '',
     linkedin: '',
@@ -29,9 +29,24 @@ function BasicDetail() {
   // State to manage form errors
   const [formErrors, setFormErrors] = useState({});
 
-  // List of cities and countries for dropdowns
-  const cities = ['New Delhi', 'Mumbai', 'Bangalore', 'Kolkata', 'Chennai'];
-  const countries = ['India', 'United States', 'United Kingdom', 'Australia', 'Canada'];
+  // State to store countries and cities
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  // Fetch countries when component mounts
+  useEffect(() => {
+    const countryList = Country.getAllCountries();
+    setCountries(countryList);
+  }, []);
+
+  // Fetch cities whenever the selected country changes
+  useEffect(() => {
+    if (formData.country) {
+      const selectedCountry = Country.getCountryByCode(formData.country);
+      const cityList = City.getCitiesOfCountry(selectedCountry?.isoCode);
+      setCities(cityList || []);
+    }
+  }, [formData.country]);
 
   // Handler to update form data state
   const handleInputChange = (e) => {
@@ -45,12 +60,12 @@ function BasicDetail() {
 
     // Validate First Name
     if (formData.firstName.length < 3 || formData.firstName.length > 15) {
-      errors.firstName = 'First name must be required.';
+      errors.firstName = 'First name must be between 3 and 15 characters.';
     }
 
     // Validate Surname
     if (formData.surname.length < 3 || formData.surname.length > 15) {
-      errors.surname = 'Surname must be required.';
+      errors.surname = 'Surname must be between 3 and 15 characters.';
     }
 
     // Validate City
@@ -63,19 +78,14 @@ function BasicDetail() {
       errors.country = 'Country is required.';
     }
 
-    // Validate Pin Code
-    // if (!formData.pinCode) {
-    //   errors.pinCode = 'Pin code is required.';
-    // }
-
     // Validate Phone Number
     if (!/^[789]\d{9}$/.test(formData.phone)) {
-      errors.phone = 'Phone number must be required.';
+      errors.phone = 'Phone number must be a valid 10-digit number.';
     }
 
     // Validate Email
     if (!formData.email.endsWith('@gmail.com')) {
-      errors.email = 'Email must be required".';
+      errors.email = 'Email must be a valid Gmail address.';
     }
 
     setFormErrors(errors);
@@ -183,33 +193,24 @@ function BasicDetail() {
               </div>
             </div>
 
-            <div className="flex gap-8">
+            <div className="grid">
               <div>
                 <label
-                  htmlFor="city"
+                  htmlFor="summary"
                   className="block text-md font-semibold text-gray-700"
                 >
-                  City
+                  Summary
                 </label>
-                <select
-                  id="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  className={`mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-                    formErrors.city ? 'border-red-500' : ''
-                  }`}
-                >
-                  <option value="">Select a city</option>
-                  {cities.map((city) => (
-                    <option key={city} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
-                {formErrors.city && (
-                  <p className="text-red-500 text-xs mt-1">{formErrors.city}</p>
-                )}
+                <textarea
+                  id="summary"
+                  placeholder="Write a short summary about yourself..."
+                  className="mt-1 block w-[675px] h-24 px-3 pt-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  style={{ resize: 'none' }}
+                />
               </div>
+            </div>
+
+            <div className="flex gap-8">
               <div className="flex gap-4">
                 <div>
                   <label
@@ -228,8 +229,8 @@ function BasicDetail() {
                   >
                     <option value="">Select a country</option>
                     {countries.map((country) => (
-                      <option key={country} value={country}>
-                        {country}
+                      <option key={country?.isoCode} value={country?.isoCode}>
+                        {country?.name}
                       </option>
                     ))}
                   </select>
@@ -237,27 +238,32 @@ function BasicDetail() {
                     <p className="text-red-500 text-xs mt-1">{formErrors.country}</p>
                   )}
                 </div>
-                {/* <div>
-                  <label
-                    htmlFor="pinCode"
-                    className="block text-md font-semibold text-gray-700"
-                  >
-                    Pin Code
-                  </label>
-                  <input
-                    type="text"
-                    id="pinCode"
-                    placeholder="e.g. 110034"
-                    value={formData.pinCode}
-                    onChange={handleInputChange}
-                    className={`mt-1 block w-36 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-                      formErrors.pinCode ? 'border-red-500' : ''
-                    }`}
-                  />
-                  {formErrors.pinCode && (
-                    <p className="text-red-500 text-xs mt-1">{formErrors.pinCode}</p>
-                  )}
-                </div> */}
+              </div>
+              <div>
+                <label
+                  htmlFor="city"
+                  className="block text-md font-semibold text-gray-700"
+                >
+                  City
+                </label>
+                <select
+                  id="city"
+                  value={formData.city}
+                  onChange={handleInputChange}
+                  className={`mt-1 block w-80 h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                    formErrors.city ? 'border-red-500' : ''
+                  }`}
+                >
+                  <option value="">Select a city</option>
+                  {cities.map((city) => (
+                    <option key={city?.name} value={city?.name}>
+                      {city?.name}
+                    </option>
+                  ))}
+                </select>
+                {formErrors.city && (
+                  <p className="text-red-500 text-xs mt-1">{formErrors.city}</p>
+                )}
               </div>
             </div>
 
@@ -343,82 +349,16 @@ function BasicDetail() {
                 />
               </div>
             </div>
-
-            {/* Dynamically rendered LinkedIn fields */}
-            {/* {linkedinFields.map((field) => (
-              <div className="flex gap-8" key={field.id}>
-                <div>
-                  <label
-                    htmlFor={`linkedin${field.id}`}
-                    className="block text-sm font-semibold text-gray-700"
-                  >
-                    LinkedIn {field.id + 1}
-                  </label>
-                  <input
-                    type="url"
-                    id={`linkedin${field.id}`}
-                    placeholder="e.g. linkedin.com/in/saanvi-patel"
-                    className="mt-1 block w-80 h-9 px-3 border border-gray-300 rounded-sm shadow-sm focus:border-blue-500 focus:ring-blue-500" // Added border
-                  />
-                </div>
-              </div>
-            ))} */}
-
-            {/* Dynamically rendered Website fields */}
-            {/* {websiteFields.map((field) => (
-              <div className="flex gap-8" key={field.id}>
-                <div>
-                  <label
-                    htmlFor={`website${field.id}`}
-                    className="block text-sm font-semibold text-gray-700"
-                  >
-                    Website {field.id + 1}
-                  </label>
-                  <input
-                    type="url"
-                    id={`website${field.id}`}
-                    placeholder="e.g. http://medium.com/saanvi-patel"
-                    className="mt-1 block w-80 h-9 px-3 border border-gray-300 rounded-sm shadow-sm focus:border-blue-500 focus:ring-blue-500" // Added border
-                  />
-                </div>
-              </div>
-            ))} */}
-
-            {/* <div className="flex space-x-4 mt-4">
-              <button
-                type="button"
-                onClick={handleAddLinkedIn} // LinkedIn handler
-                className="flex items-center px-4 py-2 border border-gray-300 rounded-full shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                LinkedIn +
-              </button>
-              <button
-                type="button"
-                onClick={handleAddWebsite} // Website handler
-                className="flex items-center px-4 py-2 border border-gray-300 rounded-full shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Website +
-              </button>
-            </div> */}
-
             {/* Flexbox for aligning the last three buttons */}
             <div className="flex justify-between pt-6 pb-16">
               {/* Left-aligned button */}
               <div></div>
-              <div className="flex-grow">
-                <button
-                  type="button"
-                  className="py-3 px-4 rounded-full shadow-sm text-base font-medium text-white bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  Optional: Personal Details
-                </button>
-              </div>
 
               {/* Right-aligned buttons */}
               <div className="flex gap-4">
                 <button
                   type="button"
-                  className="items-end w-32 py-3 px-5  border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="items-end w-32 py-3 px-5 border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Preview
                 </button>
@@ -440,4 +380,3 @@ function BasicDetail() {
 }
 
 export default BasicDetail;
-
