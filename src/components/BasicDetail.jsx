@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Country, State, City } from 'country-state-city';
 import '../App.css';
 import Sidebar from './Sidebar';
+import { addBasicDetails} from '../services/BasicDetailService';
 
 function BasicDetail() {
   // State to manage dynamically added fields
@@ -94,11 +95,20 @@ function BasicDetail() {
     return Object.keys(errors).length === 0;
   };
 
-  // Handler for navigation
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     if (validateForm()) {
-      navigate('/education-details'); // Navigate to the EducationDetails route
+      const result = await addBasicDetails(formData); // Use the service
+
+      if (result.success) {
+        navigate('/education-details');
+      } else {
+        console.error(result.error);
+      }
     }
+  };
+   
+  const handleBackClick = () => {
+    navigate('/'); // Navigate back to the home page
   };
 
   return (
@@ -113,7 +123,7 @@ function BasicDetail() {
         <div className="container w-[1120px] h-screen ml-[4.5rem] py-14">
           <div className="px-4">
             {/* Arrow alignment fix using flex properties */}
-            <button className="text-blue-600 relative flex items-center mb-1">
+            <button onClick={handleBackClick} className="text-blue-600 relative flex items-center mb-1">
               <FaArrowLeft className="mr-2" /> {/* Add margin-right for spacing */}
               Go Back
             </button>
@@ -135,7 +145,7 @@ function BasicDetail() {
                   htmlFor="firstName"
                   className="block text-md font-semibold text-gray-700"
                 >
-                  First Name
+                  First Name *
                 </label>
                 <input
                   type="text"
@@ -156,7 +166,7 @@ function BasicDetail() {
                   htmlFor="surname"
                   className="block text-md font-semibold text-gray-700"
                 >
-                  Surname
+                  Surname *
                 </label>
                 <input
                   type="text"
@@ -217,7 +227,7 @@ function BasicDetail() {
                     htmlFor="country"
                     className="block text-md font-semibold text-gray-700"
                   >
-                    Country
+                    Country *
                   </label>
                   <select
                     id="country"
@@ -244,7 +254,7 @@ function BasicDetail() {
                   htmlFor="city"
                   className="block text-md font-semibold text-gray-700"
                 >
-                  City
+                  City *
                 </label>
                 <select
                   id="city"
@@ -273,7 +283,7 @@ function BasicDetail() {
                   htmlFor="phone"
                   className="block text-md font-semibold text-gray-700"
                 >
-                  Phone
+                  Phone *
                 </label>
                 <input
                   type="text"
@@ -337,7 +347,7 @@ function BasicDetail() {
                   htmlFor="website"
                   className="block text-md font-semibold text-gray-700"
                 >
-                  Website
+                  Github
                 </label>
                 <input
                   type="url"

@@ -110,7 +110,7 @@ function ExperienceDetails() {
   };
   
   const handleNextClick = () => {
-    // navigate('/skill-details'); 
+    navigate('/skill-details'); // Navigate to the Basic Details route
   };
 
   return (
