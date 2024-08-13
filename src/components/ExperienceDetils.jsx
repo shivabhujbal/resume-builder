@@ -32,7 +32,7 @@ function ExperienceDetails() {
     navigate('/education-details'); // Navigate to the Basic Details route
   };
   const handleNextClick = () => {
-    navigate('/skill-details'); // Navigate to the Basic Details route
+    navigate('/project-details'); // Navigate to the Basic Details route
   };
 
   return (
