@@ -3,11 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const steps = [
-    { name: "Basic Details", path: "/" },
+    // { name: "Template Selector", path: "/" },
+    { name: "Basic Details", path: "/basic-details" },
     { name: "Education", path: "/education-details" },
     { name: "Professional Experience", path: "/experience-details" },
+    { name: "Project", path: "/project-details" },
     { name: "Skills", path: "/skill-details" },
-    { name: "Summary", path: "/summary" },
+    { name: "Summary", path: "/summary-details" },
     // { name: "Finalize", path: "/finalize" },
   ];
 
@@ -27,10 +29,10 @@ const Sidebar = () => {
 
   return (
     <div className="flex flex-col h-screen w-60 p-4 bg-[#0d1b2f] text-white min-w-[250px]">
-      <h1 className="pt-8 ml-6 text-3xl font-bold mb-5">zety</h1>
+      <h1 className="pt-6 ml-6 text-3xl font-bold mb-3">zety</h1>
 
       {/* Steps Navigation */}
-      <nav className="pl-4 flex flex-col space-y-1">
+      <nav className="pl-4 flex flex-col space-y-0">
         {steps.map((step, index) => (
           <div
             key={index}
@@ -76,13 +78,13 @@ const Sidebar = () => {
       </div>
 
       {/* Footer */}
-       <div className="pl-4 mt-auto text-xs text-gray-300 mb-3">
+       <div className="pl-4 mt-auto text-xs text-gray-300 mb-2">
          <div><a href="">Terms and Conditions</a></div>
          <div><a href="">Privacy Policy</a></div>
          <div><a href="">Accessibility</a></div>
          <div><a href="">Contact Us</a></div>
        </div>
-       <div className="pl-4 text-[0.65rem] mb-5 text-gray-400">
+       <div className="pl-4 text-[0.65rem] mb-2 text-gray-400">
          © 2024, Works Limited. <br /> All rights reserved.
       </div>
      </div>

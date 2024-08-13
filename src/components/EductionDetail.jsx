@@ -136,7 +136,7 @@ function EducationDetail() {
   };
 
   const handleBackClick = () => {
-    navigate('/'); // Navigate back to the home page
+    navigate('/basic-details'); // Navigate back to the home page
   };
 
   return (
