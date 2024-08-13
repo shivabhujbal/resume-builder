@@ -8,12 +8,15 @@ function SkillDetail() {
   const navigate = useNavigate();
   const [primarySearchTerm, setPrimarySearchTerm] = useState('');
   const [secondarySearchTerm, setSecondarySearchTerm] = useState('');
-  const [primarySkills, setPrimarySkills] = useState('');
+  const [primarySkills, setPrimarySkills] = useState([]);
   const [secondarySkills, setSecondarySkills] = useState('');
   const [primarySuggestions, setPrimarySuggestions] = useState([]);
   const [secondarySuggestions, setSecondarySuggestions] = useState([]);
   const [showPrimarySuggestions, setShowPrimarySuggestions] = useState(false);
   const [showSecondarySuggestions, setShowSecondarySuggestions] = useState(false);
+  const [skillTye,setSkillType] = useState('');
+
+  const primrySkills = ["",""]
 
   // Example data for job titles
   const jobTitles = [
@@ -81,9 +84,15 @@ function SkillDetail() {
 
   // Handle Adding Primary Skill to Textarea
   const addPrimarySkill = (skill) => {
+    setSkillType('PRIMARY')
+
     setPrimarySkills((prevSkills) => (prevSkills ? `${prevSkills}, ${skill}` : skill));
+    console.log(primarySkills);
+    
     setPrimarySuggestions([]);
-    setPrimarySearchTerm(''); // Clear search term after adding skill
+
+    setPrimarySearchTerm('');
+     // Clear search term after adding skill
     setShowPrimarySuggestions(false); // Hide suggestions after selection
   };
 
@@ -99,9 +108,19 @@ function SkillDetail() {
   const handleBackClick = () => {
     navigate('/experience-details'); // Navigate to the Experience Details route
   };
+  const handlesubmit = () =>{
+    //skilltype:pri
+    //["",""]
+
+    
+  }
 
   // Handle Next Click
   const handleNextClick = () => {
+    console.log(primarySkills);
+    console.log(secondarySkills);
+    
+    
     navigate('/summary-details'); // Navigate to the Summary Details route
   };
 

@@ -2,38 +2,56 @@
 
 const templateData = {
   profileImage: "https://example.com/profile-picture.jpg",
-  userId: "user123",
-  firstname: "Nikita",
-  lastname: "Meru",
-  profession: "Software Engineer",
-  city: "Pune",
-  country: "India",
-  phone: "9175900267",
-  email: "nikita@gmail.com",
-  linkedIn: "https://www.linkedin.com/in/nikitameru",
-  GitHub: "https://github.com/nikitameru",
+  userId: "1",
+  firstname: "John",
+  lastname: "Doe",
+  profession: "Full Stack Developer",
+  city: "New York",
+  country: "USA",
+  phone: "9999999999",
+  email: "john.doe@example.com",
+  linkedIn: "https://www.linkedin.com/in/johndoe",
+  GitHub: "https://github.com/johndoe",
   
   education: [
     {
       EducationID: "edu1",
-      sclName: "Solapur University",
-      sclLocation: "Solapur, Maharashtra",
+      sclName: "Harvard University",
+      sclLocation: "Cambridge, MA",
       degree: "Bachelor's",
       fieldOfStudy: "Computer Science",
-      gradeYear: "June 2017"
+      gradeYear: "May 2020"
+    },
+    {
+      EducationID: "edu2",
+      sclName: "Stanford University",
+      sclLocation: "Stanford, CA",
+      degree: "Master's",
+      fieldOfStudy: "Software Engineering",
+      gradeYear: "May 2022"
     }
     // Add more education entries here
   ],
 
   experience: [
     {
-      title: "Software Engineer",
-      company: "Numetry Technology",
-      location: "Pune, Maharashtra",
-      dateRange: "July 2024 - Present",
+      title: "Full Stack Developer",
+      company: "Tech Innovations Inc.",
+      location: "San Francisco, CA",
+      dateRange: "June 2022 - Present",
       responsibilities: [
-        "Developed and maintained web applications using React and Node.js.",
-        "Collaborated with cross-functional teams to design and implement new features."
+        "Developed and maintained scalable web applications using React and Node.js.",
+        "Led a team of developers to deliver high-quality software solutions."
+      ]
+    },
+    {
+      title: "Software Engineer Intern",
+      company: "Innovative Solutions Ltd.",
+      location: "San Jose, CA",
+      dateRange: "June 2021 - August 2021",
+      responsibilities: [
+        "Assisted in the development of new features and bug fixes for internal tools.",
+        "Participated in code reviews and contributed to team discussions."
       ]
     }
     // Add more job entries here
@@ -43,34 +61,32 @@ const templateData = {
     primaryList: [
       "JavaScript",
       "React",
-      "Node.js"
+      "Node.js",
+      "Express.js"
     ],
     secondaryList: [
       "HTML",
       "CSS",
-      "Sass",
-      "REST APIs",
+      "SQL",
       "GraphQL",
-      "Agile Development",
+      "Docker",
+      "AWS",
       "Git"
     ]
   },
 
   certifications: [
-    "Certified Scrum Master (CSM)",
-    "React Developer Certification"
+    "AWS Certified Solutions Architect",
+    "Certified Kubernetes Administrator"
   ],
 
   languages: [
     "English (Native)",
-    "Spanish (Conversational)",
-    "Hindi",
-    "Marathi"
+    "French (Intermediate)",
+    "German (Basic)"
   ],
 
-  summary: `Motivated, proactive, and hands-on developer
-   with 5+ years' experience developing and managing 
-   information systems for software development and cloud-based.`
+  summary: `Enthusiastic Full Stack Developer with 3+ years of experience in building modern web applications and backend systems. Adept at collaborating with teams to deliver high-quality solutions and drive continuous improvement.`
 };
 
 export default templateData;

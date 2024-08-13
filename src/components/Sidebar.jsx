@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const steps = [
-    { name: "Basic Details", path: "/" },
+    { name: "Basic Details", path: "/basic-details" },
     { name: "Education", path: "/education-details" },
     { name: "Professional Experience", path: "/experience-details" },
     { name: "Skills", path: "/skill-details" },

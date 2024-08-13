@@ -4,7 +4,7 @@ const BASE_URL = 'http://localhost:8080/user';
 
 const addEducation = async(educationData) =>{
     try{
-        const response = await axios.post(`${BASE_URL}/addEducation`,educationData);
+        const response = await axios.post(`${BASE_URL}/addeducation`,educationData);
         return response.data
     }
     catch(error){
@@ -18,7 +18,7 @@ const addEducation = async(educationData) =>{
 const getEducation = async(userId) =>{
 
     try {
-        const response =await axios.get(`${BASE_URL}/${userId}/getEducation`);
+        const response =await axios.get(`${BASE_URL}/${userId}/geteducation`);
         return response.data
     } catch (error) {
 
