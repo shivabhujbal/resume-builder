@@ -4,14 +4,16 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { addProject } from "../services/ProjectDeatilService";
 
 function ProjectDetails() {
   const [formData, setFormData] = useState({
-    projectName: "",
-    role: "",
-    technologies: "",
-    prokectLink: "",
-    description: "", // Your initial description value
+    description: '',
+    techstack: '',
+    projectLink: '',
+    projectRole: '',
+    projectTitle: '',
+    user_Id: 5
   });
 
   const handleChange = (e) => {
@@ -31,8 +33,29 @@ function ProjectDetails() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    // Handle form submission
+    
+    // Split the techstack string into an array
+    const techstackArray = formData.techstack.split(',').map(item => item.trim());
+
+    // Update formData with the techstack array
+    const updatedFormData = {
+      ...formData,
+      techstack: techstackArray,
+    };
+
+    console.log(updatedFormData);
+
+    addProject(updatedFormData)
+      .then((response) => {
+        console.log("Data sent successfully:", response.data);
+        if (response.data.success) {
+          alert("Project Details Submitted");
+          navigate("/skill-details");
+        }
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+      });
   };
 
   const navigate = useNavigate();
@@ -40,13 +63,9 @@ function ProjectDetails() {
   const handleBackClick = () => {
     navigate("/experience-details");
   };
-  const handleNextClick = () => {
-    navigate("/skill-details");
-  };
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar Component */}
       <div className="fixed w-64 h-full">
         <Sidebar />
       </div>
@@ -77,9 +96,9 @@ function ProjectDetails() {
                   </label>
                   <input
                     type="text"
-                    name="projectName"
+                    name="projectTitle"
                     placeholder="e.g. Employee Management Application"
-                    value={formData.projectName}
+                    value={formData.projectTitle}
                     onChange={handleChange}
                     className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
@@ -90,9 +109,9 @@ function ProjectDetails() {
                   </label>
                   <input
                     type="text"
-                    name="role"
+                    name="projectRole"
                     placeholder="e.g. Lead Developer."
-                    value={formData.role}
+                    value={formData.projectRole}
                     onChange={handleChange}
                     className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
@@ -103,9 +122,9 @@ function ProjectDetails() {
                   </label>
                   <input
                     type="text"
-                    name="technologies"
+                    name="techstack"
                     placeholder="e.g. html, css, javascript, java, etc..."
-                    value={formData.technologies}
+                    value={formData.techstack}
                     onChange={handleChange}
                     className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
@@ -116,23 +135,23 @@ function ProjectDetails() {
                   </label>
                   <input
                     type="text"
-                    name="prokectLink"
+                    name="projectLink"
                     placeholder="e.g. https://github.com/xyz"
-                    value={formData.prokectLink}
+                    value={formData.projectLink}
                     onChange={handleChange}
                     className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
               <div className="col-span-2 sm:col-span-1">
-                <label className="block mb-1 mt-4 font-semibold text-gray-700">
+                <label className="block mb-2 mt-4 font-semibold text-gray-700">
                   Project description
                 </label>
                 <ReactQuill
                   value={formData.description}
                   onChange={handleQuillChange}
                   placeholder="Write a short description about your project..."
-                  className="mt-1 block w-full h-40 bg-white border border-gray-300 rounded-sm shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="w-full h-40 text-lg text "
                 />
               </div>
 
@@ -144,8 +163,7 @@ function ProjectDetails() {
                   Preview
                 </button>
                 <button
-                  type="button"
-                  onClick={handleNextClick}
+                  type="submit"
                   className="items-end px-5 py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Next
