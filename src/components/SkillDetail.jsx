@@ -15,6 +15,9 @@ function SkillDetail() {
   const [secondarySuggestions, setSecondarySuggestions] = useState([]);
   const [showPrimarySuggestions, setShowPrimarySuggestions] = useState(false);
   const [showSecondarySuggestions, setShowSecondarySuggestions] = useState(false);
+  const [skillTye,setSkillType] = useState('');
+
+  const primrySkills = ["",""]
 
   const userId = 5; // You can dynamically set this if needed
 
