@@ -4,7 +4,7 @@ const BASE_URL = 'http://localhost:8080/user';
 
 const addEducation = async(educationData) =>{
     try{
-        const response = await axios.post(`${BASE_URL}/addeducation`,educationData);
+        const response = await axios.post(`${BASE_URL}/addEducation`,educationData);
         return response.data
     }
     catch(error){

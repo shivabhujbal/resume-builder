@@ -14,10 +14,10 @@ function SkillDetail() {
   const [primarySuggestions, setPrimarySuggestions] = useState([]);
   const [secondarySuggestions, setSecondarySuggestions] = useState([]);
   const [showPrimarySuggestions, setShowPrimarySuggestions] = useState(false);
-  const [showSecondarySuggestions, setShowSecondarySuggestions] = useState(false);
-  const [skillTye,setSkillType] = useState('');
-
-  const primrySkills = ["",""]
+  const [showSecondarySuggestions, setShowSecondarySuggestions] =
+    useState(false);
+  const [languages, setLanguages] = useState([]);
+  const [languageInput, setLanguageInput] = useState("");
 
   const userId = 5; // You can dynamically set this if needed
 
@@ -126,8 +126,7 @@ function SkillDetail() {
 
   const handleSaveClick = async (skillType) => {
     try {
-      const skills =
-        skillType === "PRIMARY" ? primarySkills : secondarySkills;
+      const skills = skillType === "PRIMARY" ? primarySkills : secondarySkills;
       if (skills) {
         await addSkills(skills, skillType, userId);
         alert(`${skillType} skills saved successfully!`);
@@ -135,8 +134,21 @@ function SkillDetail() {
         alert(`Please add ${skillType.toLowerCase()} skills before saving.`);
       }
     } catch (error) {
-      alert(`Failed to save ${skillType.toLowerCase()} skills: ${error.message}`);
+      alert(
+        `Failed to save ${skillType.toLowerCase()} skills: ${error.message}`
+      );
     }
+  };
+
+  const handleAddLanguage = () => {
+    if (languageInput.trim() && !languages.includes(languageInput.trim())) {
+      setLanguages([...languages, languageInput.trim()]);
+      setLanguageInput("");
+    }
+  };
+
+  const handleRemoveLanguage = (language) => {
+    setLanguages(languages.filter((lang) => lang !== language));
   };
 
   return (
@@ -161,6 +173,7 @@ function SkillDetail() {
             own.
           </p>
           <div className="grid grid-cols-2 gap-8">
+            {/* Primary Skills Section */}
             <div>
               <div className="w-[33rem] h-24 bg-sky-50 mb-6 drop-shadow-xl">
                 <label className="block mb-1 pl-4 pt-2 pb-1 font-semibold text-gray-700">
@@ -173,7 +186,7 @@ function SkillDetail() {
                     value={primarySearchTerm}
                     onChange={handlePrimarySearchChange}
                     placeholder="Search by Job Title"
-                    className="relative mt-1 block w-[28rem] px-3 py-2 ml-4 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="relative mt-1 h-fit block w-[28rem] px-3 py-2 ml-4 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                   <IoSearchCircleSharp
                     className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-3 w-12 h-12 text-blue-600 cursor-pointer"
@@ -222,6 +235,7 @@ function SkillDetail() {
               </div>
             </div>
 
+            {/* Secondary Skills Section */}
             <div>
               <div className="w-[33rem] h-24 bg-sky-50 mb-6 drop-shadow-xl">
                 <label className="block mb-1 pl-4 pt-2 pb-1 font-semibold text-gray-700">
@@ -233,8 +247,8 @@ function SkillDetail() {
                     name="searchbar"
                     value={secondarySearchTerm}
                     onChange={handleSecondarySearchChange}
-                    placeholder="Search by Skill"
-                    className="relative mt-1 block w-[28rem] px-3 py-2 ml-4 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder="Search by Backend Skills"
+                    className="relative mt-1 h-fit block w-[28rem] px-3 py-2 ml-4 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                   <IoSearchCircleSharp
                     className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-3 w-12 h-12 text-green-600 cursor-pointer"
@@ -277,7 +291,7 @@ function SkillDetail() {
               <div className="mt-16">
                 <button
                   onClick={() => handleSaveClick("SECONDARY")}
-                  className="ml-[27rem] py-2 px-6 bg-green-600 text-white rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  className="ml-[27rem] py-2 px-6 bg-green-600 text-white rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Save
                 </button>
@@ -285,20 +299,67 @@ function SkillDetail() {
             </div>
           </div>
 
-          <div className="mt-20 pr-5 pb-5 flex justify-end space-x-5">
-            <button
-              type="button"
-              className="items-end w-32 py-3 px-5 border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Preview
-            </button>
-            <button
-              type="button"
-              onClick={handleNextClick}
-              className="items-end px-5 py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Next
-            </button>
+          {/* Language Section */}
+          <div className="grid grid-cols-2 gap-8 mt-8">
+            <div className="col-span-2">
+              <label className="block mb-1 pl-4 font-semibold text-gray-700">
+                Add Languages:
+              </label>
+              <div className="flex">
+                <input
+                  type="text"
+                  value={languageInput}
+                  onChange={(e) => setLanguageInput(e.target.value)}
+                  placeholder="Enter a language"
+                  className="w-full px-3 py-2 h-fit ml-4 bg-white border border-gray-300 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+                <button
+                  onClick={handleAddLanguage}
+                  className="ml-2 py-2 px-4 h-fit bg-blue-600 text-white  hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Add
+                </button>
+              </div>
+              <div className="flex flex-wrap mt-4">
+                {languages.map((language, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center bg-gray-200 text-gray-800 px-4 py-2 rounded-full m-2"
+                  >
+                    {language}
+                    <button
+                      onClick={() => handleRemoveLanguage(language)}
+                      className="ml-2 text-red-600 hover:text-red-800"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-between pt-6 pb-16">
+            {/* Left-aligned button */}
+            <div></div>
+
+            {/* Right-aligned buttons */}
+            <div className="flex gap-4">
+              <button
+                type="button"
+                className="items-end h-fit py-3 px-5 border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Preview
+              </button>
+
+              <button
+                type="button"
+                onClick={handleNextClick} // Use navigate handler for routing
+                className="py-3 px-5 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
       </div>

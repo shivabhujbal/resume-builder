@@ -8,12 +8,12 @@ import { addProject } from "../services/ProjectDeatilService";
 
 function ProjectDetails() {
   const [formData, setFormData] = useState({
-    description: '',
-    techstack: '',
-    projectLink: '',
-    projectRole: '',
-    projectTitle: '',
-    user_Id: 5
+    description: "",
+    techstack: "",
+    projectLink: "",
+    projectRole: "",
+    projectTitle: "",
+    user_Id: 5,
   });
 
   const handleChange = (e) => {
@@ -33,9 +33,11 @@ function ProjectDetails() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Split the techstack string into an array
-    const techstackArray = formData.techstack.split(',').map(item => item.trim());
+    const techstackArray = formData.techstack
+      .split(",")
+      .map((item) => item.trim());
 
     // Update formData with the techstack array
     const updatedFormData = {
@@ -100,7 +102,7 @@ function ProjectDetails() {
                     placeholder="e.g. Employee Management Application"
                     value={formData.projectTitle}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block h-fit w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <div className="col-span-2 sm:col-span-1">
@@ -113,7 +115,7 @@ function ProjectDetails() {
                     placeholder="e.g. Lead Developer."
                     value={formData.projectRole}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block h-fit w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <div className="col-span-2 sm:col-span-1">
@@ -126,7 +128,7 @@ function ProjectDetails() {
                     placeholder="e.g. html, css, javascript, java, etc..."
                     value={formData.techstack}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block h-fit w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <div className="col-span-2 sm:col-span-1">
@@ -139,7 +141,7 @@ function ProjectDetails() {
                     placeholder="e.g. https://github.com/xyz"
                     value={formData.projectLink}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block h-fit w-full px-3 py-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -151,20 +153,21 @@ function ProjectDetails() {
                   value={formData.description}
                   onChange={handleQuillChange}
                   placeholder="Write a short description about your project..."
-                  className="w-full h-40 text-lg text "
+                  className="mt-1 block w-full bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  style={{ height: "240px", marginBottom: "0" }} // Adjusted height and margin
                 />
               </div>
 
               <div className="mt-28 pr-5 pb-5 flex justify-end space-x-5 ">
                 <button
                   type="button"
-                  className="items-end w-32 py-3 px-5  border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="items-end  h-fit py-3 px-5  border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Preview
                 </button>
                 <button
                   type="submit"
-                  className="items-end px-5 py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="items-end h-fit px-5 py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Next
                 </button>

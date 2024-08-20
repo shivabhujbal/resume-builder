@@ -16,7 +16,7 @@ const addBasicDetails = async (formData) => {
   };
 
   try {
-    const response = await axios.post(`${BASE_URL}basicdetails`, jsonData, {
+    const response = await axios.post(`${BASE_URL}addBasicdetails`, jsonData, {
       headers: {
         'Content-Type': 'application/json',
       },

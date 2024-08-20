@@ -7,10 +7,6 @@ import Sidebar from './Sidebar';
 import { addBasicDetails} from '../services/BasicDetailService';
 
 function BasicDetail() {
-  // State to manage dynamically added fields
-  const [linkedinFields, setLinkedinFields] = useState([]);
-  const [websiteFields, setWebsiteFields] = useState([]);
-
   // Initialize the useNavigate hook
   const navigate = useNavigate();
 
@@ -368,7 +364,7 @@ function BasicDetail() {
               <div className="flex gap-4">
                 <button
                   type="button"
-                  className="items-end w-32 py-3 px-5 border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="items-end h-fit py-3 px-5 border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Preview
                 </button>

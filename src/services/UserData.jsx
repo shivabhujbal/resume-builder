@@ -14,11 +14,7 @@ const getAllDetails = async(userId) =>{
         throw error;
         
         
-    }
-
-
-
-    
+    } 
 }
 
 

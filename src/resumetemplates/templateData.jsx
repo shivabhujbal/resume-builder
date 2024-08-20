@@ -29,7 +29,15 @@ const templateData = {
       degree: "Master's",
       fieldOfStudy: "Software Engineering",
       gradeYear: "May 2022"
-    }
+    },
+    {
+      EducationID: "edu2",
+      sclName: "Stanford University",
+      sclLocation: "Stanford, CA",
+      degree: "Master's",
+      fieldOfStudy: "Software Engineering",
+      gradeYear: "May 2022"
+    },
     // Add more education entries here
   ],
 
@@ -51,9 +59,19 @@ const templateData = {
       dateRange: "June 2021 - August 2021",
       responsibilities: [
         "Assisted in the development of new features and bug fixes for internal tools.",
-        "Participated in code reviews and contributed to team discussions."
+        "Participated in code reviews and contributed to team discussions.",
       ]
-    }
+    },
+    {
+      title: "Software Engineer Intern",
+      company: "Innovative Solutions Ltd.",
+      location: "San Jose, CA",
+      dateRange: "June 2021 - August 2021",
+      responsibilities: [
+        "Assisted in the development of new features and bug fixes for internal tools.",
+        "Participated in code reviews and contributed to team discussions.",
+      ]
+    },
     // Add more job entries here
   ],
 
@@ -77,13 +95,13 @@ const templateData = {
 
   certifications: [
     "AWS Certified Solutions Architect",
-    "Certified Kubernetes Administrator"
+    "Certified Kubernetes Administrator",
   ],
 
   languages: [
     "English (Native)",
     "French (Intermediate)",
-    "German (Basic)"
+    "German (Basic)",
   ],
 
   summary: `Enthusiastic Full Stack Developer with 3+ years of experience in building modern web applications and backend systems. Adept at collaborating with teams to deliver high-quality solutions and drive continuous improvement.`
