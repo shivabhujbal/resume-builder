@@ -12,7 +12,7 @@ function EducationDetail() {
     fieldOfStudy: "",
     month: "",
     graduationYear: "",
-    userId: "7",
+    userId: "3",
     isGapTaken: false,
     gapYear: "",
     certifications: [],
@@ -196,23 +196,29 @@ function EducationDetail() {
 
       alert("Education Details Submitted");
 
-      // setFormData({
-      //   schoolName: '',
-      //   schoolLocation: '',
-      //   degree: '',
-      //   fieldOfStudy: '',
-      //   month: '',
-      //   graduationYear: '',
+      setFormData({
+        schoolName: '',
+        schoolLocation: '',
+        degree: '',
+        fieldOfStudy: '',
+        month: '',
+        graduationYear: '',
+        certifications:[],
+        isGapTaken:false,
 
-      // });
+      });
     }
   };
 
   const navigate = useNavigate();
 
-  const handleNextClick = () => {
+  const handleNextClick = async() => {
     if (validate()) {
       console.log(formData);
+      const response = await addEducation(formData);
+      console.log("res", response);
+
+      alert("Education Details Submitted");
       navigate("/experience-details"); // Navigate to experience details
     }
   };
@@ -372,9 +378,9 @@ function EducationDetail() {
                 </div>
               </div>
 
-              <div className="col-span-2 sm:col-span-1">
-                <label className="block mb-1 font-semibold text-gray-700">
-                  Gap Year(s) Available
+              <div className="col-span-2 mt-3 sm:col-span-1">
+                <label className="block text-gray-700">
+                  Did you take a Gap?
                 </label>
                 <input
                   type="checkbox"
@@ -461,7 +467,7 @@ function EducationDetail() {
                   onClick={handleNextClick}
                   className="items-end px-5 h-fit py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Next
+                 Save & Next
                 </button>
               </div>
             </form>

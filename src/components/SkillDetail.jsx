@@ -349,7 +349,7 @@ function SkillDetail() {
                 type="button"
                 className="items-end h-fit py-3 px-5 border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Preview
+                Back
               </button>
 
               <button
@@ -357,7 +357,7 @@ function SkillDetail() {
                 onClick={handleNextClick} // Use navigate handler for routing
                 className="py-3 px-5 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Next
+                Save & Next
               </button>
             </div>
           </div>
