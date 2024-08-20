@@ -3,7 +3,7 @@ import templateData from './templateData'; // Ensure this path is correct
 
 function Template1() {
   return (
-    <div className="min-h-screen bg-white relative" style={{ fontFamily: 'Times New Roman' }}> {/* Ensure full height with a white background */}
+    <div className="h-auto  bg-white relative" style={{ fontFamily: 'Times New Roman' }}> {/* Ensure full height with a white background */}
       <div className="container mx-auto p-8 shadow-lg font-mono italic border border-gray-300" style={{ fontFamily: 'Times New Roman' }}> {/* Container with padding, shadow, and gray border */}
         {/* Center content horizontally and vertically */}
         <div className="flex flex-col items-center text-center mb-8" style={{ fontFamily: 'Times New Roman' }}> {/* Flex container for centering */}

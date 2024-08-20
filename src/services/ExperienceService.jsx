@@ -4,7 +4,7 @@ const BASE_URL = 'http://localhost:8080/user';
 
 const addExperience = async(experienceData) =>{
     try{
-        const response = await axios.post(`${BASE_URL}/experiance`,experienceData);
+        const response = await axios.post(`${BASE_URL}/addExperiance`,experienceData);
         return response.data
     }
     catch(error){
