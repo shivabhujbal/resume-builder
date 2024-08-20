@@ -15,6 +15,9 @@ const UserDetails = () => {                     // use id as a props {id}
 
   });
 
+  console.log(userData);
+  
+
   if (!userData) {
     return <div>Loading...</div>;
   }

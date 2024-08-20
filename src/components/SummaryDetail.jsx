@@ -2,8 +2,17 @@ import React from 'react';
 import templateData from './templateData'; // Ensure this path is correct
 import EditButton from './EditButton';
 import Sidebar from './Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 function SummaryDetail() {
+
+  const navigate = useNavigate();
+
+  const handleFinalize =() =>{
+
+    navigate('/template-loader')
+
+  }
   return (
     <div className="flex flex-col lg:flex-row h-screen overflow-hidden">
       {/* Sidebar Component */}
@@ -244,6 +253,14 @@ function SummaryDetail() {
                   <span className="text-sm">{templateData.summary}</span>
                 </p>
               </div>
+
+              <button
+                  type="submit"
+                  onClick={handleFinalize}
+                  className="items-end px-5 py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  go to Download
+                </button>
             </div>
           </form>
         </div>
