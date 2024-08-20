@@ -1,0 +1,77 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Ensure it's on top */
+  }
+  
+  .modal-content {
+    background: white;
+    border-radius: 10px; /* Rounded corners for the modal */
+    padding: 20px;
+    width: 90%;
+    max-width: 1000px; /* Increase max-width for more space */
+    position: relative;
+    overflow: auto; /* Allows scrolling if content is too large */
+  }
+  
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+   /* background: #f44336; /* Red background for close button */
+    color: black;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  /*.modal-close:hover {
+    background: #d32f2f; /* Darker red on hover 
+  }*/
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+    gap: 16px; /* Space between input fields */
+  }
+  
+  .input-field {
+    border-radius: 20px; /* Round shape for input fields */
+    border: 1px solid #ddd;
+    padding: 14px; /* Increase padding to make inputs taller */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+    font-size: 16px; /* Increase font size for better readability */
+    box-shadow: #0056b3;
+  }
+  .input-field:hover{
+    border: #007bff;
+   
+  }
+  
+  .save-button {
+    border-radius: 20px; /* Round shape for button */
+    padding: 8px 16px; /* Reduce padding for a narrower button */
+    background-color: #007bff; /* Bootstrap-like blue */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 16px; /* Space above the button */
+  }
+  .save-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  

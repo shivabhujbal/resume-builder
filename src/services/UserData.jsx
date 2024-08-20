@@ -15,9 +15,6 @@ const getAllDetails = async(userId) =>{
         
         
     }
-
-
-
     
 }
 
