@@ -28,6 +28,9 @@ function SummaryDetail() {
   const [education, setEducation] = useState({});
   const [basicDetailsData, setBasicDetails] = useState({});
 
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -132,6 +135,12 @@ function SummaryDetail() {
   };
   console.log(userData);
   console.log(userData.certification);
+
+
+  const handleFinalizeClick = () =>{
+    // Handle the finalize button click here
+    navigate('/template-loader')
+  }
 
   return (
     <div className="flex flex-col lg:flex-row h-screen overflow-hidden">
@@ -561,7 +570,7 @@ function SummaryDetail() {
                 </button>
                 <button
                   type="button" // Changed to button to prevent form submission
-        
+                  onClick={handleFinalizeClick}
                   className="items-end px-5 h-fit py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                  Finalize & Download

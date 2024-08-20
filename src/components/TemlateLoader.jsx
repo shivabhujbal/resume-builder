@@ -75,11 +75,13 @@ const TemplateLoader = () => {
         <div id="template-to-pdf">
           <Template8 userData={userData} />
         </div>
-        <div className="text-center mt-4 mb-5 ">
-          <button
-            onClick={handleDownload2}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
-            Download Resume
+        <div className="text-center mt-4  ">
+        <button
+          type="button" // Changed to button to prevent form submission
+          onClick={handleDownload2}
+          className="items-end px-5 h-fit py-3 mb-5 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+          Download Pdf
           </button>
         </div>
       </div>
