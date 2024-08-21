@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 import './SummaryDetail.css';
 import ModalBasicDetail from './Modal/ModalBasicDetail'; // Import the modal
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getBasicDetails } from '/src/services/SummaryDetailService';
+// import { getBasicDetails } from '/src/services/SummaryDetailService';
 import ModalExperience from './Modal/ModalExperience'; // Import the experience modal
 import ModalProject from './Modal/ModalProject'; // Import the new modal
 import ModalLanguage from './Modal/ModalLanguage'; // Import the new language modal
@@ -12,6 +12,7 @@ import ModalSkill from './Modal/ModalSkill'; // Import the skills modal
 import ModalEducation from './Modal/ModalEducation';
 import ModalSummary from './Modal/ModalSummary';
 import ModalCertification from './Modal/ModalCertification';
+import { getAllDetails } from '../services/UserData';
 
 function SummaryDetail() {
   const location = useLocation();
@@ -27,10 +28,13 @@ function SummaryDetail() {
   const [education, setEducation] = useState({});
   const [basicDetailsData, setBasicDetails] = useState({});
 
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await getBasicDetails(2);
+        const response = await getAllDetails(1);
         setUserData(response);
 
       } catch (error) {
@@ -131,6 +135,12 @@ function SummaryDetail() {
   };
   console.log(userData);
   console.log(userData.certification);
+
+
+  const handleFinalizeClick = () =>{
+    // Handle the finalize button click here
+    navigate('/template-loader')
+  }
 
   return (
     <div className="flex flex-col lg:flex-row h-screen overflow-hidden">
@@ -493,7 +503,7 @@ function SummaryDetail() {
                         <ul key={index} className="list-disc list-inside">
                           {Array.isArray(primarySkill.skills) && primarySkill.skills.length > 0 ? (
                             primarySkill.skills.map((skill, idx) => (
-                              <li key={idx} className="text-base">{skill}</li>
+                              <span key={idx} className="text-base">{skill}, </span>
                             ))
                           ) : (
                             <p className="text-sm">No primary skills available.</p>
@@ -514,7 +524,7 @@ function SummaryDetail() {
                         <ul key={index} className="list-disc list-inside">
                           {Array.isArray(secondarySkill.skills) && secondarySkill.skills.length > 0 ? (
                             secondarySkill.skills.map((skill, idx) => (
-                              <li key={idx} className="text-base">{skill}</li>
+                              <span key={idx} className="text-base">{skill}</span>
                             ))
                           ) : (
                             <p className="text-sm">No secondary skills available.</p>
@@ -550,8 +560,26 @@ function SummaryDetail() {
               </div>
               {/* End Summary Section */}
             </div>
+            <div className="mt-10 pr-5 pb-10 flex justify-end space-x-5">
+                <button
+                  type="submit"
+                
+                  className="py-3 px-5 h-fit border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Preview
+                </button>
+                <button
+                  type="button" // Changed to button to prevent form submission
+                  onClick={handleFinalizeClick}
+                  className="items-end px-5 h-fit py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                 Finalize & Download
+                </button>
+              </div>
           </form>
+          
         </div>
+       
       </div >
       <ModalBasicDetail
         isOpen={isModalBasicDetailOpen}

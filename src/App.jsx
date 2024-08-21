@@ -10,8 +10,7 @@ import ProjectDetails from './components/ProjectDetails';
 import Template8 from './resumetemplates/template8';
 import Template9 from './resumetemplates/template9';
 import UserDetails from './resumetemplates/UserDetails';
-import TemplateLoader from '../src/components/TemplateLoader';
-import Template1 from './resumetemplates/template1';
+import TemplateLoader from './components/TemlateLoader';
 
 function App() {
   return (
@@ -29,7 +28,7 @@ function App() {
            <Route path="/template-loader" element={<TemplateLoader />} />
            <Route path="/template-data" element={<UserDetails />} />
          </Routes>
-         {/* <Template1/> */}
+         {/* <Deatils/> */}
       </div>
   );
 }
