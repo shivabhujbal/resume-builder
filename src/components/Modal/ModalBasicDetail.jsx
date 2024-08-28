@@ -7,24 +7,27 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the toastify CSS
 //import { Navigate } from 'react-router-dom';
 
-const ModalBasicDetail = ({ isOpen, onClose, onSave, data }) => {
+const ModalBasicDetail = ({ isOpen, onClose, onSave, userId }) => {
   if (!isOpen) return null;
 
   const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    const fetchModalUserData = async () => {
+// To Get Data From DataBase GET API
+useEffect(() => {
+  const fetchModalUserData = async () => {
+    if (userId) {  // Check if userId is valid
       try {
-        const response = await getModalBasicDetails(2);
-        setUserData(response.besicDetails); // Set basicDetails directly
-
+        const response = await getModalBasicDetails(userId);
+        setUserData(response.besicDetails);
       } catch (error) {
         console.error('Error in fetching user data', error);
       }
-    };
+    } else {
+      console.error('Invalid userId:', userId);
+    }
+  };
 
-    fetchModalUserData();
-  }, []);
+  fetchModalUserData();
+}, [userId]);
 
   
   const handleChange = (e) => {
@@ -34,19 +37,16 @@ const ModalBasicDetail = ({ isOpen, onClose, onSave, data }) => {
       [name]: value
     }));
   };
-
+//For Editing data PUT API
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await updateBasicDetails(2, userData);
+      await updateBasicDetails(userId, userData);
       onSave(userData); // Call the onSave callback if provided
-     // console.log('User data updated successfully');
-      //toast.success('Basic Details Updated Successfully'); // Show success toast
       alert("BasicDetails Updated Successfully");
        onClose();
     } catch (error) {
       console.error('Error updating user data:', error);
-      //toast.error('Failed to update Basic Details'); // Show error toast
     }
   };
 

@@ -2,24 +2,41 @@ import React, { useState, useEffect } from 'react';
 import { IoMdClose } from "react-icons/io";
 import { getModalBasicDetails, updateProjectDetails } from '/src/services/ModalServices.jsx';
 
-function ModalProject({ isOpen, onClose, onSave, data }) {
+function ModalProject({ isOpen, onClose, onSave, userId, id }) {
   const [userData, setUserData] = useState({}); // Initialize with an empty object
+  const [isLoading, setIsLoading] = useState(false);
+   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchModalUserData = async () => {
+     setIsLoading(true); // Set loading state
+      setError(null); // Reset error state
       try {
-        const response = await getModalBasicDetails(2);
-        const projectData = response.projectList[0]; // Assuming you need the first item in the array
-       // setUserData(projectData || {}); // Set the project data or fallback to an empty object
-       setUserData(response.projectList[0]); // Set basicDetails directly
+        const response = await getModalBasicDetails(userId);
+        console.log(userData);
+        if (response && Array.isArray(response.projectList)) {
+          console.log("String");
+          // Ensure response and educationList are valid
+          const projectData = response.projectList.find(item => item.id === id);
+          setUserData(projectData || {});
+          setIsLoading(false)
+          console.log(userData) ;// Set the education data or fallback to an empty object
+        } else {
+          console.warn('Invalid response format or educationList is not an array', response);
+          setUserData({}); // Fallback to an empty object if response format is invalid
+        
+        }
       } catch (error) {
         console.error('Error in fetching user data', error);
+        setUserData({}); // Fallback to an empty object in case of error
       }
     };
-
-    fetchModalUserData();
-  }, []);
-
+  
+    if (isOpen) { // Fetch data only when the modal is open
+      fetchModalUserData();
+    }
+  }, [id, isOpen, userId]);
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData(prevData => ({ ...prevData, [name]: value }));
@@ -29,15 +46,18 @@ function ModalProject({ isOpen, onClose, onSave, data }) {
     event.preventDefault();
     console.log('Submitting project data:', userData); // Log data being sent
     try {
-      await updateProjectDetails(2, userData);
+      await updateProjectDetails(id, userData);
+      console.log(userData);
       onSave(userData);
+      console.log(userData);
       alert("Project Updated Successfully");
       onClose();
     } catch (error) {
       console.error('Error in updating project data:', error);
-      alert(`Failed to update project: ${error.response ? error.response.data.message : error.message}`);
+     
     }
   };
+  
   
 
 
@@ -45,9 +65,9 @@ function ModalProject({ isOpen, onClose, onSave, data }) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center 
-    bg-black bg-opacity-50 z-50 shadow-lg transition-shadow duration-300 ">
+    bg-black bg-opacity-50 z-50 shadow-lg transition-shadow duration-300 overflow-y-auto">
       <div className="bg-white p-6 rounded-lg w-full max-w-md shadow-lg transition-shadow duration-300 overflow-y-auto">
-        <IoMdClose className="top-2 right-2 text-gray-700 relative ml-[28rem] h-6 w-10" onClick={onClose} />
+        <IoMdClose className="top-2 left-[90%] text-gray-700 relative ml-[28rem] h-6 w-10" onClick={onClose} />
         <h2 className="text-lg font-bold mb-4">Project Details</h2>
         <form className='shadow-lg transition-shadow duration-300' onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -125,6 +145,7 @@ function ModalProject({ isOpen, onClose, onSave, data }) {
             <div className="flex gap-4">
               <button
                 type="submit"
+                onSubmit={handleSubmit}
                 className="items-end w-32 py-3 px-5 border 
                 border-blue-800 rounded-full 
                 text-blue-700 bg-white 
