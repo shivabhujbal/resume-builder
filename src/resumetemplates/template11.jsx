@@ -1,17 +1,15 @@
 import React from "react";
 import templateData from "./templateData";
 
-const CombinationResume = () => {
+const Template11 = () => {
   return (
-    <div className="max-w-4xl h-auto mx-auto p-4 mt-6 mb-10 bg-white rounded-lg shadow-md">
-      <div className="flex justify-center ">
+    <div className="w-[210mm] h-[287mm] mx-auto bg-white rounded-lg shadow-2xl border-black">
+      <div className="grid grid-flow-row justify-center p-4 bg-purple-400">
         <h1 className="text-4xl font-bold">{`${templateData.firstname} ${templateData.lastname}`}</h1>
-      </div>
-      <div className="flex justify-center mb-14">
-        <p className="text-lg">{templateData.profession}</p>
+        <p className="text-base">{templateData.profession}</p>
       </div>
       {/* Resume Content Grid */}
-      <div className="flex bg-red-300">
+      <div className="flex ">
         {/* Left Column */}
         <div className="col-span-1 space-y-6 w-72">
           {/* Contact Information */}
@@ -80,7 +78,7 @@ const CombinationResume = () => {
         </div>
 
         {/* Right Column */}
-        <div className="bg-sky-300">
+        <div className="">
         <div className="col-span-1 space-y-4">
           {/* Summary */}
           <div>
@@ -154,4 +152,4 @@ const CombinationResume = () => {
   );
 };
 
-export default CombinationResume;
+export default Template11;

@@ -6,7 +6,7 @@ import { addExperience } from "../services/ExperienceService";
 
 function ExperienceDetails() {
   const [formData, setFormData] = useState({
-    userId: 1,
+    userId: 7,
     title: "",
     company: "",
     location: "",

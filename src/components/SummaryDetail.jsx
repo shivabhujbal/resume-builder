@@ -13,6 +13,7 @@ import ModalEducation from './Modal/ModalEducation';
 import ModalSummary from './Modal/ModalSummary';
 import ModalCertification from './Modal/ModalCertification';
 import { getAllDetails } from '../services/UserData';
+import { getModalBasicDetails } from '../services/ModalServices';
 
 function SummaryDetail() {
   const location = useLocation();
@@ -34,7 +35,7 @@ function SummaryDetail() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await getAllDetails(1);
+        const response = await getModalBasicDetails(8);
         setUserData(response);
 
       } catch (error) {
@@ -49,9 +50,6 @@ function SummaryDetail() {
     return <div>Loading...</div>;
   }
   console.log(userData);
-  console.log(userData.educationList.degree);
-  console.log(userData.educationList.certification);
-  console.log(userData.skillList.languages);
 
   const handleSaveEducation = (updatedEducation) => {
     setEducation((prevEducation) => {
@@ -133,9 +131,6 @@ function SummaryDetail() {
     setSummaryModalOpen(false);
     setCertificationModalOpen(false);
   };
-  console.log(userData);
-  console.log(userData.certification);
-
 
   const handleFinalizeClick = () =>{
     // Handle the finalize button click here

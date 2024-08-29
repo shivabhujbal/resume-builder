@@ -9,7 +9,7 @@ const TemplateSelector = () => {
   const navigate = useNavigate();
 
   const templates = [
-    { id: 1, name: 'Template 1', image: '/images/image.png', headshot: 'with', columns: '1' },
+    { id: 1, name: 'Template 1', image: '/images/image.png', headshot: 'with', columns: '1',  },
     { id: 2, name: 'Template 2', image: '/images/image.png', headshot: 'without', columns: '2' },
     { id: 3, name: 'Template 3', image: '/images/image.png', headshot: 'without', columns: '2' },
     { id: 4, name: 'Template 4', image: '/images/image.png', headshot: 'without', columns: '2' },

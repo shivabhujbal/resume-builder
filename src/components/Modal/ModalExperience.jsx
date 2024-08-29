@@ -8,7 +8,7 @@ function ModalExperience({ isOpen, onClose, onSave, data }) {
   useEffect(() => {
     const fetchModalUserData = async () => {
       try {
-        const response = await getModalBasicDetails(2);
+        const response = await getModalBasicDetails(1);
         const experienceData = response.experianceList[0]; // Assuming you need the first item in the array
         setUserData(experienceData || {}); // Set the education data or fallback to an empty object
       } catch (error) {
@@ -27,7 +27,7 @@ function ModalExperience({ isOpen, onClose, onSave, data }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await updateExperienceDetails(2, userData); // Adjust the ID as needed
+      await updateExperienceDetails(1, userData); // Adjust the ID as needed
       onSave(userData); // Call the onSave callback to update the parent component
       alert("Experience Data Updated SuccessFully");
       onClose(); // Close the modal after saving

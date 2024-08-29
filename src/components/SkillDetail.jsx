@@ -16,10 +16,10 @@ function SkillDetail() {
   const [showPrimarySuggestions, setShowPrimarySuggestions] = useState(false);
   const [showSecondarySuggestions, setShowSecondarySuggestions] =
     useState(false);
-  const [languages, setLanguages] = useState([]);
-  const [languageInput, setLanguageInput] = useState("");
+  const [languageInput, setLanguageInput] = useState(""); // State for the input field
+  const [languages, setLanguages] = useState([]); // State for the list of languages
 
-  const userId = 5; // You can dynamically set this if needed
+  const userId = 1; // You can dynamically set this if needed
 
   const jobTitles = [
     "Frontend Developer",
@@ -96,6 +96,20 @@ function SkillDetail() {
     setShowSecondarySuggestions(false);
   };
 
+  const handleAddLanguage = () => {
+    if (
+      languageInput.trim() !== "" &&
+      !languages.includes(languageInput.trim())
+    ) {
+      setLanguages([...languages, languageInput.trim()]);
+      setLanguageInput(""); // Clear the input after adding
+    }
+  };
+
+  const handleRemoveLanguage = (languageToRemove) => {
+    setLanguages(languages.filter((language) => language !== languageToRemove));
+  };
+
   const handleBackClick = () => {
     navigate("/project-details");
   };
@@ -128,7 +142,7 @@ function SkillDetail() {
     try {
       const skills = skillType === "PRIMARY" ? primarySkills : secondarySkills;
       if (skills) {
-        await addSkills(skills, skillType, userId);
+        await addSkills(skills, skillType, userId, languages);
         alert(`${skillType} skills saved successfully!`);
       } else {
         alert(`Please add ${skillType.toLowerCase()} skills before saving.`);
@@ -138,17 +152,6 @@ function SkillDetail() {
         `Failed to save ${skillType.toLowerCase()} skills: ${error.message}`
       );
     }
-  };
-
-  const handleAddLanguage = () => {
-    if (languageInput.trim() && !languages.includes(languageInput.trim())) {
-      setLanguages([...languages, languageInput.trim()]);
-      setLanguageInput("");
-    }
-  };
-
-  const handleRemoveLanguage = (language) => {
-    setLanguages(languages.filter((lang) => lang !== language));
   };
 
   return (
@@ -308,9 +311,9 @@ function SkillDetail() {
               <div className="flex">
                 <input
                   type="text"
+                  placeholder="Enter a language"
                   value={languageInput}
                   onChange={(e) => setLanguageInput(e.target.value)}
-                  placeholder="Enter a language"
                   className="w-full px-3 py-2 h-fit ml-4 bg-white border border-gray-300 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
                 <button

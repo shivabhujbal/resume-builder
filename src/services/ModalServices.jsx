@@ -24,9 +24,9 @@ const BASE_URL = 'http://localhost:8080/user';
   }
 };
 
-export const updateEducationDetails = async (userId, education) => {
+export const updateEducationDetails = async (id, education) => {
   try {
-    const response = await axios.put(`http://localhost:8080/user/updateEducation/${userId}`, education);
+    const response = await axios.put(`http://localhost:8080/user/updateEducation/${id}`, education);
     console.log('Update successful:', response);
     return response.data;
   } catch (error) {

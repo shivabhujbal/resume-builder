@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { IoMdClose } from "react-icons/io";
-import { getModalBasicDetails, updateEducationDetails } from '/src/services/ModalServices';
+import { getModalBasicDetails, updateEducationDetails } from '../../services/ModalServices';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const ModalEducation = ({ isOpen, onClose, onSave }) => {
+const ModalEducation = ({ isOpen, onClose, onSave,userId,id}) => {
   const [userData, setUserData] = useState({}); // Initialize with an empty object
   const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchModalUserData = async () => {
       try {
-        const response = await getModalBasicDetails(3);
-        const educationData = response.educationList[0]; // Assuming you need the first item in the array
+        const response = await getModalBasicDetails(8);
+        const educationData = response.educationList.find(item => item.id === id); // Find the specific education entry by id
         setUserData(educationData || {}); // Set the education data or fallback to an empty object
       } catch (error) {
         console.error('Error in fetching user data', error);
       }
     };
 
-    fetchModalUserData();
-  }, []);
+    if (isOpen) { // Fetch data only when the modal is open
+      fetchModalUserData();
+    }
+  }, [id, isOpen, userId]);
+
 
   
   const handleChange = (e) => {
@@ -34,7 +37,7 @@ const ModalEducation = ({ isOpen, onClose, onSave }) => {
     event.preventDefault();
     try {
       // Update the education data using the API
-      await updateEducationDetails(3, userData); // Adjust the ID as needed
+      await updateEducationDetails(id, userData); // Adjust the ID as needed
      // alert("Edication Data Updated Successfully")
       onSave(userData); // Call the onSave callback to update the parent component
       alert("Education Updated Successfully");
@@ -45,8 +48,10 @@ const ModalEducation = ({ isOpen, onClose, onSave }) => {
     }
   };
 
-  console.log(userData);
+  console.log(userData.degree);
   if (!isOpen) return null;
+
+  console.log(userData);
 
   return (
     <div className="fixed inset-0 z-50 overflow-auto bg-smoke-800 flex border shadow-md h-full ">

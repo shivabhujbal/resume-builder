@@ -7,7 +7,7 @@ const UserDetails = () => {                     // use id as a props {id}
   useEffect(() => {
    
     const fetchUserData = async () => {
-        const response =await getAllDetails(1);
+        const response =await getAllDetails(8);
         setUserData(response);  
     }
 

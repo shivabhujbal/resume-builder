@@ -1,159 +1,256 @@
-import React from 'react';
-import templateData from './templateData'; // Import your resume data
+import React from "react";
+import PropTypes from "prop-types";
 
-function Template5() {
+const Template5 = ({ userData }) => {
   return (
-    <div className="bg-white font-times-new-roman"> {/* Apply font to the entire component */}
-      <div className="container mx-auto py-10 rounded-lg shadow-lg bg-gray-200 p-6">
-        <div className="flex flex-col items-center ">
-          <h1 className="text-4xl font-bold text-black mb-4">
-            {templateData.firstname} {templateData.lastname}
+    <div
+      className="bg-sky-200 font-times-new-roman"
+      style={{
+        width: "793.7px", // Width for A4 size in pixels (standard is 210mm or 793.7px at 96dpi)
+        height: "1118.52px", // Height for A4 size in pixels (standard is 297mm or 1122.52px at 96dpi)
+        margin: "0 auto",
+        padding: "33px", // Adjust padding to your preference
+        boxSizing: "border-box",
+        display: "flex",
+        justifyContent: "space-between",
+        gap: "20px", // Gap between left and right columns
+      }}
+    >
+      {/* Left Column */}
+      <div className="flex-1">
+        {/* Header section */}
+        <div className="flex flex-col items-center">
+          <h1 className="text-3xl font-bold text-black mb-1">
+          {userData.besicDetails.first_name} {userData.besicDetails.last_name}
           </h1>
-          <h2 className="text-lg font-medium text-black">{templateData.profession}</h2>
+          <h2 className="text-base font-medium text-black mb-1">
+          {userData.besicDetails.profession}
+          </h2>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-10 mt-10">
-          <div className="w-full md:w-2/3">
-            <h3 className="text-base font-bold mb-4 text-black">WORK EXPERIENCE</h3>
-
-            {templateData.experience.map((job, index) => (
-              <div key={index} className="border-l-2 border-black pl-4 mb-6">
-                <h4 className="text-sm font-medium mb-2 text-black">{job.title}</h4>
-                <p className="text-black mb-2 text-sm">{job.company} | {job.dateRange}</p>
-                <p className="text-black mb-2 text-sm">{job.location}</p>
-                <ul className="list-disc ml-8 text-black">
-                  {job.responsibilities.map((responsibility, idx) => (
-                    <li key={idx}>{responsibility}</li>
+        {/* Main content section */}
+        <div className="flex flex-col">
+          {/* Work Experience section */}
+          <div className="mb-1 ">
+            <h3 className="text-base font-bold mb-2 text-black">
+              WORK EXPERIENCE
+            </h3>
+            {userData.experianceList.map((job, index) => (
+              <div key={index} className="border-l-2 border-black pl-2 mb-2">
+                <h4 className="text-sm font-semibold mb-1 text-black">
+                  {job.title}
+                </h4>
+                <p className="text-black mb-1 text-sm">
+                  {job.company} | {job.startDate} - {job.endDate}
+                </p>
+                <p className="text-black mb-1 text-sm">{job.location}</p>
+                <div className="text-black text-sm">
+                  {job.responsibility?.map((responsibility, idx) => (
+                    <p key={idx}>
+                      <span className="text-base font-bold mr-1">&#8226;</span>
+                      {responsibility}
+                    </p>
                   ))}
-                </ul>
+                </div>
               </div>
             ))}
+          </div>
 
-            <h3 className="text-base font-bold mt-10 mb-4 text-black">EDUCATION</h3>
-
-            {templateData.education.map((education, index) => (
-              <div key={index} className="border-l-2 border-black pl-4 mb-6">
-                <h4 className="text-sm font-medium mb-2 text-black">{education.degree} in {education.fieldOfStudy}</h4>
-                <p className="text-black mb-2 text-sm">{education.sclName} | {education.gradeYear}</p>
-                <p className="text-black text-sm">{education.sclLocation}</p>
+          {/* Education section */}
+          <div className="mb-3">
+            <h3 className="text-base font-bold mb-2 text-black">EDUCATION</h3>
+            {userData.educationList.map((education, index) => (
+              <div key={index} className="border-l-2 border-black pl-2 mb-3">
+                <h4 className="text-sm font-semibold mb-1 text-black">
+                  {education.degree.replace(/_/g, " ")} in{" "}
+                  {education.fieldOfStudy}
+                </h4>
+                <p className="text-black mb-1 text-sm">
+                  {education.schoolName} | {education.graduationYear}
+                </p>
+                <p className="text-black text-sm">{education.schoolLocation}</p>
               </div>
             ))}
-
-            <h3 className="text-base font-bold mt-10 mb-4 text-black">SKILLS</h3>
-            <ul className="list-disc ml-8 text-black text-sm">
-              {templateData.skills.primaryList.map((skill, index) => (
-                <li key={index} className="flex items-center text-sm">
-                  <span className="mr-2 text-sm">{skill}</span>
-                  <span className="text-black text-sm">★★★★★</span> {/* Customize this rating if needed */}
-                </li>
-              ))}
-
-              {templateData.skills.secondaryList.map((skill, index) => (
-                <li key={index} className="flex items-center text-sm">
-                  <span className="mr-2 text-sm">{skill}</span>
-                  <span className="text-black">★★★★★</span> {/* Customize this rating if needed */}
-                </li>
-              ))}
-            </ul>
           </div>
 
-          <div className="w-full md:w-1/3">
-            <h3 className="text-base font-bold mb-4 text-black">Summary</h3>
-            <p className="text-black text-sm">
-              {templateData.summary}
-            </p>
+          {/* Projects section */}
+          <div className="mb-3">
+            <h3 className="text-base font-bold mb-2 text-black">PROJECTS</h3>
+            {userData.projectList.map((pro, index) => (
+              <div key={index} className="border-l-2 border-black pl-2 mb-4">
+                <h4 className="text-sm font-medium mb-1 text-black capitalize">
+                {pro.projectTitle}
+                </h4>
+                <p className="text-black mb-1 text-sm">
+                {pro.projectRole} |{" "}
+                {pro.projectLink && (
+                    <a
+                      className="text-blue-500 text-sm"
+                      href={pro.projectLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Project Link
+                    </a>
+                  )}
+                </p>
+                <p className="text-black text-sm">
+                  Techstack: {pro.techstack.join(", ")}
+                </p>
 
-            <h3 className="text-base font-bold mt-10 mb-4 text-black">CONTACTS</h3>
-            <div className="flex flex-col gap-4 text-sm">
-              <div className="flex items-center text-sm">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-black"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L10 5.414l7.293 7.293a1 1 0 001.414-1.414l-7-7a1 1 0 00-1.414 0z" />
-                </svg>
-                <span className="ml-2 text-black text-sm">
-                  {templateData.city}, {templateData.country}
-                </span>
+                <div className="text-black text-sm">
+                {pro.description.split("\n").map((desc, index) => (
+                    <p key={index}>
+                      <span className="text-base font-bold mr-1">&#8226;</span>
+                      {desc}
+                    </p>
+                  ))}
+                </div>
               </div>
-              <div className="flex items-center text-sm">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-black"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M2.003 5.884L10 12.885l7.997-7.001a.75.75 0 000-1.063L12.003 2.999 2.003 12.999a.75.75 0 000 1.063z" />
-                </svg>
-                <span className="ml-2 text-black text-sm">
-                  {templateData.email}
-                </span>
-              </div>
-              <div className="flex items-center text-sm">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-black"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 005.032 5.032l.773-1.548a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 3z" />
-                </svg>
-                <span className="ml-2 text-black text-sm">
-                  {templateData.phone}
-                </span>
-              </div>
-              <div className="flex items-center text-sm">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-black"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 005.032 5.032l.773-1.548a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 3z" />
-                </svg>
-                <span className="ml-2 text-black text-sm">
-                  <a className='text-sm' href={templateData.linkedIn} target="_blank" rel="noopener noreferrer">
-                    LinkedIn
-                  </a>
-                </span>
-              </div>
-              <div className="flex items-center text-sm">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-black"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 005.032 5.032l.773-1.548a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 3z" />
-                </svg>
-                <span className="ml-2 text-black text-sm">
-                  <a className='text-sm' href={templateData.GitHub} target="_blank" rel="noopener noreferrer">
-                    GitHub
-                  </a>
-                </span>
-              </div>
-
-              <h3 className="text-base font-bold mt-10 mb-4 text-black">CERTIFICATIONS</h3>
-              <ul className="list-disc ml-8 text-black text-sm">
-                {templateData.certifications.map((certification, index) => (
-                  <li className='text-sm' key={index}>{certification}</li>
-                ))}
-              </ul>
-
-              <h3 className="text-base font-bold mt-10 mb-4 text-black">LANGUAGES</h3>
-              <ul className="list-disc ml-8 text-black text-sm">
-                {templateData.languages.map((language, index) => (
-                  <li className='text-sm' key={index}>{language}</li>
-                ))}
-              </ul>
-            </div>
+            ))}
           </div>
+        </div>
+      </div>
+
+      {/* Right Column */}
+      <div className="flex-1">
+        {/* Summary section */}
+        <div className="mb-6">
+          <h3 className="text-base font-bold mb-2 text-black">SUMMARY</h3>
+          <p className="text-black text-sm border-r-2 border-black pl-2">
+          {userData.besicDetails.message}
+          </p>
+        </div>
+
+        {/* Contacts section */}
+        <div className="mb-6">
+          <h3 className="text-base font-bold mb-2 text-black">CONTACTS</h3>
+          <div className="flex flex-col gap-2 text-sm border-r-2 border-black pl-2">
+            <span className="text-black text-sm">
+            {userData.besicDetails.city}, {userData.besicDetails.country}
+            </span>
+            <span className="text-black text-sm">{userData.besicDetails.email}</span>
+            <span className="text-black text-sm">{userData.besicDetails.phone}</span>
+            <a
+              className="text-sm"
+              href={userData.besicDetails.linkdin}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </a>
+            <a
+              className="text-sm"
+              href={userData.besicDetails.github}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+
+        {/* Certifications section */}
+        <div className="mb-6">
+          <h3 className="text-base font-bold mb-2 text-black">
+            CERTIFICATIONS
+          </h3>
+          <div className="text-black text-xs border-r-2 border-black pl-2">
+          {userData.educationList.map((education, eduIndex) =>
+          education.certification.map((cert, certIndex) => (
+              <p key={`${eduIndex}-${certIndex}`} className="text-sm">
+                <span className="text-base font-bold mr-2">&#8226;</span>
+                {cert}
+              </p>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Languages section */}
+        <div className="mb-6">
+          <h3 className="text-base font-bold mb-2 text-black">LANGUAGES</h3>
+          <div className="text-black text-xs border-r-2 border-black pl-2">
+          {userData.skillList[0].languages
+                    .split(", ")
+                    .map((language, index) => (
+              <p key={index} className="text-sm capitalize mb-1"><span className="text-base font-bold ml-1 mr-2">&#8226;</span>
+                {language}
+              </p>
+            ))}
+          </div>
+        </div>
+
+        {/* Skills section */}
+        <div>
+          <h3 className="text-sm font-bold mb-2 text-black">SKILLS</h3>
+          <ul className="text-black text-sm ">
+            {userData.skillList[0].skills.map((skill, index) => (
+                <li key={index} className="flex items-center text-sm border-r-2 border-black pl-2">
+                  <p className="mr-1 text-sm capitalize"><span className="text-base font-bold ml-2 mr-2">&#8226;</span>{skill}</p>
+                </li>
+              ))}
+          </ul>
         </div>
       </div>
     </div>
   );
 }
+
+Template5.propTypes = {
+  userData: PropTypes.shape({
+    besicDetails: PropTypes.shape({
+      first_name: PropTypes.string.isRequired,
+      last_name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      phone: PropTypes.string.isRequired,
+      profession: PropTypes.string.isRequired,
+      city: PropTypes.string.isRequired,
+      country: PropTypes.string.isRequired,
+      linkdin: PropTypes.string.isRequired,
+      github: PropTypes.string.isRequired,
+      message: PropTypes.string.isRequired,
+    }).isRequired,
+    educationList: PropTypes.arrayOf(
+      PropTypes.shape({
+        graduationYear: PropTypes.string.isRequired,
+        degree: PropTypes.string.isRequired,
+        month: PropTypes.string.isRequired,
+        gapYear: PropTypes.string,
+        certification: PropTypes.arrayOf(PropTypes.string).isRequired,
+        gapTaken: PropTypes.bool.isRequired,
+        schoolName: PropTypes.string.isRequired,
+        schoolLocation: PropTypes.string.isRequired,
+        fieldOfStudy: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    experianceList: PropTypes.arrayOf(
+      PropTypes.shape({
+        responsibility: PropTypes.arrayOf(PropTypes.string).isRequired,
+        location: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        endDate: PropTypes.string.isRequired,
+        startDate: PropTypes.string.isRequired,
+        company: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    skillList: PropTypes.arrayOf(
+      PropTypes.shape({
+        skills: PropTypes.arrayOf(PropTypes.string).isRequired,
+        skillType: PropTypes.string.isRequired,
+        languages: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    projectList: PropTypes.arrayOf(
+      PropTypes.shape({
+        description: PropTypes.string.isRequired,
+        projectTitle: PropTypes.string.isRequired,
+        projectRole: PropTypes.string.isRequired,
+        techstack: PropTypes.arrayOf(PropTypes.string).isRequired,
+        projectLink: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+  }).isRequired,
+};
 
 export default Template5;
