@@ -1,15 +1,10 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/users/';
+const BASE_URL = 'http://localhost:8080/user/';
 
-const addSkills = async (skills, skillType, userId) => {
+const addSkills = async (skillData) => {
   try {
-    const response = await axios.post(`${BASE_URL}addSkills`, {
-      skills: skills.split(", ").map((skill) => skill.trim()),
-      skillType: skillType,
-      userId: userId,
-    });
-
+    const response = await axios.post(`${BASE_URL}addSkills`, skillData);
     return response.data;
   } catch (error) {
     throw new Error(error.response ? error.response.data : 'Failed to save skills');
