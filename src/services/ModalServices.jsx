@@ -35,9 +35,9 @@ export const updateEducationDetails = async (id, education) => {
   }
 };
   
-export const updateExperienceDetails = async (userId, experience) => {
+export const updateExperienceDetails = async (id, experience) => {
   try {
-    const response = await axios.put(`http://localhost:8080/user/updateExperiance/${userId}`, experience);
+    const response = await axios.put(`http://localhost:8080/user/updateExperiance/${id}`, experience);
     console.log('Update successful:', response);
     return response.data;
   } catch (error) {
@@ -46,20 +46,20 @@ export const updateExperienceDetails = async (userId, experience) => {
   }
 };
 
-export const updateCertificationDetails = async (userId, certification) => {
-  try {
-    const response = await axios.put(`http://localhost:8080/user/updateEducation/${userId}`, certification);
-    console.log('Update successful:', response);
-    return response.data;
-  } catch (error) {
-    console.error('Error updating certification details:', error);
-    throw error;
-  }
-};
+// export const updateCertificationDetails = async (id, certification) => {
+//   try {
+//     const response = await axios.put(`http://localhost:8080/user/updateEducation/${id}`, certification);
+//     console.log('Update successful:', response);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error updating certification details:', error);
+//     throw error;
+//   }
+// };
 
-export const updateProjectDetails = async (userId, project) => {
+export const updateProjectDetails = async (id, project) => {
   try {
-    const response = await axios.put(`http://localhost:8080/updateProject/${userId}`, project);
+    const response = await axios.put(`http://localhost:8080/user/updateProject/${id}`, project);
     console.log('Update successful:', response);
     return response.data;
   } catch (error) {
@@ -68,9 +68,9 @@ export const updateProjectDetails = async (userId, project) => {
   }
 };
 
-export const updateSkillDetails = async (userId, skills) => {
+export const updateSkillDetails = async (id, skills) => {
   try {
-    const response = await axios.put(`http://localhost:8080/user/updateSkills/${userId}`, skills);
+    const response = await axios.put(`http://localhost:8080/user/updateSkills/${id}`, skills);
     console.log('Update successful:', response);
     return response.data;
   } catch (error) {

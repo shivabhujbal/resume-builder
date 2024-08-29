@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { useNavigate } from 'react-router-dom';
+import { components } from 'react-select';
 
 const TemplateSelector = () => {
   const [headshotFilter, setHeadshotFilter] = useState(null);
@@ -9,7 +10,7 @@ const TemplateSelector = () => {
   const navigate = useNavigate();
 
   const templates = [
-    { id: 1, name: 'Template 1', image: '/images/image.png', headshot: 'with', columns: '1',  },
+    { id: 1, name: 'Template 1', image: '/images/image.png', headshot: 'with', columns: '1' ,component:"<Template1/>"},
     { id: 2, name: 'Template 2', image: '/images/image.png', headshot: 'without', columns: '2' },
     { id: 3, name: 'Template 3', image: '/images/image.png', headshot: 'without', columns: '2' },
     { id: 4, name: 'Template 4', image: '/images/image.png', headshot: 'without', columns: '2' },

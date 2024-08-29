@@ -2,22 +2,43 @@ import React, { useState , useEffect} from 'react';
 import { IoMdClose } from "react-icons/io";
 import { getModalBasicDetails,updateExperienceDetails } from '/src/services/ModalServices.jsx';
 
-function ModalExperience({ isOpen, onClose, onSave, data }) {
+function ModalExperience({ isOpen, onClose, onSave, userId, id}) {
   const [userData, setUserData] = useState({}); // Initialize with an empty object
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchModalUserData = async () => {
+     setIsLoading(true); // Set loading state
+      setError(null); // Reset error state
       try {
-        const response = await getModalBasicDetails(1);
-        const experienceData = response.experianceList[0]; // Assuming you need the first item in the array
-        setUserData(experienceData || {}); // Set the education data or fallback to an empty object
+        const response = await getModalBasicDetails(userId);
+      
+        if (response && Array.isArray(response.experianceList)) {
+          console.log("String");
+          // Ensure response and educationList are valid
+          const experienceData = response.experianceList.find(item => item.id === id);
+          console.log(experienceData);
+          setUserData(experienceData || {});
+          setIsLoading(false)
+          console.log("Experience UserData",userData) ;// Set the education data or fallback to an empty object
+        } else {
+          console.warn('Invalid response format or educationList is not an array', response);
+          setUserData({}); // Fallback to an empty object if response format is invalid
+        
+        }
       } catch (error) {
         console.error('Error in fetching user data', error);
+        setUserData({}); // Fallback to an empty object in case of error
       }
     };
+  
+    if (isOpen) { // Fetch data only when the modal is open
+      fetchModalUserData();
+    }
+  }, [id, isOpen, userId]);
+  
 
-    fetchModalUserData();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +48,7 @@ function ModalExperience({ isOpen, onClose, onSave, data }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await updateExperienceDetails(1, userData); // Adjust the ID as needed
+      await updateExperienceDetails(id, userData); // Adjust the ID as needed
       onSave(userData); // Call the onSave callback to update the parent component
       alert("Experience Data Updated SuccessFully");
       onClose(); // Close the modal after saving
@@ -41,7 +62,7 @@ function ModalExperience({ isOpen, onClose, onSave, data }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 w-full h-full">
       <div className="bg-white p-8 rounded w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-md">
-      <IoMdClose  className="top-2 right-2 text-gray-700  h-6 w-10 "
+      <IoMdClose  className="top-2 left-[90%] text-gray-700  h-6 w-10 "
           onClick={onClose} />
      
         <h1 className="text-lg font-bold mb-4"> Experience</h1>
