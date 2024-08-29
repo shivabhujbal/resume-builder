@@ -1,33 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { getModalBasicDetails, updateSkillDetails } from '/src/services/ModalServices.jsx';
 
-const ModalSkill = ({ isOpen, onClose, onSave }) => {
+const ModalSkill = ({ isOpen, onClose, onSave, userId,id}) => {
   const [editedSkills, setEditedSkills] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [userData, setUserData] = useState({}); // Initialize with an empty object
+  const [selectedSkillType, setSelectedSkillType] = useState(null); // or a default value if appropriate
 
   useEffect(() => {
     const fetchModalUserData = async () => {
+      setIsLoading(true); // Set loading state
+      setError(null); // Reset error state
+     
       try {
-        const response = await getModalBasicDetails(3);
-        const skillData = response.skillList || []; // Assuming skillList is an array
-        setEditedSkills(skillData);
+        const response = await getModalBasicDetails(userId);
+  
+        if (response && Array.isArray(response.skillList)) {
+          console.log("Response data is valid");
+          console.log("Skill List from Response:", response.skillList);
+          
+          // Find the skills data by matching both skillType and id
+          const skillData = response.skillList.find(
+            (item) => item.id === id && item.skillType === selectedSkillType
+
+          );
+          // Check the id and selectedSkillType before filtering
+        console.log("ID to find:", id);
+        console.log("Selected Skill Type:", selectedSkillType);
+          console.log("Filtered SkillData:", skillData);
+          
+          setUserData(skillData || {});
+
+          setIsLoading(false);
+          console.log("Skills UserData", userData); // Debugging log for user data
+        } else {
+          console.warn('Invalid response format or skillList is not an array', response);
+          setUserData({}); // Fallback to an empty object if response format is invalid
+          setIsLoading(false); // Ensure loading state is reset
+        }
       } catch (error) {
-        console.error('Error fetching user data', error);
+        console.error('Error in fetching user data', error);
+        setUserData({}); // Fallback to an empty object in case of error
+        setIsLoading(false); // Ensure loading state is reset in case of error
       }
     };
-
-    if (isOpen) {
+  
+    if (isOpen && selectedSkillType) { // Fetch data only when the modal is open and selectedSkillType is valid
       fetchModalUserData();
+    } else if (isOpen && !selectedSkillType) {
+      console.warn("selectedSkillType is null or undefined.");
     }
-  }, [isOpen]);
-
-  const handleSkillChange = (skillType, index, newSkills) => {
-    const updatedSkills = editedSkills.map((skill, i) =>
-      i === index && skill.skillType === skillType
-        ? { ...skill, skills: newSkills }
-        : skill
-    );
-    setEditedSkills(updatedSkills);
-  };
+  }, [id, isOpen, userId, selectedSkillType]); // Include selectedSkillType in dependencies
+  
+  
 
   const handleSkillInputChange = (skillType, index, event) => {
     const newSkills = event.target.value.split(',').map(s => s.trim());
@@ -45,7 +71,7 @@ const ModalSkill = ({ isOpen, onClose, onSave }) => {
   
     try {
       // Update skill details
-      const response = await updateSkillDetails(3, { skillList: editedSkills });
+      const response = await updateSkillDetails(id, { skillList: editedSkills });
   
       // Check if the response is successful
       if (response && response.status === 200) {

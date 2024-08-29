@@ -10,7 +10,7 @@ const templateData = {
   country: "USA",
   phone: "9999999999",
   email: "john.doe@example.com",
-  linkedIn: "https://www.linkedin.com/in/johndoe",
+  linkedIn: "https://www.linkedin.com/in/johndoesdasdasdasdasda",
   GitHub: "https://github.com/johndoe",
   
   education: [

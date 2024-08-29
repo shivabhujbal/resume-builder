@@ -2,24 +2,45 @@ import React, { useState, useEffect } from 'react';
 import { IoMdClose } from "react-icons/io";
 import { getModalBasicDetails, updateEducationDetails } from '/src/services/ModalServices';
 import { useNavigate, useLocation } from 'react-router-dom';
+//import { getEducation } from '../../services/EducationService';
 
-const ModalEducation = ({ isOpen, onClose, onSave }) => {
-  const [userData, setUserData] = useState({}); // Initialize with an empty object
-  const navigate = useNavigate(); 
+const ModalEducation = ({ isOpen, onClose, onSave, userId,id}) => {
+   const [userData, setUserData] = useState({}); // Initialize with an empty object
+   const [isLoading, setIsLoading] = useState(false);
+   const [error, setError] = useState(null);
+   const navigate = useNavigate(); 
+  
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchModalUserData = async () => {
+     setIsLoading(true); // Set loading state
+      setError(null); // Reset error state
       try {
-        const response = await getModalBasicDetails(3);
-        const educationData = response.educationList[0]; // Assuming you need the first item in the array
-        setUserData(educationData || {}); // Set the education data or fallback to an empty object
+        const response = await getModalBasicDetails(userId);
+      
+        if (response && Array.isArray(response.educationList)) {
+          
+          // Ensure response and educationList are valid
+          const educationData = response.educationList.find(item => item.id === id);
+          setUserData(educationData || {});
+          setIsLoading(false)
+          console.log(userData) ;// Set the education data or fallback to an empty object
+        } else {
+          console.warn('Invalid response format or educationList is not an array', response);
+          setUserData({}); // Fallback to an empty object if response format is invalid
+        
+        }
       } catch (error) {
         console.error('Error in fetching user data', error);
+        setUserData({}); // Fallback to an empty object in case of error
       }
     };
-
-    fetchModalUserData();
-  }, []);
+  
+    if (isOpen) { // Fetch data only when the modal is open
+      fetchModalUserData();
+    }
+  }, [id, isOpen, userId]);
+  
 
   
   const handleChange = (e) => {
@@ -34,25 +55,34 @@ const ModalEducation = ({ isOpen, onClose, onSave }) => {
     event.preventDefault();
     try {
       // Update the education data using the API
-      await updateEducationDetails(3, userData); // Adjust the ID as needed
-     // alert("Edication Data Updated Successfully")
+      await updateEducationDetails(id, userData); // Adjust the ID as needed
       onSave(userData); // Call the onSave callback to update the parent component
+      
       alert("Education Updated Successfully");
-      //navigate('/template1-detail'); // Navigate to SummaryDetail.jsx (or the desired route)
-      onClose(); // Close the modal after saving
+  
+      // Use setTimeout to delay the execution of onClose
+      setTimeout(() => {
+        onClose(); // Close the modal after saving
+      }, 0);
     } catch (error) {
       console.error('Error in updating education data', error);
     }
   };
 
-  console.log(userData);
+  console.log(userData.degree);
   if (!isOpen) return null;
 
+  if (isLoading) return <div>Loading...</div>;
+
+  if (error) return <div>{error}</div>;
+
+  console.log(userData);
+
   return (
-    <div className="fixed inset-0 z-50 overflow-auto bg-smoke-800 flex border shadow-md h-full ">
-      <div className="relative p-8 bg-white w-full max-w-md m-auto flex-col flex rounded-lg border shadow-md max-h-full ">
+    <div className="fixed inset-0 z-50 overflow-auto bg-smoke-800 flex border shadow-md h-auto ">
+      <div className="relative p-8 bg-white w-full max-w-md m-auto flex-col flex rounded-lg border shadow-md max-h-auto ">
         <IoMdClose
-          className="top-2 right-2 text-gray-700 relative h-6 w-10"
+          className="top-2 left-[90%] text-gray-700 relative h-6 w-10"
           onClick={onClose}
         />
         

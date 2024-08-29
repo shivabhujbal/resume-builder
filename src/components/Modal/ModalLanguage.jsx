@@ -2,47 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { IoMdClose } from "react-icons/io";
 import { getModalBasicDetails, updateSkillDetails } from '/src/services/ModalServices.jsx';
 
-function ModalLanguage({ isOpen, onClose, onSave }) {
+function ModalLanguage({ isOpen, onClose, onSave, userId, id }) {
   const [userData, setUserData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  
   useEffect(() => {
     const fetchModalUserData = async () => {
+      setIsLoading(true);
+      setError(null);
       try {
-        const response = await getModalBasicDetails(1);
-        console.log('API Response:', response);
+        const response = await getModalBasicDetails(userId);
 
-        if (response && response.skillList && response.skillList.length > 0) {
-          console.log('Skill List:', response.skillList);
-
-          const languages = response.skillList[0]?.languages;
-          console.log('Languages:', languages);
-
-          if (languages) {
-            if (typeof languages === 'string') {
-              setUserData(languages.split(',').map(lang => lang.trim())); // Trim whitespace
-            } else if (Array.isArray(languages)) {
-              setUserData(languages);
-            } else {
-              console.error('Unexpected data format for languages:', languages);
-              setUserData([]);
-            }
+        if (response && Array.isArray(response.skillList)) {
+          // Find the skill data by id
+          const skillData = response.skillList.find(item => item.id === id);
+          
+          if (skillData && skillData.languages) {
+            // Convert the languages string to an array
+            const languagesArray = skillData.languages.split(',').map(lang => lang.trim());
+            setUserData(languagesArray); // Set userData as an array of languages
           } else {
-            console.error('Languages field is null or undefined.');
-            setUserData([]);
+            setUserData([]); // Fallback to an empty array if no data is found
           }
+          
+          setIsLoading(false);
         } else {
-          console.error('No skillList data available.');
-          setUserData([]);
+          console.warn('Invalid response format or skillList is not an array', response);
+          setUserData([]); // Fallback to an empty array if response format is invalid
+          setIsLoading(false);
         }
       } catch (error) {
-        console.error('Error in fetching user data:', error);
-        setUserData([]);
+        console.error('Error in fetching user data', error);
+        setUserData([]); // Fallback to an empty array in case of error
+        setIsLoading(false);
       }
     };
 
-    fetchModalUserData();
-  }, []);
-
+    if (isOpen) { // Fetch data only when the modal is open
+      fetchModalUserData();
+    }
+  }, [id, isOpen, userId]);
+  
   const handleChange = (index, value) => {
     const newLanguages = [...userData];
     newLanguages[index] = value;
@@ -54,8 +56,9 @@ function ModalLanguage({ isOpen, onClose, onSave }) {
     try {
       const updatedLanguages = userData.join(','); // Convert array back to a comma-separated string
       console.log('Updating with data:', updatedLanguages);
-      const response = await updateSkillDetails(1, { languages: updatedLanguages });
+      const response = await updateSkillDetails(id, { languages: updatedLanguages });
       console.log('API Update Response:', response);
+      console.log("updatedLanguages",updatedLanguages);
       onSave(updatedLanguages);
       alert("Language Details Updated Successfully");
       onClose();

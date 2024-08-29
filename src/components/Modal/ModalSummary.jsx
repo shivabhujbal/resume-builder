@@ -3,7 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import { getModalBasicDetails} from '/src/services/ModalServices.jsx'; // Replace with actual service
 import { updateBasicDetails } from '../../services/ModalServices';
 
-const ModalSummary = ({ isOpen, onClose, onSave, initialSummary }) => {
+const ModalSummary = ({ isOpen, onClose, onSave, userId }) => {
   if (!isOpen) return null;
 
   const [userData, setUserData] = useState({}); // Initialize with an empty object
@@ -11,7 +11,7 @@ const ModalSummary = ({ isOpen, onClose, onSave, initialSummary }) => {
   useEffect(() => {
     const fetchModalUserData = async () => {
       try {
-        const response = await getModalBasicDetails(2);
+        const response = await getModalBasicDetails(userId);
         setUserData(response.besicDetails || {}); // Set basicDetails directly
       } catch (error) {
         console.error('Error in fetching user data', error);
@@ -31,7 +31,7 @@ const ModalSummary = ({ isOpen, onClose, onSave, initialSummary }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await updateBasicDetails(2, userData);
+      await updateBasicDetails(userId, userData);
       onSave(userData);
       console.log(userData);
       alert("Summary Updated Successfully");
