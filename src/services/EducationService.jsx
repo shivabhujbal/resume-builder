@@ -18,7 +18,7 @@ const addEducation = async(educationData) =>{
 const getEducation = async(userId) =>{
 
     try {
-        const response =await axios.get(`${BASE_URL}/${userId}/geteducation`);
+        const response =await axios.get(`${BASE_URL}/getEducation/${userId}`);
         return response.data
     } catch (error) {
 

@@ -4,46 +4,41 @@ import { getModalBasicDetails, updateSkillDetails } from '/src/services/ModalSer
 
 function ModalLanguage({ isOpen, onClose, onSave, userId, id }) {
   const [userData, setUserData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  
   useEffect(() => {
     const fetchModalUserData = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await getModalBasicDetails(userId);
-
-        if (response && Array.isArray(response.skillList)) {
-          // Find the skill data by id
-          const skillData = response.skillList.find(item => item.id === id);
-          
-          if (skillData && skillData.languages) {
-            // Convert the languages string to an array
-            const languagesArray = skillData.languages.split(',').map(lang => lang.trim());
-            setUserData(languagesArray); // Set userData as an array of languages
+      if (id && userId) {
+        setIsLoading(true);
+        setError(null);
+        try {
+          const response = await getModalBasicDetails(userId);
+          if (response && Array.isArray(response.skillList)) {
+            const skillData = response.skillList.find(item => item.id === id);
+            if (skillData && skillData.languages) {
+              const languagesArray = skillData.languages.split(',').map(lang => lang.trim());
+              setUserData(languagesArray);
+            } else {
+              setUserData([]);
+            }
           } else {
-            setUserData([]); // Fallback to an empty array if no data is found
+            console.warn('Invalid response format or skillList is not an array', response);
+            setUserData([]);
           }
-          
           setIsLoading(false);
-        } else {
-          console.warn('Invalid response format or skillList is not an array', response);
-          setUserData([]); // Fallback to an empty array if response format is invalid
+        } catch (error) {
+          console.error('Error in fetching user data', error);
+          setUserData([]);
           setIsLoading(false);
         }
-      } catch (error) {
-        console.error('Error in fetching user data', error);
-        setUserData([]); // Fallback to an empty array in case of error
-        setIsLoading(false);
       }
     };
 
-    if (isOpen) { // Fetch data only when the modal is open
+    if (isOpen) {
       fetchModalUserData();
     }
-  }, [id, isOpen, userId]);
+  }, [id, userId, isOpen]);
   
   const handleChange = (index, value) => {
     const newLanguages = [...userData];
@@ -52,22 +47,32 @@ function ModalLanguage({ isOpen, onClose, onSave, userId, id }) {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    //event.preventDefault();
+
     try {
       const updatedLanguages = userData.join(','); // Convert array back to a comma-separated string
       console.log('Updating with data:', updatedLanguages);
-      const response = await updateSkillDetails(id, { languages: updatedLanguages });
+
+      const response = await updateSkillDetails(id, { languages: updatedLanguages }); // Make sure to pass `id` and not `selectedLanguageId`
       console.log('API Update Response:', response);
-      console.log("updatedLanguages",updatedLanguages);
-      onSave(updatedLanguages);
+
+      onSave(updatedLanguages); // Pass updated data to parent component
       alert("Language Details Updated Successfully");
-      onClose();
+      onClose(); // Close the modal after saving
     } catch (error) {
       console.error('Error updating language details:', error);
     }
   };
 
+  const handleSave = (updatedLanguages) => {
+    console.log('Languages saved:', updatedLanguages);
+    // Update the parent component's state or perform other actions
+  };
+  
+
   if (!isOpen) return null;
+
+  console.log("Language", id);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 shadow-lg transition-shadow duration-300">
@@ -85,7 +90,6 @@ function ModalLanguage({ isOpen, onClose, onSave, userId, id }) {
                   type="text"
                   value={lang}
                   onChange={(e) => handleChange(index, e.target.value)}
-                  placeholder="Enter language"
                   className="mt-1 block w-full h-10 px-3
                     bg-white border border-gray-300 rounded-sm
                     shadow-sm placeholder-gray-400
