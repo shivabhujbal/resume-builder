@@ -13,6 +13,7 @@ import ModalEducation from './Modal/ModalEducation';
 import ModalSummary from './Modal/ModalSummary';
 import ModalCertification from './Modal/ModalCertification';
 import { getAllDetails } from '../services/UserData';
+import { getModalBasicDetails } from '../services/ModalServices';
 
 function SummaryDetail() {
   const location = useLocation();

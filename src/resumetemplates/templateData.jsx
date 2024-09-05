@@ -46,7 +46,7 @@ const templateData = {
       title: "Full Stack Developer",
       company: "Tech Innovations Inc.",
       location: "San Francisco, CA",
-      dateRange: "June 2022 - Present",
+      dateRange: "June 2022 - september 2024",
       responsibilities: [
         "Developed and maintained scalable web applications using React and Node.js.",
         "Led a team of developers to deliver high-quality software solutions."
@@ -56,17 +56,7 @@ const templateData = {
       title: "Software Engineer Intern",
       company: "Innovative Solutions Ltd.",
       location: "San Jose, CA",
-      dateRange: "June 2021 - August 2021",
-      responsibilities: [
-        "Assisted in the development of new features and bug fixes for internal tools.",
-        "Participated in code reviews and contributed to team discussions.",
-      ]
-    },
-    {
-      title: "Software Engineer Intern",
-      company: "Innovative Solutions Ltd.",
-      location: "San Jose, CA",
-      dateRange: "June 2021 - August 2021",
+      dateRange: "June 2021 - February 2021",
       responsibilities: [
         "Assisted in the development of new features and bug fixes for internal tools.",
         "Participated in code reviews and contributed to team discussions.",
@@ -74,13 +64,35 @@ const templateData = {
     },
     // Add more job entries here
   ],
+  project: [
+    {
+      projectRole: "Full Stack Developer",
+      projectTitle: "Employee Management System",
+      techstack: "Angular, Bootstrap, Spring, Spring Boot, Hibernate, MySQL",
+      projectLink: "https://www.linkedin.com/in/johndoesdasdasdasdasda",
+      description: [
+        "Developed a web application for efficient employee management, including record-keeping, attendance tracking, and task assignment.",
+        "Improved productivity and communication within the organization."
+      ]
+    },
+    {
+      projectRole: "Full Stack Developer",
+      projectTitle: "Employee Management System",
+      techstack: "Angular, Bootstrap, Spring, Spring Boot, Hibernate, MySQL",
+      projectLink: "https://www.linkedin.com/in/johndoesdasdasdasdasda",
+      description: [
+        "Developed a web application for efficient employee management, including record-keeping, attendance tracking, and task assignment.",
+        "Improved productivity and communication within the organization.",
+      ]
+    },
+  ],
 
   skills: {
     primaryList: [
       "JavaScript",
       "React",
       "Node.js",
-      "Express.js"
+      "Express.js",
     ],
     secondaryList: [
       "HTML",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IoMdClose } from "react-icons/io";
-import { getModalBasicDetails, updateEducationDetails } from '/src/services/ModalServices';
+import { getModalBasicDetails, updateEducationDetails } from '../../services/ModalServices';
 import { useNavigate, useLocation } from 'react-router-dom';
 //import { getEducation } from '../../services/EducationService';
 
