@@ -276,7 +276,6 @@ function SkillDetail() {
                   placeholder="Enter a language"
                   value={languageInput}
                   onChange={handleLanguageInputChange}
-                  placeholder="Enter a language"
                   className="w-full px-3 py-2 h-fit ml-4 bg-white border border-gray-300 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
                 <button
@@ -333,7 +332,7 @@ function SkillDetail() {
                 <button
                   type="submit"
                   onClick={handleSaveClick}
-                  className="items-end h-fit px-5 py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="items-end h-fit px-5 py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-white bg-orange-600 hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Save & Next
                 </button>

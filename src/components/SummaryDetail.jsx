@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import Sidebar from './Sidebar';
 import './SummaryDetail.css';
+import { TiEdit } from "react-icons/ti";
+
 import ModalBasicDetail from './Modal/ModalBasicDetail'; // Import the modal
 import { useNavigate, useLocation } from 'react-router-dom';
 // import { getBasicDetails } from '/src/services/SummaryDetailService';
@@ -240,7 +242,7 @@ function SummaryDetail() {
               {/* Basic Details Section */}
               <div className="flex-1 md:w-full border border-gray-300 hover:shadow-xl p-8 bg-white relative mb-8 md:mb-0">
                 <div className="absolute top-2 right-2 flex space-x-2 z-10 text-black">
-                  <svg
+                  {/* <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 inline-block"
                     fill="none"
@@ -254,10 +256,15 @@ function SummaryDetail() {
                       strokeWidth={2}
                       d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.536c0-.894.296-1.736.856-2.407l3.536-3.536a2.5 2.5 0 013.536 0z"
                     />
-                  </svg>
+                  </svg> */}
+                  <TiEdit 
+                  className='w-6 h-6'
+                  onClick={() => handleEditClick('basicDetails')}
+                  />
+
                 </div>
                 <h2 className="text-xl font-bold mb-2">Basic Details</h2>
-
+                <div className=''>
                 <p className="text-base">
                   <span className="text-lg font-bold">First Name : </span>
                   <span className="text-base">{userData.besicDetails.first_name}</span>
@@ -283,8 +290,8 @@ function SummaryDetail() {
                   <span className="text-base">{userData.besicDetails.phone}</span>
                 </p>
                 <p className="text-base">
-                  <span className="text-sm font-semibold">Email : </span>
-                  <span className="text-sm">{userData.besicDetails.email}</span>
+                  <span className="text-lg font-bold">Email : </span>
+                  <span className="text-base">{userData.besicDetails.email}</span>
                 </p>
                 <p className="text-base">
                   <span className="text-lg font-bold">LinkedIn : </span>
@@ -298,7 +305,7 @@ function SummaryDetail() {
                   </a>
                 </p>
                 <p className="text-base">
-                  <span className="text-lg bold">GitHub : </span>
+                  <span className="text-lg font-bold">GitHub : </span>
                   <a
                     href={userData.besicDetails.github}
                     className="text-blue-500"
@@ -308,6 +315,7 @@ function SummaryDetail() {
                     {userData.besicDetails.github}
                   </a>
                 </p>
+                </div>
               </div>
               {/* End Basic Details Section */}
 
@@ -326,7 +334,7 @@ function SummaryDetail() {
                       <span className="text-lg font-bold">Degree:</span>
                       {/* Container for degree text and edit icon */}
                       <span className="text-base inline-flex items-center ml-2">
-                        {edu.degree}
+                        {edu.degree.replace(/_/g, " ")}
                         {/* SVG edit icon immediately after edu.degree */}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -347,15 +355,15 @@ function SummaryDetail() {
                     </p>
 
                     <p className="text-base">
-                      <span className="text-base font-bold">Field of Study: </span>
+                      <span className="text-lg font-bold">Field of Study: </span>
                       <span className="text-lg">{edu.fieldOfStudy}</span>
                     </p>
                     <p className="text-base">
-                      <span className="text-base font-bold">College Name: </span>
+                      <span className="text-lg font-bold">College Name: </span>
                       <span className="text-lg">{edu.schoolName}</span>
                     </p>
                     <p className="text-base">
-                      <span className="text-base font-bold">Location: </span>
+                      <span className="text-lg font-bold">Location: </span>
                       <span className="text-lg">{edu.schoolLocation}</span>
                     </p>
                     <p className="text-base">
@@ -439,10 +447,10 @@ function SummaryDetail() {
                   userData.projectList.map((project) => (
                     <div key={project.ProjectID} className="mb-4">
                       <p className="text-base">
-                        <span className="text-lg font-bold">Project Title: </span>
+                        <span className="text-lg font-bold">Project Title:</span>
                         {/* Container for Project Title and Edit Icon */}
-                        <span className="text-base inline-flex items-center ml-2">
-                          {project.projectTitle}
+                        <span className="text-base inline-flex items-center capitalize ml-2">
+                        {project.projectTitle}
                           {/* SVG Edit Icon immediately after project title */}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -462,24 +470,24 @@ function SummaryDetail() {
                         </span>
                       </p>
                       <p className="text-base">
-                        <span className="text-lg font-bold">Description: </span>
-                        <span className="text-base">{project.description}</span>
+                        <span className="text-lg font-bold">Project Role: </span>
+                        <span className="text-base">{project.projectRole}</span>
                       </p>
                       <p className="text-base">
                         <span className="text-lg font-bold">Technologies: </span>
-                        <span className="text-base">
+                        <span className="text-base capitalize">
                           {Array.isArray(project.techstack) ? project.techstack.join(', ') : 'N/A'}
                         </span>
-                      </p>
-                      <p className="text-base">
-                        <span className="text-lg font-bold">Project Role: </span>
-                        <span className="text-base">{project.projectRole}</span>
                       </p>
                       <p className="text-base">
                         <span className="text-lg font-bold">Project Link: </span>
                         <a href={project.projectLink} className="text-blue-500" target="_blank" rel="noopener noreferrer">
                           {project.projectLink}
                         </a>
+                      </p>
+                      <p className="text-base">
+                        <span className="text-lg font-bold">Description: </span>
+                        <span className="text-base">{project.description}</span>
                       </p>
                     </div>
                   ))
@@ -513,13 +521,13 @@ function SummaryDetail() {
                   userData.educationList.length > 0 &&
                   Array.isArray(userData.educationList[0].certification) &&
                   userData.educationList[0].certification.length > 0 ? (
-                  <ul className="list-disc ml-5 text-sm">
+                  <div className="text-sm">
                     {userData.educationList[0].certification.map((cert, index) => (
-                      <li className="text-sm" key={index}>
+                      <li className="text-base capitalize list-item" key={index}>
                         {cert}
                       </li>
                     ))}
-                  </ul>
+                  </div>
                 ) : (
                   <p className="text-sm">No certification data available.</p>
                 )}
@@ -548,13 +556,13 @@ function SummaryDetail() {
                 <h2 className="text-xl font-bold mb-4">Languages</h2>
                 {userData && userData.skillList && userData.skillList.length > 0 ? (
                   userData.skillList[0].languages ? (
-                    <ul className="list-disc ml-5 text-sm">
+                    <div className=" text-sm">
                       {userData.skillList[0].languages.split(',').map((lang, index) => (
-                        <li className="text-sm" key={index}>
+                        <li className="text-base capitalize list-item" key={index}>
                           {lang.trim()}
                         </li>
                       ))}
-                    </ul>
+                    </div>
                   ) : (
                     <p className="text-sm">No languages data available.</p>
                   )
@@ -572,7 +580,7 @@ function SummaryDetail() {
 
                 {/* Primary Skills Section */}
                 <div className="mb-2 relative">
-                  <h3 className="text-lg font-bold">Primary Skills</h3>
+                  {/* <h3 className="text-lg font-bold">Primary Skills</h3> */}
                   <div className="absolute top-0 right-0 flex space-x-2 z-10 text-black">
                     {userData && userData.skillList && Array.isArray(userData.skillList) && userData.skillList
                       .filter(skill => skill.skillType === "PRIMARY")
@@ -595,17 +603,17 @@ function SummaryDetail() {
                     userData.skillList
                       .filter(skill => skill.skillType === "PRIMARY")
                       .map((primarySkill, index) => (
-                        <ul key={index} className="list-disc list-inside">
+                        <div key={index} className="list-disc list-inside">
                           {Array.isArray(primarySkill.skills) && primarySkill.skills.length > 0 ? (
                             primarySkill.skills.map((skill, idx) => (
                               <li key={idx} className="flex items-center">
-                                <span className="text-base">{skill}</span>
+                                <span className="text-base capitalize list-item">{skill}</span>
                               </li>
                             ))
                           ) : (
                             <p className="text-sm">No primary skills available.</p>
                           )}
-                        </ul>
+                        </div>
                       ))
                   ) : (
                     <p className="text-sm">No primary skills available.</p>
@@ -690,7 +698,7 @@ function SummaryDetail() {
               <button
                 type="button" // Changed to button to prevent form submission
                 onClick={handleFinalizeClick}
-                className="items-end px-5 h-fit py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="items-end px-5 h-fit py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-white bg-orange-600 hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Finalize & Download
               </button>

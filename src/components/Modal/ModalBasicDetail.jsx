@@ -52,14 +52,14 @@ useEffect(() => {
 
   return (
     <div className="modal-overlay h-full">
-      <div className="modal-content h-full">
+      <div className="modal-content bg-sky-200 mt-10 mx-auto h-[90%]">
         <IoMdClose 
           className="top-1 right-2 text-gray-700 relative ml-[56rem] h-6 w-10"
           onClick={onClose}
         />
           
         {userData && (
-          <div>
+          <div className=''>
             <h1 className='font-bold mb-2'>Basic Details</h1>
             <h5 className='text-sm text-gray-400 mb-5'>Details like userid, firstname, lastname, city, country etc.</h5>
             <form className="form-grid px-4 mt-5 space-y-5" onSubmit={handleSubmit}>

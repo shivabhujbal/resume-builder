@@ -28,7 +28,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-60 p-4 bg-[#0d1b2f] text-white min-w-[250px]">
+    <div className="flex flex-col h-screen w-60 p-4 bg-teal-900 text-white  min-w-[250px]">
       <h1 className="pt-6 ml-6 text-3xl font-bold mb-3">zety</h1>
 
       {/* Steps Navigation */}
@@ -43,7 +43,7 @@ const Sidebar = () => {
             <div className="flex flex-col items-center">
               <span
                 className={`rounded-full w-7 h-7 flex items-center justify-center text-sm ${
-                  location.pathname === step.path ? "bg-blue-500" : "bg-gray-500"
+                  location.pathname === step.path ? "bg-amber-400 outline" : "bg-gray-500 ring"
                 }`}
               >
                 {index + 1}
@@ -53,7 +53,7 @@ const Sidebar = () => {
               {index < steps.length - 1 && (
                 <div
                   className={`w-0.5 h-6 ${
-                    location.pathname === step.path ? "bg-blue-500" : "bg-gray-300"
+                    location.pathname === step.path ? "bg-white" : "bg-gray-500"
                   }`}
                 />
               )}
@@ -62,7 +62,7 @@ const Sidebar = () => {
             {/* Step Name */}
             <span
               className={`ml-4 ${
-                location.pathname === step.path ? "text-blue-500" : ""
+                location.pathname === step.path ? "text-amber-400" : ""
               }`}
             >
               {step.name}
@@ -73,7 +73,7 @@ const Sidebar = () => {
 
       {/* Progress Bar */}
       <div className="pl-4 flex-grow mt-8">
-        <h6 className="text-xs font-semibold text-gray-400">RESUME COMPLETENESS</h6>
+        <h6 className="text-xs font-semibold text-gray-300">RESUME COMPLETENESS</h6>
         <ProgressBar progress={((steps.findIndex((s) => s.path === location.pathname) + 1) / steps.length) * 100} />
       </div>
 
@@ -100,7 +100,7 @@ const ProgressBar = ({ progress }) => {
         <div className="w-full bg-gray-50 h-2 rounded overflow-hidden">
           <div
             style={{ width: `${progress}%` }}
-            className="h-full bg-[#2aae9e]"
+            className="h-full bg-[#eddb39]"
           ></div>
         </div>
 

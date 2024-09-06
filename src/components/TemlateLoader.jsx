@@ -22,7 +22,7 @@ const TemplateLoader = () => {
   useEffect(() => {
     const fetchUserData = async () => {
      
-        const response = await getAllDetails(8);
+        const response = await getAllDetails(1);
         setUserData(response);
      
     };
