@@ -1,95 +1,106 @@
 import React, { useState, useEffect } from 'react';
 import { getModalBasicDetails, updateSkillDetails } from '/src/services/ModalServices.jsx';
 
-const ModalSkill = ({ isOpen, onClose, onSave, userId,id}) => {
-  const [editedSkills, setEditedSkills] = useState([]);
+const ModalSkill = ({ isOpen, onClose, onSave, userId, id }) => {
+  const [editedSkill, setEditedSkill] = useState({ skillType: '', skills: [] });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [userData, setUserData] = useState({}); // Initialize with an empty object
-  const [selectedSkillType, setSelectedSkillType] = useState(null); // or a default value if appropriate
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     const fetchModalUserData = async () => {
-      setIsLoading(true); // Set loading state
-      setError(null); // Reset error state
-     
+      setIsLoading(true);
+      setError(null);
+
       try {
         const response = await getModalBasicDetails(userId);
-  
+
         if (response && Array.isArray(response.skillList)) {
-          console.log("Response data is valid");
-          console.log("Skill List from Response:", response.skillList);
-          
-          // Find the skills data by matching both skillType and id
-          const skillData = response.skillList.find(
-            (item) => item.id === id && item.skillType === selectedSkillType
+          const skillData = response.skillList.find((item) => item.id === id);
 
-          );
-          // Check the id and selectedSkillType before filtering
-        console.log("ID to find:", id);
-        console.log("Selected Skill Type:", selectedSkillType);
-          console.log("Filtered SkillData:", skillData);
-          
-          setUserData(skillData || {});
-
-          setIsLoading(false);
-          console.log("Skills UserData", userData); // Debugging log for user data
+          if (skillData) {
+            setUserData(skillData);
+            setEditedSkill({
+              skillType: skillData.skillType,
+              skills: Array.isArray(skillData.skills) ? skillData.skills : [],
+            });
+          } else {
+            setUserData({});
+            setEditedSkill({ skillType: '', skills: [] });
+          }
         } else {
           console.warn('Invalid response format or skillList is not an array', response);
-          setUserData({}); // Fallback to an empty object if response format is invalid
-          setIsLoading(false); // Ensure loading state is reset
+          setUserData({});
+          setEditedSkill({ skillType: '', skills: [] });
         }
       } catch (error) {
         console.error('Error in fetching user data', error);
-        setUserData({}); // Fallback to an empty object in case of error
-        setIsLoading(false); // Ensure loading state is reset in case of error
+        setUserData({});
+        setEditedSkill({ skillType: '', skills: [] });
+      } finally {
+        setIsLoading(false);
       }
     };
-  
-    if (isOpen && selectedSkillType) { // Fetch data only when the modal is open and selectedSkillType is valid
-      fetchModalUserData();
-    } else if (isOpen && !selectedSkillType) {
-      console.warn("selectedSkillType is null or undefined.");
-    }
-  }, [id, isOpen, userId, selectedSkillType]); // Include selectedSkillType in dependencies
-  
-  
 
-  const handleSkillInputChange = (skillType, index, event) => {
-    const newSkills = event.target.value.split(',').map(s => s.trim());
-    handleSkillChange(skillType, index, newSkills);
+    if (isOpen) {
+      fetchModalUserData();
+    }
+  }, [id, isOpen, userId]);
+
+  const handleSkillInputChange = (event) => {
+    const newSkills = event.target.value.split(',').map((s) => s.trim());
+    setEditedSkill((prev) => ({
+      ...prev,
+      skills: newSkills,
+    }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    // Ensure editedSkills is an array
-    if (!Array.isArray(editedSkills)) {
-      alert('Invalid skill data');
-      return;
-    }
-  
     try {
-      // Update skill details
-      const response = await updateSkillDetails(id, { skillList: editedSkills });
+      setIsLoading(true);
   
-      // Check if the response is successful
-      if (response && response.status === 200) {
-        if (onSave) onSave(editedSkills); // Call the onSave callback if provided
-        alert("Skills Updated Successfully");
-        onClose();
-      } else {
-        // Handle unsuccessful response
-        alert("Failed to Save Skills");
-      }
+      // Ensure that only the skills are included in the updatedSkillData
+      const updatedSkillData = {
+        skillList: [
+          {
+            skills: editedSkill.skills // Only include the `skills` array
+          }
+        ]
+      };
+  
+      // Log the data being sent to the API
+      console.log('Submitting data:', updatedSkillData);
+  
+      // Make the API call to update the skills
+      const response = await updateSkillDetails(id, updatedSkillData);
+  
+      // Log the response from the API
+      console.log('API response:', response);
+  
+      // if (response && response.data) {
+      //   if (onSave) onSave(updatedSkillData);
+      //   console.log("updatedSkills", updatedSkillData);
+      //   alert('Skill updated successfully');
+      //   onClose();
+      // } else {
+      //   alert('Failed to save skill. Please try again.');
+      // }
     } catch (error) {
-      // Handle errors from the API
-      console.error('Error updating skills:', error);
-      alert("Failed to Save Skills");
+      console.error('Error updating skill:', error.message);
+  
+      // Check if there is an error response from the API
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+      }
+  
+      alert('Failed to save skill. Please check your internet connection and try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
   
-
+  
   if (!isOpen) return null;
 
   return (
@@ -100,74 +111,35 @@ const ModalSkill = ({ isOpen, onClose, onSave, userId,id}) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <h2 className="text-2xl font-bold mb-4">Skills</h2>
+        <h2 className="text-2xl font-bold mb-4">Edit Skill</h2>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-md font-semibold text-gray-700 mb-2">
-              Primary Skills
-            </label>
-            {editedSkills
-              .filter(skill => skill.skillType === 'PRIMARY')
-              .map((skill, index) => (
-                <div key={index} className="mb-2">
-                  <input
-                    type="text"
-                    value={skill.skills.join(', ')}
-                    onChange={(e) => handleSkillInputChange('PRIMARY', index, e)}
-                    className="mt-1 block w-full px-3 h-10 
-                    bg-white border 
-                    border-gray-300 rounded-sm shadow-sm 
-                    placeholder-gray-400 focus:outline-none 
-                    focus:ring-indigo-500 
-                    focus:border-indigo-500 sm:text-sm"
-                  />
-                  
-                </div>
-              ))}
-          </div>
+            <label className="block text-md font-semibold text-gray-700 mb-2">Skill</label>
 
-          <div className="mb-4">
-            <label className="block text-md font-semibold text-gray-700 mb-2">
-              Secondary Skills
-            </label>
-            {editedSkills
-              .filter(skill => skill.skillType === 'SECONDARY')
-              .map((skill, index) => (
-                <div key={index} className="mb-2">
-                  <input
-                    type="text"
-                    value={skill.skills.join(', ')}
-                    onChange={(e) => handleSkillInputChange('SECONDARY', index, e)}
-                    className="mt-1 block w-full px-3 h-10
-                    bg-white border 
-                    border-gray-300 rounded-sm shadow-sm 
-                    placeholder-gray-400 focus:outline-none 
-                    focus:ring-indigo-500 
-                    focus:border-indigo-500 sm:text-sm"
-                  />
-                </div>
-              ))}
+            <input
+              type="text"
+              value={editedSkill.skills.join(', ')}
+              onChange={handleSkillInputChange}
+              className="mt-1 block w-full px-3 h-10 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
           </div>
 
           <div className="flex justify-between pt-3 pb-16">
-            <div></div>
-            <div className="flex gap-4">
-              <button
-                type="submit"
-                className="w-32 py-3 px-5 border h-full border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Save
-              </button>
+            <button
+              type="submit"
+              className="w-32 py-3 px-5 border h-full border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Save
+            </button>
 
-              <button
-                type="button"
-                onClick={onClose}
-                className="py-3 px-5 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Cancel
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="py-3 px-5 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>

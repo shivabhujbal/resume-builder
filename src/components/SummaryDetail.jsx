@@ -37,7 +37,9 @@ function SummaryDetail() {
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [selectedSkillsId, setSelectedSkillsId] = useState(null);
   const [selectedSkillType, setSelectedSkillType] = useState(''); // Initialize with a default value
-
+  const [selectedSkills, setSelectedSkills] = useState([]); // Initialize with a default value
+  const [selectedLanguageId, setSelectedLanguageId] = useState(null); // Initialize with a default value
+  const [selectedLanguages, setSelectedLanguages] = useState(''); // Initialize with a default value
 
   const navigate = useNavigate();
 
@@ -123,26 +125,37 @@ function SummaryDetail() {
       setSelectedExperienceId(id);
       console.log(selectedExperienceId);
       setExperienceModalOpen(true);
-      
+
     } else if (section === 'projects') {
       console.log(id);
       setSelectedProjectId(id);
       console.log(selectedProjectId);
       setProjectModalOpen(true);
 
-    } else if (section === 'languages') {
-      setLanguageModalOpen(true);
-
-    } else if (section === 'skills') {
+    }  if (section === 'languages') {
+    setSelectedLanguageId(id); // Set the selected language ID
+    console.log("Language Id", id);
+    
+    const selectedLanguageData = userData.skillList.find(skill => skill.id === id);
+    
+    if (selectedLanguageData && selectedLanguageData.languages) {
+      setSelectedLanguages(selectedLanguageData.languages.split(',')); // Initialize with the current languages
+    } else {
+      setSelectedLanguages([]); // Initialize with an empty array if no languages are found
+    }
+    
+    setLanguageModalOpen(true); // Open the modal for editing languages
+  } else if (section === 'skills') {
       console.log("Primary Skill ID:", id);
-      
+      console.log("selectedId", id);
       setSelectedSkillsId(id);
-      console.log(selectedSkillsId);
+      setSelectedSkills(selectedSkills);
+      console.log("selected Skills", selectedSkills);
       setSelectedSkillType('PRIMARY'); // Set the skill type
       console.log(selectedSkillType);
       setSkillModalOpen(true);
-      
-    }  else if (section === 'education') {
+
+    } else if (section === 'education') {
       console.log(id);
       setSelectedEducationId(id);  // Set the selected education ID
       console.log(selectedEducationId)
@@ -159,6 +172,7 @@ function SummaryDetail() {
 
 
   };
+  console.log("Summary UserData",userData);
 
   // const handleEditClick = (section, id = null) => {
   //   switch (section) {
@@ -223,12 +237,14 @@ function SummaryDetail() {
   };
   // console.log(userData);
   //console.log(userData.certification);
-
+  console.log("Skills Id", userData.skillList.id);
 
   const handleFinalizeClick = () => {
     // Handle the finalize button click here
     navigate('/template-loader')
   }
+  console.log("UserData", userData.skillList);
+  //console.log("Language Id",selectedLanguageId);
 
   return (
     <div className="flex flex-col lg:flex-row h-screen overflow-hidden">
@@ -498,7 +514,7 @@ function SummaryDetail() {
               {/* End Projects Section */}
 
               {/* Certification Section */}
-              <div className="flex-1 md:w-full border border-gray-300 hover:shadow-xl p-8 bg-white relative overflow-y-auto custom-scrollbar" style={{ maxHeight: '400px' }}>
+              <div className="flex-1 md:w-full border border-gray-300 hover:shadow-xl p-8 bg-white relative overflow-y-auto custom-scrollbar h-auto" >
                 <div className="absolute top-2 right-2 flex space-x-2 z-10 text-black">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -506,7 +522,7 @@ function SummaryDetail() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    onClick={() => handleEditClick('certification')}
+                    onClick={() => handleEditClick('certification', userData.educationList[0].id)}
                   >
                     <path
                       strokeLinecap="round"
@@ -543,7 +559,7 @@ function SummaryDetail() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    onClick={() => handleEditClick('languages')}
+                    onClick={() => handleEditClick('languages', userData.skillList[0].id)} // Ensure selectedLanguageId is properly set
                   >
                     <path
                       strokeLinecap="round"
@@ -572,15 +588,13 @@ function SummaryDetail() {
               </div>
               {/* End Languages Section */}
 
-              {/* End Languages Section */}
-
               {/* Skills Section */}
               <div className="flex-1 md:w-full border border-gray-300 hover:shadow-xl p-8 bg-white relative overflow-y-auto custom-scrollbar" style={{ maxHeight: '400px' }}>
                 <h2 className="text-xl font-bold mb-2">Skills</h2>
 
                 {/* Primary Skills Section */}
                 <div className="mb-2 relative">
-                  {/* <h3 className="text-lg font-bold">Primary Skills</h3> */}
+                  <h3 className="text-lg font-bold">Primary Skills</h3>
                   <div className="absolute top-0 right-0 flex space-x-2 z-10 text-black">
                     {userData && userData.skillList && Array.isArray(userData.skillList) && userData.skillList
                       .filter(skill => skill.skillType === "PRIMARY")
@@ -603,11 +617,11 @@ function SummaryDetail() {
                     userData.skillList
                       .filter(skill => skill.skillType === "PRIMARY")
                       .map((primarySkill, index) => (
-                        <div key={index} className="list-disc list-inside">
+                        <ul key={index} className="list-disc list-inside">
                           {Array.isArray(primarySkill.skills) && primarySkill.skills.length > 0 ? (
                             primarySkill.skills.map((skill, idx) => (
                               <li key={idx} className="flex items-center">
-                                <span className="text-base capitalize list-item">{skill}</span>
+                                <span className="text-base">{skill}</span>
                               </li>
                             ))
                           ) : (
@@ -618,54 +632,20 @@ function SummaryDetail() {
                   ) : (
                     <p className="text-sm">No primary skills available.</p>
                   )}
-                </div><br />
 
-                {/* Secondary Skills Section */}
-                {/* <div className="mb-2 relative">
-                  <h3 className="text-lg font-bold">Secondary Skills</h3>
-                  <div className="absolute top-0 right-0 flex space-x-2 z-10 text-black">
-                    {userData && userData.skillList && Array.isArray(userData.skillList) && userData.skillList
-                      .filter(skill => skill.skillType === "SECONDARY")
-                      .map((secondarySkill, index) => (
-                        <svg
-                          key={secondarySkill.id}
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4 inline-block cursor-pointer"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          onClick={() => handleEditClick('secondary', secondarySkill.id)} // Pass the skill id to handleEditClick
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.536c0-.894.296-1.736.856-2.407l3.536-3.536a2.5 2.5 0 013.536 0z" />
-                        </svg>
-                      ))
-                    }
-                  </div>
-                  {userData && userData.skillList && Array.isArray(userData.skillList) ? (
-                    userData.skillList
-                      .filter(skill => skill.skillType === "SECONDARY")
-                      .map((secondarySkill, index) => (
-                        <ul key={index} className="list-disc list-inside">
-                          {Array.isArray(secondarySkill.skills) && secondarySkill.skills.length > 0 ? (
-                            secondarySkill.skills.map((skill, idx) => (
-                              <li key={idx} className="flex items-center">
-                                <span className="text-base">{skill}</span>
-                              </li>
-                            ))
-                          ) : (
-                            <p className="text-sm">No secondary skills available.</p>
-                          )}
-                        </ul>
-                      ))
-                  ) : (
-                    <p className="text-sm">No secondary skills available.</p>
-                  )}
-                </div> */}
-
+                  {/* Single common edit SVG icon for the entire Skills section */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 cursor-pointer text-black absolute top-0 right-0 m-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    onClick={() => handleEditClick('skills', userData.skillList.find(skill => skill.skillType === 'PRIMARY')?.id)} // Pass the correct id based on skillType
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.536c0-.894.296-1.736.856-2.407l3.536-3.536a2.5 2.5 0 013.536 0z" />
+                  </svg>
+                </div>
               </div>
-              {/* End Skills Section */}
-
-
               {/* Summary Section */}
               <div className="flex-1 md:w-full border border-gray-300 hover:shadow-xl p-8 bg-white relative overflow-y-auto custom-scrollbar" style={{ maxHeight: '400px' }}>
                 <div className="absolute top-2 right-2 flex space-x-2 z-10 text-black">
@@ -755,9 +735,13 @@ function SummaryDetail() {
       <ModalLanguage
         isOpen={isLanguageModalOpen}
         onClose={handleCloseModal}
-        onSave={(handleLanguageSave) => handleLanguageSave({ ...data, languages: updatedLanguages })}
-        data={userData.languages}
+        // onSave={(handleLanguageSave) => handleLanguageSave({ ...data, languages: updatedLanguages })}
+        //data={userData.languages}
+        selectedLanguageId={selectedLanguageId}
+        selectedLanguages={selectedLanguages}
         userId={userId}
+        id={selectedLanguageId}
+      // id={selectedLanguageId} // Pass the selected ID
       //index={index} 
       /> {/* Pass language data */}
 
@@ -765,11 +749,13 @@ function SummaryDetail() {
         isOpen={isSkillModalOpen}
         onClose={handleCloseModal}
         selectedSkillsId={selectedSkillsId}
-        selectedSkillType={selectedSkillType}
+        // selectedSkillType={selectedSkillType}
+        selectedSkills={selectedSkills}
         //onSave={handleSkillSave}
         //data={userData.skills} // Pass the skills data
         userId={userId}
         id={selectedSkillsId} // Pass the selected ID
+        initialSelectedSkillType={selectedSkillType}
       />
       <ModalCertification
         isOpen={isCertificationModalOpen}

@@ -11,6 +11,8 @@ import Template8 from './resumetemplates/template8';
 import Template9 from './resumetemplates/template9';
 import UserDetails from './resumetemplates/UserDetails';
 import TemplateLoader from './components/TemlateLoader';
+import ProfilePage from './components/ProfilePage';
+import ProfileSection from './components/ProfileSection';
 
 function App() {
   return (
@@ -26,7 +28,9 @@ function App() {
            <Route path="/template-8" element={<Template8 />} />
            <Route path="/template-9" element={<Template9 />} />
            <Route path="/template-loader" element={<TemplateLoader />} />
-           <Route path="/template-data" element={<UserDetails />} />
+              <Route path="/template-data" element={<UserDetails />} />
+              <Route path="profile-detail" element={<ProfilePage />} />
+              <Route path="summary-detail" element={<ProfileSection />} /> 
          </Routes>
          {/* <Deatils/> */}
       </div>

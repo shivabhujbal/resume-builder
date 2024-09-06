@@ -39,7 +39,7 @@ useEffect(() => {
   };
 //For Editing data PUT API
   const handleSubmit = async (event) => {
-    event.preventDefault();
+   // event.preventDefault();
     try {
       await updateBasicDetails(userId, userData);
       onSave(userData); // Call the onSave callback if provided
