@@ -13,12 +13,13 @@ import UserDetails from './resumetemplates/UserDetails';
 import TemplateLoader from './components/TemlateLoader';
 import ProfilePage from './components/ProfilePage';
 import ProfileSection from './components/ProfileSection';
+import Template13 from './resumetemplates/template13';
 
 function App() {
   return (
       <div className="App">
          <Routes>
-          <Route path="/" element={<TemplateSelector />} />
+          {/* <Route path="/" element={<TemplateSelector />} />
            <Route path="/basic-details" element={<BasicDetail />} />
            <Route path="/education-details" element={<EductionDetail />} />
            <Route path="/experience-details" element={<ExperienceDetils/>} />
@@ -30,7 +31,9 @@ function App() {
            <Route path="/template-loader" element={<TemplateLoader />} />
               <Route path="/template-data" element={<UserDetails />} />
               <Route path="profile-detail" element={<ProfilePage />} />
-              <Route path="summary-detail" element={<ProfileSection />} /> 
+              <Route path="summary-detail" element={<ProfileSection />} />   */}
+              <Route path="template-13" element={<Template13 />} />
+              <Route path="/template-loader" element={<TemplateLoader />} />
          </Routes>
          {/* <Deatils/> */}
       </div>

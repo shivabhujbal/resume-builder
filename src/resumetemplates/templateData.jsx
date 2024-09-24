@@ -1,122 +1,82 @@
 // src/resumeData.js
 
 const templateData = {
-  profileImage: "https://example.com/profile-picture.jpg",
-  userId: "1",
-  firstname: "John",
-  lastname: "Doe",
-  profession: "Full Stack Developer",
-  city: "New York",
-  country: "USA",
-  phone: "9999999999",
-  email: "john.doe@example.com",
-  linkedIn: "https://www.linkedin.com/in/johndoesdasdasdasdasda",
-  GitHub: "https://github.com/johndoe",
-  
-  education: [
-    {
-      EducationID: "edu1",
-      sclName: "Harvard University",
-      sclLocation: "Cambridge, MA",
-      degree: "Bachelor's",
-      fieldOfStudy: "Computer Science",
-      gradeYear: "May 2020"
-    },
-    {
-      EducationID: "edu2",
-      sclName: "Stanford University",
-      sclLocation: "Stanford, CA",
-      degree: "Master's",
-      fieldOfStudy: "Software Engineering",
-      gradeYear: "May 2022"
-    },
-    {
-      EducationID: "edu2",
-      sclName: "Stanford University",
-      sclLocation: "Stanford, CA",
-      degree: "Master's",
-      fieldOfStudy: "Software Engineering",
-      gradeYear: "May 2022"
-    },
-    // Add more education entries here
-  ],
-
-  experience: [
-    {
-      title: "Full Stack Developer",
-      company: "Tech Innovations Inc.",
-      location: "San Francisco, CA",
-      dateRange: "June 2022 - september 2024",
-      responsibilities: [
-        "Developed and maintained scalable web applications using React and Node.js.",
-        "Led a team of developers to deliver high-quality software solutions."
-      ]
-    },
-    {
-      title: "Software Engineer Intern",
-      company: "Innovative Solutions Ltd.",
-      location: "San Jose, CA",
-      dateRange: "June 2021 - February 2021",
-      responsibilities: [
-        "Assisted in the development of new features and bug fixes for internal tools.",
-        "Participated in code reviews and contributed to team discussions.",
-      ]
-    },
-    // Add more job entries here
-  ],
-  project: [
-    {
-      projectRole: "Full Stack Developer",
-      projectTitle: "Employee Management System",
-      techstack: "Angular, Bootstrap, Spring, Spring Boot, Hibernate, MySQL",
-      projectLink: "https://www.linkedin.com/in/johndoesdasdasdasdasda",
-      description: [
-        "Developed a web application for efficient employee management, including record-keeping, attendance tracking, and task assignment.",
-        "Improved productivity and communication within the organization."
-      ]
-    },
-    {
-      projectRole: "Full Stack Developer",
-      projectTitle: "Employee Management System",
-      techstack: "Angular, Bootstrap, Spring, Spring Boot, Hibernate, MySQL",
-      projectLink: "https://www.linkedin.com/in/johndoesdasdasdasdasda",
-      description: [
-        "Developed a web application for efficient employee management, including record-keeping, attendance tracking, and task assignment.",
-        "Improved productivity and communication within the organization.",
-      ]
-    },
-  ],
-
-  skills: {
-    primaryList: [
-      "JavaScript",
-      "React",
-      "Node.js",
-      "Express.js",
+    profileImage: "https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_1280.png",
+    userId: "user123",
+    firstname: "Praveen",
+    lastname: "vancharla",
+    profession: "Software Engineer",
+    city: "HYD",
+    country: "India",
+    phone: "123-456-789",
+    email: "Praveen@gmail.com",
+    linkedIn: "https://www.linkedin.com",
+    GitHub: "https://github.com",
+    
+    education: [
+      {
+        EducationID: "edu1",
+        sclName: "Avanthi pg and research acadamy",
+        sclLocation: "JNTUH",
+        degree: "Master's",
+        fieldOfStudy: "MBA",
+        gradeYear: "June 2020"
+      }
+      // Add more education entries here
     ],
-    secondaryList: [
-      "HTML",
-      "CSS",
-      "SQL",
-      "GraphQL",
-      "Docker",
-      "AWS",
-      "Git"
-    ]
-  },
-
-  certifications: [
-    "AWS Certified Solutions Architect",
-    "Certified Kubernetes Administrator",
-  ],
-
-  languages: [
-    "English (Native)",
-    "French (Intermediate)",
-    "German (Basic)",
-  ],
-
-  summary: `Enthusiastic Full Stack Developer with 3+ years of experience in building modern web applications and backend systems. Adept at collaborating with teams to deliver high-quality solutions and drive continuous improvement.`
-};
-
-export default templateData;
+  
+    experience: [
+      {
+        title: "Software Engineer",
+        company: "Numetry Technology",
+        location: "Pune, Maharashtra",
+        dateRange: "July 2024 - Present",
+        responsibilities: [
+          "Developed and maintained web applications using React and Node.js.",
+          "Collaborated with cross-functional teams to design and implement new features."
+        ]
+      }
+      // Add more job entries here
+    ],
+  
+    skills: 
+        ['JavaScript', 'React.js', 'Node.js',
+        'Python', 'Django', 'Docker']
+    
+    ,
+  
+    certifications: [
+      "Certified web developer",
+      "React Developer Certification"
+    ],
+  
+    languages: [
+      "English (Native)",
+      "Telugu",
+      "Hindi",
+      "Marathi"
+    ],
+  
+    summary: `Motivated, proactive, and hands-on developer
+     with 5+ years' experience developing and managing 
+     information systems for software development and cloud-based.`,
+  
+    projects: [
+      {
+        title: "Project Management System",
+        description: "Developed a web-based project management system using React, Node.js, and MongoDB.",
+        technologies: ["React", "Node.js", "MongoDB"],
+        link: "https://github.com/username/project-management-system"
+      },
+      {
+        title: "E-commerce Platform",
+        description: "Built a full-featured e-commerce platform with product management, shopping cart, and payment integration.",
+        technologies: ["React", "Redux", "Firebase"],
+        link: "https://github.com/username/e-commerce-platform"
+      }
+      // Add more projects here
+    ],
+     declaration: 'I hereby declare that the information provided is true to the best of my knowledge and belief.'
+  };
+  
+  export default templateData;

@@ -13,6 +13,21 @@ import Template9 from '../resumetemplates/template9';
 import Template10 from '../resumetemplates/template10';
 import Template11 from '../resumetemplates/template11';
 import Template12 from '../resumetemplates/template12';
+import Resume1 from '../resumetemplates/Resume1';
+import Template13 from '../resumetemplates/template13';
+import Template14 from '../resumetemplates/template14';
+import templateData from '../resumetemplates/templateData';
+import Template15 from '../resumetemplates/template15';
+import Template16 from '../resumetemplates/template16';
+import Template17 from '../resumetemplates/template17';
+import Template18 from '../resumetemplates/template18';
+import Template19 from '../resumetemplates/template19';
+import Template20 from '../resumetemplates/template20';
+import Template21 from '../resumetemplates/template21';
+import Template22 from '../resumetemplates/template22';
+import Template23 from '../resumetemplates/template23';
+import Template24 from '../resumetemplates/template24';
+import Template25 from '../resumetemplates/template25';
 
 const TemplateLoader = () => {
   const [userData, setUserData] = useState(null);
@@ -77,21 +92,35 @@ const TemplateLoader = () => {
     <div className="mt-5 mx-auto  ">
       <div className="shadow-md rounded-lg ">
         <h1 className="text-2xl font-bold text-center mb-4">
-          {userData.besicDetails.first_name} {userData.besicDetails.last_name}s Resume
+        {userData.besicDetails.first_name} {userData.besicDetails.last_name} Resume
         </h1>
         <div id="template-to-pdf">
-          <Template1 userData={userData} />
-          <Template2 userData={userData} />
+          {/*<Template1 userData={userData} />
+           <Template2 userData={userData} />
           <Template3 userData={userData} />
           <Template4 userData={userData} />
           <Template5 userData={userData} />
           <Template6 userData={userData} />
           <Template7 userData={userData} />
           <Template8 userData={userData} /> 
-          <Template9 userData={userData} /> 
-          <Template10 userData={userData} />
-          {/* <Template11 userData={userData} /> */}
-          {/* <Template12 userData={userData} /> */}
+          <Template9 userData={userData} />*/} 
+          {/* <Template10 userData={userData} />  */}
+          {/* <Resume1 userData={userData}/> */}
+          {/* <Template11 userData={userData} />
+          <Template12 userData={userData} /> */}
+          {/* <Template13 userData={userData} /> */}
+          {/* <Template14 userData={userData} /> */}
+          {/* <Template15 userData={userData} /> */}
+          {/* <Template16 userData={userData} /> */}
+          {/* <Template17 userData={userData} /> */}
+          {/* <Template18 userData={userData} /> */}
+          {/* <Template19 userData={userData} /> */}
+          {/* <Template20 userData={userData} /> */}
+          {/* <Template21 userData={userData} /> */}
+          {/* <Template22 userData={userData} /> */}
+          {/* <Template23 userData={userData} /> */}
+          {/* <Template24 userData={userData} /> */}
+          <Template25 userData={userData} />
         </div>
         <div className="text-center mt-4  ">
         <button
