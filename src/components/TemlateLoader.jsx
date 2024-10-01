@@ -13,8 +13,6 @@ import Template9 from '../resumetemplates/template9';
 import Template10 from '../resumetemplates/template10';
 import Template11 from '../resumetemplates/template11';
 import Template12 from '../resumetemplates/template12';
-import Template13 from '../resumetemplates/template13';
-import Template15 from '../resumetemplates/template15';
 
 const TemplateLoader = () => {
   const [userData, setUserData] = useState(null);
@@ -79,10 +77,10 @@ const TemplateLoader = () => {
     <div className="mt-5 mx-auto  ">
       <div className="shadow-md rounded-lg ">
         <h1 className="text-2xl font-bold text-center mb-4">
-          {userData.besicDetails.first_name} {userData.besicDetails.last_name}s Resume
+        {userData.besicDetails.first_name} {userData.besicDetails.last_name} Resume
         </h1>
         <div id="template-to-pdf">
-          {/* <Template1 userData={userData} />
+          <Template1 userData={userData} />
           <Template2 userData={userData} />
           <Template3 userData={userData} />
           <Template4 userData={userData} />
@@ -91,11 +89,9 @@ const TemplateLoader = () => {
           <Template7 userData={userData} />
           <Template8 userData={userData} /> 
           <Template9 userData={userData} /> 
-          <Template10 userData={userData} /> */}
+          <Template10 userData={userData} />
           {/* <Template11 userData={userData} /> */}
           {/* <Template12 userData={userData} /> */}
-          <Template13 userData={userData} />
-          {/* <Template15 userData={userData} /> */}
         </div>
         <div className="text-center mt-4  ">
         <button
