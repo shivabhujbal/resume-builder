@@ -81,7 +81,8 @@ const TemplateLoader = () => {
         </h1>
         <div id="template-to-pdf">
           <Template1 userData={userData} />
-          <Template2 userData={userData} />
+          {/* <Template11 userData={userData} /> */}
+          {/* <Template2 userData={userData} />
           <Template3 userData={userData} />
           <Template4 userData={userData} />
           <Template5 userData={userData} />
@@ -89,7 +90,7 @@ const TemplateLoader = () => {
           <Template7 userData={userData} />
           <Template8 userData={userData} /> 
           <Template9 userData={userData} /> 
-          <Template10 userData={userData} />
+          <Template10 userData={userData} /> */}
           {/* <Template11 userData={userData} /> */}
           {/* <Template12 userData={userData} /> */}
         </div>

@@ -13,11 +13,17 @@ import UserDetails from './resumetemplates/UserDetails';
 import TemplateLoader from './components/TemlateLoader';
 import ProfilePage from './components/ProfilePage';
 import ProfileSection from './components/ProfileSection';
+import HomePage from './components/Home';
+import SignupForm from './components/signup';
+import Login from './components/login';
 
 function App() {
   return (
       <div className="App">
          <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignupForm />} />
           <Route path="/" element={<TemplateSelector />} />
            <Route path="/basic-details" element={<BasicDetail />} />
            <Route path="/education-details" element={<EductionDetail />} />
