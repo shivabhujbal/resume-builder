@@ -8,4 +8,5 @@
 /* Custom Styles */
 body {
   font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom right, white, #fef9c38a, #fecdd3); /* from white, via yellow-50 to pink-100 */
 }

@@ -2,6 +2,27 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { useNavigate } from 'react-router-dom';
 import { components } from 'react-select';
+import resume1 from '../assets/imageSelector/resume1.png';
+import resume2 from '../assets/imageSelector/resume2.png';
+import resume3 from '../assets/imageSelector/resume3.png';
+import resume4 from '../assets/imageSelector/resume4.png';
+import resume5 from '../assets/imageSelector/resume5.png';
+import resume6 from '../../public/image/resume1.png';
+import resume7 from '../../public/image/resume2.png';
+import resume8 from '../../public/image/resume3.png';
+import resume9 from '../../public/image/resume4.png';
+import resume10 from '../../public/image/resume5.png';
+import resume11 from '../../public/image/resume6.png';
+import resume12 from '../../public/image/resume7.png';
+import resume13 from '../../public/image/resume8.png';
+import resume14 from '../../public/image/resume9.png';
+import resume15 from '../../public/image/resume1.png';
+import resume16 from '../../public/image/resume2.png';
+import resume17 from '../../public/image/resume3.png';
+import resume18 from '../../public/image/resume4.png';
+import resume19 from '../../public/image/resume5.png';
+import resume20 from '../../public/image/resume8.png';
+
 
 const TemplateSelector = () => {
   const [headshotFilter, setHeadshotFilter] = useState(null);
@@ -10,12 +31,29 @@ const TemplateSelector = () => {
   const navigate = useNavigate();
 
   const templates = [
-    { id: 1, name: 'Template 1', image: '/images/image.png', headshot: 'with', columns: '1' ,component:"<Template1/>"},
-    { id: 2, name: 'Template 2', image: '/images/image.png', headshot: 'without', columns: '2' },
-    { id: 3, name: 'Template 3', image: '/images/image.png', headshot: 'without', columns: '2' },
-    { id: 4, name: 'Template 4', image: '/images/image.png', headshot: 'without', columns: '2' },
-    { id: 5, name: 'Template 5', image: '/images/image.png', headshot: 'without', columns: '2' },
+    { id: 1, name: 'Template 1', image: resume1, headshot: 'with', columns: '1' ,component:"<Template1/>"},
+    { id: 2, name: 'Template 2', image: resume2, headshot: 'without', columns: '2' },
+    { id: 3, name: 'Template 3', image: resume3, headshot: 'without', columns: '2' },
+    { id: 4, name: 'Template 4', image: resume4, headshot: 'without', columns: '2' },
+    { id: 5, name: 'Template 5', image: resume5, headshot: 'without', columns: '2' },
+    { id: 6, name: 'Template 6', image: resume6, headshot: 'without', columns: '2' },
+    { id: 7, name: 'Template 7', image: resume7, headshot: 'without', columns: '2' },
+    { id: 8, name: 'Template 8', image: resume8, headshot: 'without', columns: '2' },
+    { id: 9, name: 'Template 9', image: resume9, headshot: 'without', columns: '2' },
+    { id: 10, name: 'Template 10', image: resume10, headshot: 'without', columns: '2' },
+    { id: 11, name: 'Template 11', image: resume11, headshot: 'without', columns: '2' },
+    { id: 12, name: 'Template 12', image: resume12, headshot: 'without', columns: '2' },
+    { id: 13, name: 'Template 13', image: resume13, headshot: 'without', columns: '2' },
+    { id: 14, name: 'Template 14', image: resume14, headshot: 'without', columns: '2' },
+    { id: 15,name: 'Template 15', image: resume15, headshot: 'without', columns: '2' },
+    { id: 16, name: 'Template 16', image: resume16, headshot: 'without', columns: '2' },
+    { id: 17, name: 'Template 17', image: resume17, headshot: 'without', columns: '2' },
+    { id: 18, name: 'Template 18', image: resume18, headshot: 'without', columns: '2' },
+    { id: 19, name: 'Template 19', image: resume19, headshot: 'without', columns: '2' },
+    { id: 20, name: 'Template 20', image: resume20, headshot: 'without', columns: '2' },
+    
   ];
+  
 
   const handleImageClick = (id) => {
     setSelectedTemplate(id === selectedTemplate ? null : id);
@@ -27,7 +65,7 @@ const TemplateSelector = () => {
   }
 
   return (
-    <div className="container w-[1120px] mt-5 mb-5">
+    <div className="container w-[1120px] mt-5 mb-5 ">
       <h1 className="text-4xl font-semibold leading-tight text-center mb-4">Choose from our best templates for Job Seekers</h1>
       <p className="text-center  font-semibold mb-12  border-t-2 border-indigo-900">You can always change your template later.</p>
       <div className="flex">
@@ -87,7 +125,7 @@ const TemplateSelector = () => {
                 className={`border rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-110 ${selectedTemplate === template.id ? 'border-blue-500 shadow-lg' : 'border-gray-300'} `}
                 onClick={() => handleImageClick(template.id)}
               >
-                <img src={template.image} alt={template.name} className="w-full h-56 object-cover transition-transform transform hover:scale-110" />
+                <img src={template.image} alt={template.name} className="w-full h-fit object-cover transition-transform transform hover:scale-110" />
                 <div className="p-2">
                   <input
                     type="checkbox"

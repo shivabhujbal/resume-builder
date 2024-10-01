@@ -617,7 +617,7 @@ function SummaryDetail() {
                     userData.skillList
                       .filter(skill => skill.skillType === "PRIMARY")
                       .map((primarySkill, index) => (
-                        <ul key={index} className="list-disc list-inside">
+                        <div key={index} className="list-disc list-inside">
                           {Array.isArray(primarySkill.skills) && primarySkill.skills.length > 0 ? (
                             primarySkill.skills.map((skill, idx) => (
                               <li key={idx} className="flex items-center">
