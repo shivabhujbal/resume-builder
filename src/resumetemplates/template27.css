@@ -1,0 +1,214 @@
+/* Resume Container */
+.resume-container {
+    max-width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    display: flex;
+    background-color: #787a7c; /* Soft light blue background */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Soft shadow */
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add smooth hover effect */
+  }
+  
+  .resume-container:hover {
+    transform: scale(1.02); /* Slight zoom effect */
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+  }
+  
+  /* Flexbox Layout */
+  .resume-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 20px; /* Added padding for better spacing */
+  }
+  
+  /* Left Section */
+  .resume-left {
+    width: 30%;
+    background: linear-gradient(135deg, #2e3b4e, #1a2534); /* Gradient for added depth */
+    color: #ffffff;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 2px solid #ffcc00; /* Accent border */
+  }
+  
+  /* Right Section */
+  .resume-right {
+    width: 70%;
+    background-color: #ffffff;
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid #ffcc00; /* Accent border */
+  }
+  
+  /* Profile Section */
+  .profile-section {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #f0f4f8;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for profile image */
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .profile-image:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Hover effect */
+  }
+  
+  .profile-name {
+    font-size: 24px; /* Increased font size */
+    font-weight: bold;
+    color: #ffcc00;
+    margin-bottom: 5px;
+    text-transform: uppercase; /* Capitalize name */
+  }
+  
+  .profession {
+    font-size: 16px;
+    font-weight: 300;
+    color: #ffffff;
+  }
+  
+  /* Contact Information */
+  .location,
+  .contact-info {
+    font-size: 14px;
+    margin-top: 10px;
+    color: #b0c4de;
+    text-transform: uppercase; /* Added text transformation */
+  }
+  
+  /* Social Links */
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ffffff; /* Subtle border to separate section */
+  }
+  
+  .social-links a {
+    color: #ffcc00;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .social-links a:hover {
+    color: #ffffff; /* Hover effect for social links */
+  }
+  
+  /* Section Titles */
+  h2 {
+    font-size: 22px; /* Slightly larger font size */
+    font-weight: bold;
+    margin-bottom: 15px;
+    color:black;
+    border-bottom: 3px solid #ffcc00;
+    padding-bottom: 5px;
+    text-transform: uppercase; /* Consistency across sections */
+  }
+  
+  /* Skills Section */
+  .skills-section ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 2px;
+  }
+  
+  .skill-item {
+    background-color: #ffcc00;
+    padding: 10px ; /* Increased padding for more emphasis */
+    border-radius: 8px; /* Softer corners */
+    color: #2e3b4e;
+
+    font-size: 14px;
+    list-style-type:none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .skill-item:hover {
+    background-color: #ffdd33; /* Slight hover effect */
+  }
+  
+  /* Right Section Content (Education, Experience, Projects) */
+  .education-section,
+  .experience-section,
+  .projects-section {
+    margin-top: 30px;
+  }
+  
+  .education-section h3,
+  .experience-section h3,
+  .projects-section h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2e3b4e;
+  }
+  
+  .education-section p,
+  .experience-section p,
+  .projects-section p {
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 10px;
+  }
+  
+  /* Project Links */
+  .projects-section a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+  
+  .projects-section a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .resume-content {
+      flex-direction: column;
+    }
+  
+    .resume-left,
+    .resume-right {
+      width: 100%;
+      padding: 15px;
+    }
+  }
+  
+  /* Print-specific adjustments */
+  @media print {
+    .resume-container {
+      background-color: white;
+      box-shadow: none;
+    }
+  
+    @page {
+      size: A4;
+      margin: 10mm;
+    }
+  }
+  
