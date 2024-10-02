@@ -1,0 +1,161 @@
+/* src/Resume.css */
+
+/* General Layout */
+.resume-wrapper {
+    display: flex;
+    max-width: 1200px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Left Container */
+  .left-container {
+    width: 35%;
+    background: linear-gradient(135deg, #2c3e50, #4a90e2);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+  }
+  
+  .right-container {
+    width: 65%;
+    padding: 30px;
+  }
+  
+  /* Resume Header */
+  .resume-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .resume-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #f0f4f7;
+    letter-spacing: 1px;
+  }
+  
+  .resume-header p {
+    font-size: 1.2rem;
+    color: #d4e1f5;
+    margin-bottom: 5px;
+  }
+  
+  .resume-header p:last-child {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #c0d6f7;
+  }
+  
+  /* Resume Sections */
+  .resume-section {
+    margin-bottom: 25px;
+  }
+  
+  .resume-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #34495e;
+    position: relative;
+  }
+  
+  .resume-section h2::after {
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 50px;
+    height: 2px;
+    background-color: #2980b9;
+  }
+  
+  .resume-section p,
+  .resume-section ul {
+    font-size: 1.1rem;
+    color: #5f6a7d;
+  }
+  
+  /* Skills Section */
+  .skills-section ul {
+    list-style-type: square;
+    margin-left: 20px;
+    line-height: 1.6;
+  }
+  
+  /* Enhanced Languages Section */
+  .languages-section {
+    background-color: #eaf4ff;
+    color: #34495e;
+    padding: 20px;
+    margin: 5px 0px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(46, 134, 222, 0.1);
+  }
+  
+  .languages-section h2 {
+    color: #2980b9;
+  }
+  
+  .languages-section ul {
+    list-style-type: circle;
+    margin-left: 25px;
+    line-height: 1.8;
+    color: #5f6a7d;
+  }
+  
+  /* Experience and Projects */
+  .job,
+  .project {
+    margin-bottom: 20px;
+  }
+  
+  .job h3,
+  .project h3 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+  }
+  
+  .job p,
+  .project p {
+    font-size: 1.1rem;
+    color: #5f6a7d;
+  }
+  
+  .job em,
+  .project em {
+    color: #2980b9;
+    font-weight: 500;
+  }
+  
+  .job {
+    border-left: 4px solid #2980b9;
+    padding-left: 15px;
+    margin-bottom: 20px;
+  }
+  
+  /* Project Section */
+  .project {
+    background-color: #eaf4ff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(46, 134, 222, 0.1);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .resume-wrapper {
+      flex-direction: column;
+      padding: 20px;
+    }
+  
+    .left-container,
+    .right-container {
+      width: 100%;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+  }
