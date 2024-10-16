@@ -1,8 +1,12 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom'
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 const Footer = () => {
+
+  const {isLoggedIn} = useSelector((state) => state.auth);
+
   const pageLinks = [
     'Resume Builder',
     'Templates',
@@ -24,8 +28,14 @@ const Footer = () => {
 
   const navigate = useNavigate()
 
-  const handleLoginClick = () => {
-    navigate('/login')
+  const handleCreateClick = () => {
+    if (isLoggedIn) {
+      navigate('/template-selector');
+    }
+    else{
+      navigate('/login');
+    }
+
   }
   return (
     <footer className="bg-zinc-800 text-white py-8">
@@ -48,7 +58,7 @@ const Footer = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
-              onClick={handleLoginClick}
+              onClick={handleCreateClick}
             >
               Create Resume
             </motion.button>

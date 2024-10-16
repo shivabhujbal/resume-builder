@@ -5,6 +5,9 @@ import Sidebar from "./Sidebar";
 import { addEducation } from "../services/EducationService";
 
 function EducationDetail() {
+  let userId = localStorage.getItem('userId');
+  userId = userId ? parseInt(userId, 10) : null;
+
   const [formData, setFormData] = useState({
     schoolName: "",
     schoolLocation: "",
@@ -12,10 +15,10 @@ function EducationDetail() {
     fieldOfStudy: "",
     month: "",
     graduationYear: "",
-    userId: "3",
+    userId: userId||null,
     isGapTaken: false,
     gapYear: "",
-    certifications: [],
+    certification: [],
   });
 
   const [newCertification, setNewCertification] = useState("");
@@ -143,7 +146,7 @@ function EducationDetail() {
     if (newCertification.trim() !== "") {
       setFormData((prevData) => ({
         ...prevData,
-        certifications: [...prevData.certifications, newCertification],
+        certification: [...prevData.certification, newCertification],
       }));
       setNewCertification(""); // Clear the input field after adding
     }
@@ -152,7 +155,7 @@ function EducationDetail() {
   const handleRemoveCertification = (index) => {
     setFormData((prevData) => ({
       ...prevData,
-      certifications: prevData.certifications.filter((_, i) => i !== index),
+      certification: prevData.certification.filter((_, i) => i !== index),
     }));
   };
 
@@ -191,20 +194,22 @@ function EducationDetail() {
     if (validate()) {
       console.log(formData);
 
-      const response = await addEducation(formData);
-      console.log("res", response);
+    const response = await addEducation(formData);
+    console.log("res", response);
 
-      alert("Education Details Submitted");
+    alert("Education Details Submitted");
 
-      setFormData({
-        schoolName: '',
-        schoolLocation: '',
-        degree: '',
-        fieldOfStudy: '',
-        month: '',
-        graduationYear: '',
-        certifications:[],
-        isGapTaken:false,
+    setFormData({
+    schoolName: "",
+    schoolLocation: "",
+    degree: "",
+    fieldOfStudy: "",
+    month: "",
+    graduationYear: "",
+    userId: userId||null,
+    isGapTaken: false,
+    gapYear: "",
+    certification: [],
 
       });
     }
@@ -214,7 +219,6 @@ function EducationDetail() {
 
   const handleNextClick = async() => {
     if (validate()) {
-      console.log(formData);
       const response = await addEducation(formData);
       console.log("res", response);
 
@@ -410,19 +414,19 @@ function EducationDetail() {
                 </div>
               )}
 
-              {/* Certifications */}
+              {/* Certification */}
               <div className="col-span-2 sm:col-span-1">
                 <label className="block mb-1 font-semibold text-gray-700">
-                  Certifications
+                  Certification
                 </label>
                 <div className="flex space-x-2">
                   <input
                     type="text"
-                    name="certifications"
+                    name="certification"
                     placeholder="e.g. Certified Java Developer"
                     value={newCertification}
                     onChange={handleCertificationChange}
-                    className={`mt-1 h-fit block w-full px-3 py-2 bg-white border rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.certifications ? "border-red-500" : "border-gray-300"}`}
+                    className={`mt-1 h-fit block w-full px-3 py-2 bg-white border rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.certification ? "border-red-500" : "border-gray-300"}`}
                   />
                   <button
                     type="button"
@@ -432,10 +436,10 @@ function EducationDetail() {
                     Add
                   </button>
                 </div>
-                {/* Display the list of added certifications */}
-                {formData.certifications.length > 0 && (
+                {/* Display the list of added certification */}
+                {formData.certification.length > 0 && (
                   <ul className="mt-2">
-                    {formData.certifications.map((cert, index) => (
+                    {formData.certification.map((cert, index) => (
                       <li
                         key={index}
                         className="flex justify-between items-center"

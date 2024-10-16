@@ -9,18 +9,24 @@ import { addBasicDetails} from '../services/BasicDetailService';
 function BasicDetail() {
   // Initialize the useNavigate hook
   const navigate = useNavigate();
+  let userId = localStorage.getItem('userId');
+  userId = userId ? parseInt(userId, 10) : null;
+  
 
   // State to manage form fields
   const [formData, setFormData] = useState({
+    userId:userId||null,
     firstName: '',
     surname: '',
     profession: '',
     city: '',
     country: '',
+    summary:'',
     phone: '',
     email: '',
     linkedin: '',
     website: '',
+    profileImage: null,
   });
 
   // State to manage form errors
@@ -47,8 +53,12 @@ function BasicDetail() {
 
   // Handler to update form data state
   const handleInputChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
+    const { id, value, type, files } = e.target;
+    if (type === 'file') {
+      setFormData({ ...formData, [id]: files[0] }); // For file inputs
+    } else {
+      setFormData({ ...formData, [id]: value });
+    }
   };
 
   // Validation function
@@ -94,8 +104,9 @@ function BasicDetail() {
   const handleNextClick = async () => {
     if (validateForm()) {
       const result = await addBasicDetails(formData); // Use the service
-
-      if (result.success) {
+      console.log(result);
+      
+      if (result) {
         navigate('/education-details');
       } else {
         console.error(result.error);
@@ -104,7 +115,7 @@ function BasicDetail() {
   };
    
   const handleBackClick = () => {
-    navigate('/'); // Navigate back to the home page
+    navigate('/template-selector'); // Navigate back to the home page
   };
 
   return (
@@ -157,6 +168,7 @@ function BasicDetail() {
                   <p className="text-red-500 text-xs mt-1">{formErrors.firstName}</p>
                 )}
               </div>
+
               <div>
                 <label
                   htmlFor="surname"
@@ -212,9 +224,24 @@ function BasicDetail() {
                   placeholder="Write a short summary about yourself..."
                   className="mt-1 block w-[675px] h-24 px-3 pt-2 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   style={{ resize: 'none' }}
+                  value={formData.summary}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
+
+            {/* File input for profileImage */}
+  <div>
+    <label htmlFor="profileImage" className="block text-md font-semibold text-gray-700">
+      Profile Image
+    </label>
+    <input
+      type="file"
+      id="profileImage"
+      onChange={handleInputChange} // handle file input change
+      className="mt-1 block w-[675px] h-9 px-3 bg-white border border-gray-300 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    />
+  </div>
 
             <div className="flex gap-8">
               <div className="flex gap-4">
@@ -365,6 +392,7 @@ function BasicDetail() {
                 <button
                   type="button"
                   className="items-end h-fit py-3 px-5 border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  onClick={handleBackClick}
                 >
                   Back
                 </button>

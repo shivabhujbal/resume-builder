@@ -48,7 +48,10 @@ function SkillDetail() {
 
   const handleLanguageSuggestionClick = (language) => {
     if (language.trim()) {
-      const updatedLanguages = [...formData.languages.split(", ").map(lang => lang.trim()), language.trim()];
+      const updatedLanguages = formData.languages
+        ? [...new Set([...formData.languages.split(", ").map(lang => lang.trim()), language.trim()])]
+        : [language.trim()];
+      
       setFormData((prevFormData) => ({
         ...prevFormData,
         languages: updatedLanguages.join(", ")
@@ -70,29 +73,85 @@ function SkillDetail() {
     languages: ""
   });
 
-
-
   const skills = [
-    "Frontend Developer",
-    "Backend Developer",
-    "Full Stack Developer",
-    "Software Engineer",
-    "Data Analyst",
-    "Project Manager",
-    "Graphic Designer",
-    "UX Designer",
-    "Data Scientist",
-    "Quality Assurance Engineer",
-    "Node.js",
-    "Express.js",
-    "Django",
-    "Ruby on Rails",
-    "Spring Boot",
-    "ASP.NET",
-    "PHP",
-    "Java",
-    "C#",
+    // IT & Computer Science (keeping some for balance)
+    "Frontend Developer", "Backend Developer", "Full Stack Developer", "Software Engineer", "Data Analyst", 
+    "Project Manager", "Graphic Designer", "UX Designer", "Data Scientist", "Quality Assurance Engineer",
+    "Node.js", "Express.js", "Django", "Ruby on Rails", "Spring Boot", "ASP.NET", "PHP", "Java", "C#", 
+    "React", "Angular", "Vue.js", "Next.js", "Svelte", "Laravel", "Flask", "Go", "Kotlin", "Swift", 
+    "TypeScript", "JavaScript", "Python", "Rust", "Elixir", "Scala", "HTML", "CSS", "SASS", "Tailwind CSS", 
+    "SQL", "PostgreSQL", "MySQL", "MongoDB", "GraphQL", "Docker", "Kubernetes", "AWS", "Azure", "GCP", 
+    "Linux", "Terraform", "CI/CD", "Redis", "Jenkins", "Git", "Figma", "Adobe XD", "Sketch", "Blockchain",
+    
+    // Healthcare
+    "Registered Nurse", "Pharmacist", "Occupational Therapist", "Physical Therapist", "Radiologist", 
+    "Medical Laboratory Scientist", "Dentist", "Surgeon", "Paramedic", "Anesthesiologist", "Chiropractor", 
+    "Healthcare Administrator", "Dietitian", "Psychiatrist", "Veterinarian", "Medical Coder", "Phlebotomist", 
+    "Speech Pathologist", "Sonographer", "Optometrist", "Respiratory Therapist", "Genetic Counselor", 
+    "Public Health Educator", "Cardiologist", "Orthopedic Surgeon", "Pediatrician", "Neurologist", 
+    "Geriatric Care Manager", "Radiologic Technologist", "Oncologist", "Dermatologist",
+  
+    // Engineering (Non-IT)
+    "Mechanical Engineer", "Civil Engineer", "Electrical Engineer", "Chemical Engineer", "Aerospace Engineer", 
+    "Environmental Engineer", "Industrial Engineer", "Biomedical Engineer", "Nuclear Engineer", 
+    "Materials Scientist", "Marine Engineer", "Automotive Engineer", "Structural Engineer", "Geotechnical Engineer", 
+    "Petroleum Engineer", "Mining Engineer", "Surveyor", "Hydraulic Engineer", "Energy Engineer", 
+    "HVAC Engineer", "Transportation Engineer", "Robotics Engineer", "Acoustical Engineer", "Piping Engineer", 
+    "Wastewater Engineer", "Agricultural Engineer", "Instrumentation Engineer", "Control Systems Engineer", 
+    "Plumbing Engineer", "Railway Engineer", "Telecommunications Engineer",
+  
+    // Finance & Business
+    "Accountant", "Financial Analyst", "Investment Banker", "Stockbroker", "Actuary", "Tax Advisor", 
+    "Auditor", "Insurance Underwriter", "Risk Manager", "Loan Officer", "Budget Analyst", "Treasurer", 
+    "Mortgage Broker", "Venture Capitalist", "Portfolio Manager", "Claims Adjuster", "Quantitative Analyst", 
+    "Financial Planner", "Compliance Officer", "Bank Manager", "Wealth Manager", "Cost Estimator", 
+    "Real Estate Appraiser", "Payroll Specialist", "Corporate Treasurer", "Management Consultant", 
+    "Business Development Manager", "Financial Controller", "Chief Financial Officer", "Marketing Analyst",
+  
+    // Education
+    "High School Teacher", "Elementary School Teacher", "College Professor", "School Counselor", 
+    "Educational Administrator", "Special Education Teacher", "Instructional Coordinator", "Librarian", 
+    "Curriculum Developer", "Academic Advisor", "ESL Teacher", "Kindergarten Teacher", "Tutoring Specialist", 
+    "Reading Specialist", "School Psychologist", "STEM Educator", "Music Teacher", "Physical Education Teacher", 
+    "Art Teacher", "Language Instructor", "Vocational Teacher", "Educational Technologist", "Substitute Teacher", 
+    "Teacher's Aide", "School Principal", "Assistant Principal", "Education Policy Analyst", "Preschool Teacher", 
+    "Career Counselor", "Instructional Designer", "Training Specialist",
+  
+    // Manufacturing & Skilled Trades
+    "Welding Technician", "CNC Operator", "Machinist", "Electrician", "Plumber", "Carpenter", 
+    "Automotive Mechanic", "HVAC Technician", "Millwright", "Tool and Die Maker", "Sheet Metal Worker", 
+    "Boilermaker", "Pipefitter", "Fabricator", "Industrial Painter", "Forklift Operator", "Line Worker", 
+    "Maintenance Technician", "Assembly Line Worker", "Construction Laborer", "Heavy Equipment Operator", 
+    "Production Supervisor", "Quality Control Inspector", "Robotics Technician", "Manufacturing Engineer", 
+    "Industrial Mechanic", "Lathe Operator", "Metalworking Specialist", "Foundry Worker", "Assembler", 
+    "Power Plant Operator",
+  
+    // Agriculture & Environmental Science
+    "Agricultural Scientist", "Soil Scientist", "Hydrologist", "Forester", "Fishery Manager", 
+    "Wildlife Biologist", "Environmental Scientist", "Ecologist", "Conservation Officer", 
+    "Pest Control Specialist", "Agronomist", "Farm Manager", "Horticulturist", "Viticulturist", 
+    "Agricultural Equipment Operator", "Sustainability Consultant", "Ranger", "Greenhouse Manager", 
+    "Landscaper", "Irrigation Specialist", "Organic Farmer", "Beekeeper", "Agricultural Economist", 
+    "Environmental Health Officer", "Livestock Manager", "Animal Nutritionist", "Soil Conservationist", 
+    "Agricultural Engineer", "Organic Certification Specialist", "Composting Specialist", "Aquaculture Technician",
+  
+    // Arts & Entertainment
+    "Actor", "Musician", "Painter", "Sculptor", "Photographer", "Cinematographer", 
+    "Director", "Film Editor", "Writer", "Playwright", "Dancer", "Choreographer", 
+    "Music Producer", "Sound Engineer", "Video Game Designer", "Graphic Novelist", "Animator", 
+    "Art Critic", "Theater Technician", "Voice Actor", "Fashion Designer", "Set Designer", 
+    "Costume Designer", "Makeup Artist", "Tattoo Artist", "Museum Curator", "Art Teacher", 
+    "Art Dealer", "Gallery Manager", "Publicist", "Literary Agent",
+  
+    // Soft Skills
+    "Communication", "Problem-Solving", "Critical Thinking", "Leadership", "Teamwork", "Adaptability", 
+    "Time Management", "Creativity", "Emotional Intelligence", "Conflict Resolution", "Collaboration", 
+    "Decision Making", "Flexibility", "Empathy", "Attention to Detail", "Negotiation", "Public Speaking", 
+    "Stress Management", "Interpersonal Skills", "Self-Motivation", "Work Ethic", "Patience", 
+    "Listening", "Delegation", "Confidence", "Networking", "Persuasion", "Customer Service", 
+    "Goal-Oriented", "Organizational Skills"
   ];
+  
 
  
 
@@ -172,7 +231,10 @@ function SkillDetail() {
 
   const handleAddLanguage = () => {
     if (languageInput.trim()) {
-      const updatedLanguages = [...formData.languages.split(", ").map(lang => lang.trim()), languageInput.trim()];
+      const updatedLanguages = formData.languages
+        ? [...new Set([...formData.languages.split(", ").map(lang => lang.trim()), languageInput.trim()])]
+        : [languageInput.trim()];
+      
       setFormData((prevFormData) => ({
         ...prevFormData,
         languages: updatedLanguages.join(", ")

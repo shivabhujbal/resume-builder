@@ -30,8 +30,6 @@ function SummaryDetail() {
   const [isCertificationModalOpen, setCertificationModalOpen] = useState(null);
   const [education, setEducation] = useState({});
   const [basicDetailsData, setBasicDetails] = useState({});
-  //const [index, setIndex] = useState(0); 
-  const [userId, setUserId] = useState(1); // Assuming 1 is the initial userId
   const [selectedEducationId, setSelectedEducationId] = useState(null);
   const [selectedExperienceId, setSelectedExperienceId] = useState(null);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
@@ -42,6 +40,11 @@ function SummaryDetail() {
   const [selectedLanguages, setSelectedLanguages] = useState(''); // Initialize with a default value
 
   const navigate = useNavigate();
+
+  const userId = localStorage.getItem('userId');
+  // userId = userId ? parseInt(userId, 10) : null;
+
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -61,27 +64,7 @@ function SummaryDetail() {
   if (!userData) {
     return <div>Loading...</div>;
   }
-  // console.log(userData);
-  // console.log(userData.educationList.degree);
-  // console.log(userData.educationList.certification);
-  // console.log(userData.skillList.languages);
-  //console.log("Education", userData.educationList[0]);
-
-
-  /*const handleSaveEducation = (updatedEducation) => {
-    setEducation((prevEducation) => {
-      if (Array.isArray(prevEducation)) {
-        return prevEducation.map((item) =>
-          item.id === updatedEducation.id ? updatedEducation : item
-        );
-      }
-      return [updatedEducation]; // Fallback to a new array with updated data
-      console.log(updatedEducation);
-      setEducationModalOpen(false);
-    });
-    handleCloseModal();
-  };*/
-
+ 
   const handleModalSave = (updatedDetails) => {
     setBasicDetails(updatedDetails); // Update the state with new data
   };
@@ -174,55 +157,7 @@ function SummaryDetail() {
   };
   console.log("Summary UserData",userData);
 
-  // const handleEditClick = (section, id = null) => {
-  //   switch (section) {
-  //     case 'basicDetails':
-  //       setModalBasicDetailOpen(true);
-  //       break;
-
-  //     case 'experience':
-  //       console.log("Experience ID:", id);
-  //       setSelectedExperienceId(id);
-  //       setExperienceModalOpen(true);
-  //       break;
-
-  //     case 'projects':
-  //       console.log("Project ID:", id);
-  //       setSelectedProjectId(id);
-  //       setProjectModalOpen(true);
-  //       break;
-
-  //     case 'languages':
-  //       setLanguageModalOpen(true);
-  //       break;
-
-  //     case 'primary':
-  //     case 'secondary':
-  //       console.log(`${section} Skills ID:`, id);
-  //       setSelectedSkillsId(id);
-  //       setSkillModalOpen(true);  // Open the skills modal for both primary and secondary
-  //       break;
-
-  //     case 'education':
-  //       console.log("Education ID:", id);
-  //       setSelectedEducationId(id);
-  //       setEducationModalOpen(true);
-  //       break;
-
-  //     case 'summary':
-  //       setSummaryModalOpen(true);
-  //       break;
-
-  //     case 'certification':
-  //       console.log("Certification ID:", id);
-  //       setSelectedEducationId(id);  // Assuming certification uses the same selectedEducationId
-  //       setCertificationModalOpen(true);
-  //       break;
-
-  //     default:
-  //       console.warn('Unknown section:', section);
-  //   }
-  // };
+  
 
 
   const handleCloseModal = () => {
@@ -251,6 +186,7 @@ function SummaryDetail() {
       <div className="sticky top-0 h-screen">
         <Sidebar />
       </div>
+      
       <div className="flex-grow overflow-y-auto p-4 bg-gray-50 ml-1">
         <div className="max-w-6xl mx-auto ml-1">
           <form className="w-full ml-1">
@@ -258,21 +194,7 @@ function SummaryDetail() {
               {/* Basic Details Section */}
               <div className="flex-1 md:w-full border border-gray-300 hover:shadow-xl p-8 bg-white relative mb-8 md:mb-0">
                 <div className="absolute top-2 right-2 flex space-x-2 z-10 text-black">
-                  {/* <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 inline-block"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    onClick={() => handleEditClick('basicDetails')}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.536c0-.894.296-1.736.856-2.407l3.536-3.536a2.5 2.5 0 013.536 0z"
-                    />
-                  </svg> */}
+                  
                   <TiEdit 
                   className='w-6 h-6'
                   onClick={() => handleEditClick('basicDetails')}
@@ -312,12 +234,12 @@ function SummaryDetail() {
                 <p className="text-base">
                   <span className="text-lg font-bold">LinkedIn : </span>
                   <a
-                    href={userData.besicDetails.linkdin}
+                    href={userData.besicDetails.linkedin}
                     className="text-blue-500"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {userData.besicDetails.linkdin}
+                    {userData.besicDetails.linkedin}
                   </a>
                 </p>
                 <p className="text-base">
@@ -588,64 +510,58 @@ function SummaryDetail() {
               </div>
               {/* End Languages Section */}
 
-              {/* Skills Section */}
-              <div className="flex-1 md:w-full border border-gray-300 hover:shadow-xl p-8 bg-white relative overflow-y-auto custom-scrollbar" style={{ maxHeight: '400px' }}>
-                <h2 className="text-xl font-bold mb-2">Skills</h2>
+             {/* Skills Section */}
+<div className="flex-1 md:w-full border border-gray-300 hover:shadow-xl p-8 bg-white relative overflow-y-auto custom-scrollbar" style={{ maxHeight: '400px' }}>
+  <h2 className="text-xl font-bold mb-2">Skills</h2>
 
-                {/* Primary Skills Section */}
-                <div className="mb-2 relative">
-                  <h3 className="text-lg font-bold">Primary Skills</h3>
-                  <div className="absolute top-0 right-0 flex space-x-2 z-10 text-black">
-                    {userData && userData.skillList && Array.isArray(userData.skillList) && userData.skillList
-                      .filter(skill => skill.skillType === "PRIMARY")
-                      .map((primarySkill, index) => (
-                        <svg
-                          key={primarySkill.id}
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4 inline-block cursor-pointer"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          onClick={() => handleEditClick('skills',primarySkill.id)} // Pass the skill id to handleEditClick
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.536c0-.894.296-1.736.856-2.407l3.536-3.536a2.5 2.5 0 013.536 0z" />
-                        </svg>
-                      ))
-                    }
-                  </div>
-                  {userData && userData.skillList && Array.isArray(userData.skillList) ? (
-                    userData.skillList
-                      .filter(skill => skill.skillType === "PRIMARY")
-                      .map((primarySkill, index) => (
-                        <div key={index} className="list-disc list-inside">
-                          {Array.isArray(primarySkill.skills) && primarySkill.skills.length > 0 ? (
-                            primarySkill.skills.map((skill, idx) => (
-                              <li key={idx} className="flex items-center">
-                                <span className="text-base">{skill}</span>
-                              </li>
-                            ))
-                          ) : (
-                            <p className="text-sm">No primary skills available.</p>
-                          )}
-                        </div>
-                      ))
+  {/* Primary Skills Section */}
+  <div className="mb-2 relative">
+    {userData?.skillList?.length ? (
+      (() => {
+        // Get the first primary skill only
+        const primarySkills = userData.skillList.filter(skill => skill.skillType === "PRIMARY");
+
+        // Check if there are any primary skills and display the first one
+        if (primarySkills.length > 0) {
+          const primarySkill = primarySkills[0]; // Get the first primary skill
+
+          return (
+            <div key={primarySkill.id} className="list-disc list-inside mb-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  {Array.isArray(primarySkill.skills) && primarySkill.skills.length > 0 ? (
+                    primarySkill.skills.map((skill, idx) => (
+                      <li key={idx} className="text-base">{skill}</li>
+                    ))
                   ) : (
                     <p className="text-sm">No primary skills available.</p>
                   )}
-
-                  {/* Single common edit SVG icon for the entire Skills section */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 cursor-pointer text-black absolute top-0 right-0 m-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    onClick={() => handleEditClick('skills', userData.skillList.find(skill => skill.skillType === 'PRIMARY')?.id)} // Pass the correct id based on skillType
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.536c0-.894.296-1.736.856-2.407l3.536-3.536a2.5 2.5 0 013.536 0z" />
-                  </svg>
                 </div>
+
+                {/* Edit Icon for the first primary skill */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 cursor-pointer"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  onClick={() => handleEditClick('skills', primarySkill.id)}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.536c0-.894.296-1.736.856-2.407l3.536-3.536a2.5 2.5 0 013.536 0z" />
+                </svg>
               </div>
+            </div>
+          );
+        } else {
+          return <p className="text-sm">No primary skills available.</p>;
+        }
+      })()
+    ) : (
+      <p className="text-sm">No primary skills available.</p>
+    )}
+  </div>
+</div>
+
               {/* Summary Section */}
               <div className="flex-1 md:w-full border border-gray-300 hover:shadow-xl p-8 bg-white relative overflow-y-auto custom-scrollbar" style={{ maxHeight: '400px' }}>
                 <div className="absolute top-2 right-2 flex space-x-2 z-10 text-black">

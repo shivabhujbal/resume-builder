@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 
 const navItems = [
-  { name: 'Resume', href: '#' },
+  { name: 'Resume', href: '/template-selector' },
   { name: 'CV', href: '#' },
   { name: 'Cover Letter', href: '#' },
 ]

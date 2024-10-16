@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ArrowRight } from 'lucide-react'
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home2() {
   const [currentTip, setCurrentTip] = useState(0)
@@ -11,6 +13,10 @@ export default function Home2() {
     { text: "Keep it concise", highlight: "all" },
     { text: "Proofread carefully", highlight: "all" }
   ]
+  const {isLoggedIn} = useSelector((state) => state.auth);
+ 
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -18,6 +24,16 @@ export default function Home2() {
     }, 3000)
     return () => clearInterval(interval)
   }, [])
+
+  const handleStartBuilding = () =>{
+    if (isLoggedIn) {
+        navigate('/template-selector')
+      
+    }else{
+      navigate('/login')
+    }
+    
+  }
 
   return (
     <div className="min-h-screen flex flex-col p-4">
@@ -98,7 +114,7 @@ export default function Home2() {
       </main>
       
       <div className="text-center mb-8">
-        <button className="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition-colors duration-300">
+        <button onClick={handleStartBuilding} className="bg-purple-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700 transition-colors duration-300">
           Start Building Your ATS-Friendly Resume
         </button>
       </div>

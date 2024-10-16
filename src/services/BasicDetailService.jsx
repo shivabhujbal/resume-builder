@@ -3,7 +3,11 @@ import axios from 'axios';
 const BASE_URL = 'http://localhost:8080/user/';
 
 const addBasicDetails = async (formData) => {
-  const jsonData = {
+  const formDataToSend = new FormData();
+
+  // Serialize the form fields as JSON (except for the profileImage)
+  const detailsJson = JSON.stringify({
+    userId: formData.userId,
     first_name: formData.firstName,
     last_name: formData.surname,
     email: formData.email,
@@ -12,23 +16,32 @@ const addBasicDetails = async (formData) => {
     city: formData.city,
     country: formData.country,
     linkedin: formData.linkedin,
-    website: formData.website,
-  };
+    github: formData.website,
+    message:formData.summary // Assuming 'website' refers to GitHub in your form
+  });
+
+  // Append the JSON data as a string
+  formDataToSend.append('details', detailsJson);
+
+  // Append the profile image if it exists
+  if (formData.profileImage) {
+    formDataToSend.append('profileImage', formData.profileImage);
+  }
+
+  console.log('FormData content:');
+for (const pair of formDataToSend.entries()) {
+  console.log(`${pair[0]}: ${pair[1]}`);
+}
+
 
   try {
-    const response = await axios.post(`${BASE_URL}addBasicdetails`, jsonData, {
+    const response = await axios.post(`${BASE_URL}addBasicDetails`, formDataToSend, {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
       },
     });
 
-    if (response.status === 200 || response.status === 201) {
-      console.log('Form data sent successfully');
-      return { success: true, data: response.data };
-    } else {
-      console.error('Failed to send form data');
-      return { success: false, error: 'Failed to send form data' };
-    }
+    return response.data.message;
   } catch (error) {
     console.error('Error:', error);
     return { success: false, error };

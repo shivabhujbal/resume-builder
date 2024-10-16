@@ -8,9 +8,15 @@ import Body2 from './Body2'
 import Faqs from './Faqs'
 import Body3 from './Body3'
 import Footer from './Footer'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../redux/actions/authActions'
 
 export default function HomePage() {
-  const [currentTemplate, setCurrentTemplate] = useState(0)
+  const [currentTemplate, setCurrentTemplate] = useState(0);
+  const {isLoggedIn} = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const templates = [
     "../../public/image/resume1.png",
     "../../public/image/resume2.png",
@@ -21,7 +27,12 @@ export default function HomePage() {
     "../../public/image/resume7.png",
   ]
 
-  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem('id');
+    dispatch(logout()); // Dispatch logout action
+    navigate('/login')
+  };
 
   const handleLoginClick = () => {
     navigate('/login')
@@ -30,6 +41,51 @@ export default function HomePage() {
   const handleHomeClick = () => {
     navigate('/') // assuming the start building page route is '/builder'
   }
+  
+  // resume button click 
+  const handResumeClick = () => {
+    if(isLoggedIn){
+      navigate('/template-selector')
+    }else{
+      navigate('/login')
+    }
+  }
+  const handAboutClick = () => {
+    if(isLoggedIn){
+      navigate('/about')
+    }else{
+      navigate('/login')
+    }
+  }
+  const handCvClick = () => {
+    if(isLoggedIn){
+      navigate('/')
+    }else{
+      navigate('/login')
+    }
+  }
+  const handProfileClick = () => {
+    if(isLoggedIn){
+      navigate('/profile-details')
+    }else{
+      navigate('/login')
+    }
+  }
+  const handleStartClick = () => {
+    if(isLoggedIn){
+      navigate('/template-selector')
+    }else{
+      navigate('/login');
+    }
+  }
+  const handleSignUpClick = () => {
+    
+      navigate('/signup')
+    
+  }
+
+
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,7 +93,7 @@ export default function HomePage() {
     }, 4000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [templates.length])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -65,7 +121,7 @@ export default function HomePage() {
             <div className='flex space-x-2'>
               <img 
                 src="../../public/reshot-icon-resume-RK2HTZ6GUA.svg" 
-                alt="" 
+                alt="icon" 
                 className='w-16 h-16'
               />
               <motion.h1 
@@ -83,6 +139,7 @@ export default function HomePage() {
                 className="px-4 py-2 rounded-full font-semibold hover:bg-opacity-90 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={handResumeClick}
               >
                 Resume
               </motion.button>
@@ -90,6 +147,7 @@ export default function HomePage() {
                 className=" px-4 py-2 rounded-full font-semibold hover:bg-opacity-90 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={handCvClick}
               >
                 CV
               </motion.button>
@@ -97,25 +155,57 @@ export default function HomePage() {
                 className=" px-4 py-2 rounded-full font-semibold hover:bg-opacity-90 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={handAboutClick}
               >
                 About
               </motion.button>
+              {isLoggedIn ? (
               <motion.button 
-                className="bg-white ring-1 ring-purple-700 text-purple-700 px-4 py-2 rounded-full font-semibold hover:bg-opacity-90 transition-colors"
-                onClick={handleLoginClick} // Login button handler
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Login
-              </motion.button>
+              className="bg-white ring-1 ring-purple-700 text-purple-700 px-4 py-2 rounded-full font-semibold hover:bg-opacity-90 transition-colors"
+                onClick={handleLogout}// Login button handler
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Logout
+            </motion.button>            ) : (
               <motion.button 
-                className="bg-purple-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-opacity-90 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleLoginClick} // Start Building button handler
-              >
-                Get Started
-              </motion.button>
+              className="bg-white ring-1 ring-purple-700 text-purple-700 px-4 py-2 rounded-full font-semibold hover:bg-opacity-90 transition-colors"
+              onClick={handleLoginClick} // Login button handler
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Login
+            </motion.button>
+        
+          )}
+
+            {isLoggedIn ? (
+                 <motion.button 
+                 className="bg-purple-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-opacity-90 transition-colors"
+                 whileHover={{ scale: 1.05 }}
+                 whileTap={{ scale: 0.95 }}
+                 onClick={handProfileClick} // Start Building button handler
+               >
+                 Profile
+               </motion.button>
+
+            ):(
+              <motion.button 
+              className="bg-white ring-1 ring-purple-700 text-purple-700 px-4 py-2 rounded-full font-semibold hover:bg-opacity-90 transition-colors"
+              onClick={handleSignUpClick} // Login button handler
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              SignUp
+            </motion.button>
+
+
+
+            )
+            
+            
+            }
+           
             </div>
           </nav>
         </header>
@@ -145,7 +235,7 @@ export default function HomePage() {
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={handleLoginClick} // Start Building button handler
+                onClick={handleStartClick} // Start Building button handler
               >
                 <span>Start Building</span>
                 <ArrowRight className="w-5 h-5" />

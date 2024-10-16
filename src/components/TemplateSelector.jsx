@@ -1,27 +1,8 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { useNavigate } from 'react-router-dom';
-import { components } from 'react-select';
-import resume1 from '../assets/imageSelector/resume1.png';
-import resume2 from '../assets/imageSelector/resume2.png';
-import resume3 from '../assets/imageSelector/resume3.png';
-import resume4 from '../assets/imageSelector/resume4.png';
-import resume5 from '../assets/imageSelector/resume5.png';
-import resume6 from '../../public/image/resume1.png';
-import resume7 from '../../public/image/resume2.png';
-import resume8 from '../../public/image/resume3.png';
-import resume9 from '../../public/image/resume4.png';
-import resume10 from '../../public/image/resume5.png';
-import resume11 from '../../public/image/resume6.png';
-import resume12 from '../../public/image/resume7.png';
-import resume13 from '../../public/image/resume8.png';
-import resume14 from '../../public/image/resume9.png';
-import resume15 from '../../public/image/resume1.png';
-import resume16 from '../../public/image/resume2.png';
-import resume17 from '../../public/image/resume3.png';
-import resume18 from '../../public/image/resume4.png';
-import resume19 from '../../public/image/resume5.png';
-import resume20 from '../../public/image/resume8.png';
+import { templates } from '../constants/templateList';
+
 
 
 const TemplateSelector = () => {
@@ -30,29 +11,7 @@ const TemplateSelector = () => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const navigate = useNavigate();
 
-  const templates = [
-    { id: 1, name: 'Template 1', image: resume1, headshot: 'with', columns: '1' ,component:"<Template1/>"},
-    { id: 2, name: 'Template 2', image: resume2, headshot: 'without', columns: '2' },
-    { id: 3, name: 'Template 3', image: resume3, headshot: 'without', columns: '2' },
-    { id: 4, name: 'Template 4', image: resume4, headshot: 'without', columns: '2' },
-    { id: 5, name: 'Template 5', image: resume5, headshot: 'without', columns: '2' },
-    { id: 6, name: 'Template 6', image: resume6, headshot: 'without', columns: '2' },
-    { id: 7, name: 'Template 7', image: resume7, headshot: 'without', columns: '2' },
-    { id: 8, name: 'Template 8', image: resume8, headshot: 'without', columns: '2' },
-    { id: 9, name: 'Template 9', image: resume9, headshot: 'without', columns: '2' },
-    { id: 10, name: 'Template 10', image: resume10, headshot: 'without', columns: '2' },
-    { id: 11, name: 'Template 11', image: resume11, headshot: 'without', columns: '2' },
-    { id: 12, name: 'Template 12', image: resume12, headshot: 'without', columns: '2' },
-    { id: 13, name: 'Template 13', image: resume13, headshot: 'without', columns: '2' },
-    { id: 14, name: 'Template 14', image: resume14, headshot: 'without', columns: '2' },
-    { id: 15,name: 'Template 15', image: resume15, headshot: 'without', columns: '2' },
-    { id: 16, name: 'Template 16', image: resume16, headshot: 'without', columns: '2' },
-    { id: 17, name: 'Template 17', image: resume17, headshot: 'without', columns: '2' },
-    { id: 18, name: 'Template 18', image: resume18, headshot: 'without', columns: '2' },
-    { id: 19, name: 'Template 19', image: resume19, headshot: 'without', columns: '2' },
-    { id: 20, name: 'Template 20', image: resume20, headshot: 'without', columns: '2' },
-    
-  ];
+  
   
 
   const handleImageClick = (id) => {
@@ -60,95 +19,163 @@ const TemplateSelector = () => {
     console.log("Selected id", id);
   };
 
-  const handleTemplate =()=>{
-    navigate("/basic-details")
-  }
+  const handleTemplate = () => {
+    if (selectedTemplate) {
+      localStorage.setItem('templateId', selectedTemplate);
+    }
+    navigate('/basic-details');
+  };
+
+  const handleChooseLater = () => {
+    localStorage.removeItem('templateId');
+    navigate('/basic-details');
+  };
 
   return (
-    <div className="container w-[1120px] mt-5 mb-5 ">
-      <h1 className="text-4xl font-semibold leading-tight text-center mb-4">Choose from our best templates for Job Seekers</h1>
-      <p className="text-center  font-semibold mb-12  border-t-2 border-indigo-900">You can always change your template later.</p>
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="w-1/4 p-4">
-          <div className="mb-8">
-            <h2 className="font-bold mb-4">Filters</h2>
-            <div className="flex flex-col mb-6">
-              <h3 className="font-bold mb-2">Headshot</h3>
-              <label className="inline-flex items-center mb-2">
-                <input
-                  type="checkbox"
-                  className="form-checkbox"
-                  onChange={() => setHeadshotFilter(headshotFilter === 'with' ? null : 'with')}
-                />
-                <span className="ml-2">With photo</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  className="form-checkbox"
-                  onChange={() => setHeadshotFilter(headshotFilter === 'without' ? null : 'without')}
-                />
-                <span className="ml-2">Without photo</span>
-              </label>
-            </div>
-            <div className="flex flex-col">
-              <h3 className="font-bold mb-2">Columns</h3>
-              <label className="inline-flex items-center mb-2">
-                <input
-                  type="checkbox"
-                  className="form-checkbox"
-                  onChange={() => setColumnFilter(columnFilter === '1' ? null : '1')}
-                />
-                <span className="ml-2">1 Column</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  className="form-checkbox"
-                  onChange={() => setColumnFilter(columnFilter === '2' ? null : '2')}
-                />
-                <span className="ml-2">2 Columns</span>
-              </label>
-            </div>
-          </div>
-        </div>
+    <div className="container w-full mx-auto p-6 shadow-lg rounded-lg">
+    <h1 className="text-3xl font-semibold text-center mb-6">Choose Your Resume Template</h1>
+    <p className="text-center mb-8 text-gray-600">Easily switch templates later if you change your mind.</p>
 
-        {/* Template Cards */}
-        <div className="w-3/4 grid grid-cols-3 gap-4">
-          {templates
-            .filter(template => !headshotFilter || template.headshot === headshotFilter)
-            .filter(template => !columnFilter || template.columns === columnFilter)
-            .map(template => (
-              <div
-                key={template.id}
-                className={`border rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-110 ${selectedTemplate === template.id ? 'border-blue-500 shadow-lg' : 'border-gray-300'} `}
-                onClick={() => handleImageClick(template.id)}
-              >
-                <img src={template.image} alt={template.name} className="w-full h-fit object-cover transition-transform transform hover:scale-110" />
-                <div className="p-2">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox"
-                    checked={selectedTemplate === template.id}
-                    readOnly
-                  />
-                  <span className="ml-2">{template.name}</span>
-                </div>
-              </div>
-            ))}
-        </div>
+      {/* Choose Later Button */}
+      <div className="absolute top-6 right-6">
+        <button
+        className="py-3 px-5 text-base font-medium border border-transparent rounded-full shadow-sm text-dark bg-blue-200 hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        onClick={handleChooseLater}>
+          Choose Later
+        </button>
       </div>
-      <div className="flex justify-end mt-8 space-x-4">
-        <button 
-          className="py-3 px-5 h-fit border border-blue-800 rounded-full text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >Choose Later</button>
-        <button 
-          className="py-3 px-5 text-base font-medium border border-transparent rounded-full shadow-sm text-blue-700 bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          onClick={handleTemplate}
-        >Choose Template</button>
+      
+<div className="grid grid-cols-4 gap-8">
+  {/* Filter Section */}
+  <div className="col-span-1 p-4 bg-gray-100 rounded-lg shadow-inner">
+    <h2 className="text-lg font-bold mb-4">Filters</h2>
+
+    {/* Headshot Filter */}
+    <div className="mb-6">
+      <h3 className="font-semibold mb-2">Headshot</h3>
+      <div className="flex items-center mb-2">
+        <input
+          type="radio"
+          id="allTemplates"
+          name="headshot"
+          value="all"
+          checked={headshotFilter === null}
+          onChange={() => {
+            setHeadshotFilter(null);
+            setColumnFilter(null);
+          }}
+          className="mr-2"
+        />
+        <label htmlFor="allTemplates" className="cursor-pointer">All</label>
+      </div>
+      <div className="flex items-center mb-2">
+        <input
+          type="radio"
+          id="withPhoto"
+          name="headshot"
+          value="with"
+          checked={headshotFilter === 'with'}
+          onChange={() => setHeadshotFilter('with')}
+          className="mr-2"
+        />
+        <label htmlFor="withPhoto" className="cursor-pointer">With Photo</label>
+      </div>
+      <div className="flex items-center">
+        <input
+          type="radio"
+          id="withoutPhoto"
+          name="headshot"
+          value="without"
+          checked={headshotFilter === 'without'}
+          onChange={() => setHeadshotFilter('without')}
+          className="mr-2"
+        />
+        <label htmlFor="withoutPhoto" className="cursor-pointer">Without Photo</label>
       </div>
     </div>
+
+    {/* Columns Filter */}
+    <div>
+      <h3 className="font-semibold mb-2">Columns</h3>
+      <div className="flex items-center mb-2">
+        <input
+          type="radio"
+          id="oneColumn"
+          name="columns"
+          value="1"
+          checked={columnFilter === '1'}
+          onChange={() => setColumnFilter('1')}
+          className="mr-2"
+        />
+        <label htmlFor="oneColumn" className="cursor-pointer">1 Column</label>
+      </div>
+      <div className="flex items-center">
+        <input
+          type="radio"
+          id="twoColumns"
+          name="columns"
+          value="2"
+          checked={columnFilter === '2'}
+          onChange={() => setColumnFilter('2')}
+          className="mr-2"
+        />
+        <label htmlFor="twoColumns" className="cursor-pointer">2 Columns</label>
+      </div>
+    </div>
+  </div>
+
+  {/* Template Selection Grid */}
+  <div className="col-span-3 grid lg:grid-cols-3 sm:grid-cols-2 gap-6">
+    {templates
+      .filter((template) => !headshotFilter || template.headshot === headshotFilter)
+      .filter((template) => !columnFilter || template.columns === columnFilter)
+      .map((template) => (
+        <div
+          key={template.id}
+          className={`relative border rounded-lg overflow-hidden shadow-md p-4 cursor-pointer transition-transform transform hover:scale-105 ${
+            selectedTemplate === template.id ? 'border-blue-500' : 'border-gray-300'
+          }`}
+
+          onClick={() => handleImageClick(template.id)}
+        >
+          <img
+            src={template.image}
+            alt={template.name}
+            className="w-full h-48 object-contain mb-4"
+          />
+           {/* Checkbox only visible when the template is selected */}
+        {selectedTemplate === template.id && (
+          <div className="absolute top-4 right-4">
+            <input
+              type="checkbox"
+              checked={selectedTemplate === template.id}
+              onChange={() => handleImageClick(template.id)} // This is for toggling the selection
+              className="form-checkbox h-5 w-5 text-blue-600"
+            />
+          </div>
+        )}
+        
+        <div className="text-center font-semibold">{template.name}</div>
+
+          
+
+          {/* Show Choose Template button at the bottom of the selected template */}
+          {selectedTemplate === template.id && (
+            <div className="flex justify-center mt-4">
+            <button
+              className="py-2 px-3 text-base font-medium border border-transparent rounded-full shadow-sm text-white bg-orange-600 hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={handleTemplate}
+            >
+              Choose Template
+            </button>
+          </div>
+          )}
+        </div>
+      ))}
+  </div>
+</div>
+
+  </div>
   );
 };
 

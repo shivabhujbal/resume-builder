@@ -5,8 +5,15 @@ import Sidebar from "./Sidebar";
 import { addExperience } from "../services/ExperienceService";
 
 function ExperienceDetails() {
+
+  let userId = localStorage.getItem('userId');
+  userId = userId ? parseInt(userId, 10) : null;
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+
   const [formData, setFormData] = useState({
-    userId: 7,
+    userId: userId||null,
     title: "",
     company: "",
     location: "",
@@ -89,11 +96,31 @@ function ExperienceDetails() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validate()) {
-      console.log(formData);
+    setSuccessMessage("");
+    setErrorMessage("");
 
-      const response = await addExperience(formData);
-      console.log("res", response);
+    if (validate()) {
+      try {
+        const response = await addExperience(formData);
+        console.log("res", response);
+        setSuccessMessage("Experience added successfully!");
+        // Reset the form after success
+        setFormData({
+          userId: userId || null,
+          title: "",
+          company: "",
+          location: "",
+          startDate: "",
+          endDate: "",
+          responsibility: [],
+          currentlyWorking: false,
+        });
+        alert("Experience Added")
+        navigate("/project-details");
+      } catch (error) {
+        setErrorMessage("Failed to add experience. Please try again.");
+        console.error("Error while adding Experience", error);
+      }
     }
   };
 
@@ -103,9 +130,9 @@ function ExperienceDetails() {
     navigate("/education-details");
   };
 
-  const handleNextClick = () => {
-    navigate("/project-details"); // Navigate to the Basic Details route
-  };
+  // const handleNextClick = () => {
+  //   navigate("/project-details"); // Navigate to the Basic Details route
+  // };
 
   return (
     <div className="flex h-screen">
@@ -292,7 +319,6 @@ function ExperienceDetails() {
                 </button>
                 <button
                   type="submit"
-                  onClick={handleNextClick}
                   className="items-end h-fit px-5 py-3 text-base font-medium border border-transparent rounded-full shadow-sm text-white bg-orange-600 hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Save & Next

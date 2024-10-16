@@ -28,8 +28,8 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-60 p-4 bg-teal-900 text-white  min-w-[250px]">
-      <h1 className="pt-6 ml-6 text-3xl font-bold mb-3">zety</h1>
+    <div className="flex flex-col h-screen w-60 p-4 bg-dark text-white  min-w-[250px]">
+      <h1 className="pt-6 ml-6 text-xl font-bold mb-3">ResumeBuilder</h1>
 
       {/* Steps Navigation */}
       <nav className="pl-4 flex flex-col space-y-0">
